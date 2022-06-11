@@ -65,7 +65,6 @@ const Home = () =>{
         }
     }
 
-
     return(
         <div>
             <label>
@@ -79,6 +78,8 @@ const Home = () =>{
             </label>
             <br />
             <button onClick={handleSubmit}>ورود</button>
+            <br/>
+            <span>{msg}</span>
         </div>
     )
 }
