@@ -2,8 +2,7 @@
 import {handleAccount} from '../../components/cheakaccount'
 import Menu from './menu/menu'
 import { Outlet } from "react-router-dom"
-
-import { useNavigate } from 'react-router-dom'
+import './portfoli.css'
 
 
 const Portfoli = () => {
@@ -12,7 +11,10 @@ const Portfoli = () => {
     return(
         <div>
             portfoli
-            <Menu />
+            <div className='continermenuportfoli'>
+                <Menu />
+            </div>
+
             <Outlet/>
 
         </div>
