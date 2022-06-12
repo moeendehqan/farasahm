@@ -2,7 +2,7 @@ import { getCookie } from '../../../components/cookie'
 import {useState} from 'react'
 import axios from 'axios'
 import { serverAddress } from '../../../config/config'
-
+import './update.css'
 const Update = () =>{
     const [filetrade, setFiletrade] = useState('')
     const [msg, setMsg] = useState('')
@@ -32,13 +32,15 @@ const Update = () =>{
 
 
     return(
-        <div>
-            <label>
-                فایل
-                <input type='file' onChange={(e)=>setFiletrade(e.target.files[0])}></input>
-            </label>
-            <button onClick={handleSubmit}>بارگذاری</button>
-            <span>{msg}</span>
+        <div className='updateportfoli'>
+            <div className='content'>
+                <label>
+                    فایل
+                    <input type='file' onChange={(e)=>setFiletrade(e.target.files[0])}></input>
+                </label>
+                <button onClick={handleSubmit}>بارگذاری</button>
+                <span>{msg}</span>
+            </div>
         </div>
     )
 }
