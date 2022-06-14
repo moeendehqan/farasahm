@@ -9,9 +9,10 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 
 const CustomerReviews = () =>{
-
     const [customerlist, setCustomerlist] = useState('')
     const [customerselect, setCustomerselect] = useState('')
+
+ 
     const [dateselect, setDateselect] = useState('')
     const handleDataselect = (date)=>{
         const yd = (date.year).toString()
@@ -23,7 +24,7 @@ const CustomerReviews = () =>{
         }else{var dd = (date.day).toString()}
         setDateselect(yd+md+dd)
     }
-    console.log(dateselect)
+
     
     const handleCustomerselect = (e)=>{setCustomerselect(e.target.value)}
     const clean = (e) =>{e.target.value=''}
@@ -47,12 +48,12 @@ const CustomerReviews = () =>{
     const [tab, seTab] = useState('asset')
     const handleCustomerReview= () =>{
         if(customerlist.indexOf(customerselect)>=0 && customerselect!==''){
-            setPortfoliview(<PortfoliView customer={customerselect} tab={tab} username={username}/>)
+            setPortfoliview(<PortfoliView customer={customerselect} tab={tab} username={username} dateselect={dateselect}/>)
         }
     }
 
     useEffect(handleCustomerlist,[])
-    useEffect(handleCustomerReview,[customerselect,tab])
+    useEffect(handleCustomerReview,[customerselect,tab,dateselect])
 
 
     return(

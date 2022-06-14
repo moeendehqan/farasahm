@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import './menu.css'
+
 const Menu = () =>{
     const nav = useNavigate()
     const handleMenu = (a) =>{nav(a)}

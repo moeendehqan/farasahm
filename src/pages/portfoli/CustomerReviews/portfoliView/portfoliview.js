@@ -7,11 +7,14 @@ const PortfoliView = (props)=>{
 
     const [content, setContent] = useState(null)
     const [tableasset, setTableasset] = useState(null)
+    const [tablenobuy, setTablenobay] = useState(null)
 
     const handleContent = ()=>{
         if(props.tab==='asset'){
             if(tableasset===null){
-                <h1>دارایی برای نمایش وجود ندارد</h1>
+                setContent(<h1>دارایی برای نمایش وجود ندارد</h1>)
+            }else if(tableasset==='wait'){
+                setContent(<h1>لطفا صبر کنید</h1>)
             }else{
             setContent(
                 <table>
@@ -26,7 +29,6 @@ const PortfoliView = (props)=>{
                     </thead>
                     <tbody>
                     {tableasset.map(item=>{
-                        console.log(item)
                         return(
                             <tr key={item['نماد']}>
                                 <td>{item['نماد']}</td>
@@ -41,13 +43,45 @@ const PortfoliView = (props)=>{
                 </table>
                 )}
             }else if(props.tab==='profitability'){
-            setContent(
-                <h1>سود اوری</h1>
-                )
+                setContent(<p>تاریخ را تنظیم کنید</p>)
+                if(props.dateselect!==''){
+                setContent(
+                    <h1>لطفا صبر کنید</h1>
+                    )
+                if(tablenobuy!==null && tablenobuy!=='show'){
+                    setContent(
+                        <div>
+                        <span>معاملات {props.customer} ناقص ثبت شده است</span>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نماد</th>
+                                    <th>تعداد</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {tablenobuy.map(o=>{
+                                return(
+                                <tr key={o['نماد']}>
+                                    <td>{o['نماد']}</td>
+                                    <td>{o['تعداد']}</td>
+                                </tr>)
+                            })}
+                            </tbody>
+                        </table>
+
+                        </div>
+                        )
+                    }else if(tablenobuy!==null && tablenobuy==='show'){
+                        setContent(
+                            <p>نمایش عملکرد</p>
+                        )
+                    }}
             }
     }
 
     const handleAsset = ()=>{
+        setTableasset('wait')
         axios({
             method: 'post',
             url: serverAddress+'/portfoli/asset',
@@ -56,10 +90,34 @@ const PortfoliView = (props)=>{
             }).then(Response=>{
                 if(Response.data.replay){
                     setTableasset(Response.data.databack)
+                }else{
+                    setTableasset(null)
                 }            })    }
 
-    useEffect(handleContent,[props.tab,props.customer])
+
+    const handleprofitability = () =>{
+        if (props.tab==='profitability' && props.dateselect!=''){
+            axios({
+                method: 'post',
+                url: serverAddress+'/portfoli/profitability',
+                data: { username: props.username,
+                        customer: props.customer,
+                        dateselect: props.dateselect
+                    }
+                }).then(Response=>{
+                    if(!Response.data.replay){
+                        console.log(' resp >> false')
+                        setTablenobay(Response.data.databack)
+                    }else{
+                        console.log(' resp >> true')
+                        setTablenobay('show')
+                    }                })        }        }
+
+
+    useEffect(handleprofitability,[props.tab, props.customer, props.dateselect])
     useEffect(handleAsset,[props.tab,props.customer])
+    useEffect(handleContent,[props.tab,props.customer,(tableasset===null),(tableasset==='wait'),(tablenobuy===null),props.dateselect])
+
     
 
     return(
