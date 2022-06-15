@@ -7,9 +7,9 @@ const Menu = () =>{
 
     return(
         <div className='menuportfoli'>
-            <button onClick={()=>handleMenu('update')}>بروزرسانی</button>
-            <button onClick={()=>handleMenu('customerreviews')}>مرور مشتری</button>
-            <button onClick={()=>handleMenu('groupreviews')}>مرور گروه</button>
+            <button className="portfolimenubtn" onClick={()=>handleMenu('update')}>بروزرسانی</button>
+            <button className="portfolimenubtn" onClick={()=>handleMenu('customerreviews')}>مرور مشتری</button>
+            <button className="portfolimenubtn" onClick={()=>handleMenu('groupreviews')}>مرور گروه</button>
         </div>
     )
 }

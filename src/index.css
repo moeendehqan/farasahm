@@ -1,5 +1,72 @@
 * {
   margin: 0px;
   padding: 0px;
-
 }
+
+
+
+@font-face{
+  font-family: 'peydaBlack';
+  src: url('../public/Peyda/Peyda-Black.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-Black.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-Black.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydaBold';
+  src: url('../public/Peyda/Peyda-Bold.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-Bold.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-Bold.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydaExtraBold';
+  src: url('../public/Peyda/Peyda-ExtraBold.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-ExtraBold.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-ExtraBold.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydaMedium';
+  src: url('../public/Peyda/Peyda-Medium.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-Medium.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-Medium.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydaRegular';
+  src: url('../public/Peyda/Peyda-Regular.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-Regular.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-Regular.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydaSemiBold';
+  src: url('../public/Peyda/Peyda-SemiBold.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-SemiBold.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-SemiBold.woff2') format('woff2');
+ }
+
+ 
+ @font-face{
+  font-family: 'peydaThin';
+  src: url('../public/Peyda/Peyda-Thin.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/PeydaWeb-Thin.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/PeydaWeb-Thin.woff2') format('woff2');
+ }
+
+
+  
+ @font-face{
+  font-family: 'peydaextralight';
+  src: url('../public/Peyda/peyda-extralight.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/peydaWeb-extralight.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/peydaWeb-extralight.woff2') format('woff2');
+ }
+
+ @font-face{
+  font-family: 'peydalight';
+  src: url('../public/Peyda/peyda-light.ttf') format('truetype'),
+  url('../public/Peyda/PeydaWeb/woff/peydaWeb-light.woff') format('woff'),
+  url('../public/Peyda/PeydaWeb/woff2/peydaWeb-light.woff2') format('woff2');
+ }

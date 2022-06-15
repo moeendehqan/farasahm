@@ -1,7 +1,101 @@
 .continermenuportfoli{
-    background-color:blue;
-    width:250px;
     position: absolute;
-    top:40%;
-    right:0px;
+    top:90px;
+    right:60px;
+    width: 200px;
+}
+
+.portfolicontiner{
+    background-color: #eae7e7;
+    min-height: 100vh;
+    padding: 25px;
+}
+
+.portfolititle{
+    display: flex;
+    flex-direction: column;
+    border-right: #fff 1px solid;
+    text-align: end;
+    width: 150px;
+    padding-right: 25px;
+}
+.portfolititle h1{
+    color: #263bb0;
+    font-family: 'peydaBlack';
+    font-size: 0.9rem;
+}
+.portfolititle h4{
+    color: #9545af;
+    font-family: 'peydaMedium';
+    font-size: 0.9rem;
+}
+.portfoliprofilemenu{
+    writing-mode: vertical-rl;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'peydaBlack';
+    font-size: 1.1rem;
+    color: #263bb0;
+    margin-right: 25px;
+}
+.portfoliprofile{
+    margin-left: auto ;
+    display: flex;
+    flex-direction: row;
+}
+.portfoliprofiletitle{
+    text-align: right;
+    margin: 0px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+}
+.portfoliprofiletitle h3{
+    font-family: 'peydaMedium';
+    font-size: 0.9rem;
+    color: #384bb4;
+}
+.portfoliprofiletitle h6{
+    font-family: 'peydaRegular';
+    color: #4c5bb8;
+}
+.portfoliprofileimg{
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius: 40px;
+    background: 
+    linear-gradient(to right, white, white), 
+    linear-gradient(to top right, #c63ef1 , #2d41fd); 
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
+    margin-left: 10px;
+}
+.portfoliprofileimg img{
+    margin-top: 5px;
+    width: 40px;
+}
+.portfoliheader{
+    display: flex;
+    flex-direction: row;
+
+}
+
+
+.portfolioseting{
+    position: absolute;
+    right: 60px;
+    top:300px;
+    display:flex;
+    flex-direction:column;
+    background-image: linear-gradient(to top , #263bb0 , #9b3cac);
+    padding:20px;
+    border-radius: 15px;
+    width: 160px;
+
 }

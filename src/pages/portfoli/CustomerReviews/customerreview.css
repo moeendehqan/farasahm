@@ -1,0 +1,28 @@
+.portfoliosetingcustomername{
+    display: flex;
+    flex-direction: column;
+
+}
+.portfoliosetingcustomername p{
+    font-family: 'peydaMedium';
+    color: #fff;
+    text-align: end;
+    font-size: 0.8rem;
+    margin: 5px 5px;
+}
+.portfoliosetingcustomername input{
+    height: 25px;
+    font-family: 'peydaMedium';
+    font-size: 0.8rem;
+    text-align: right;
+    overflow: hidden;
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2);
+    border: 0px;
+    border-radius: 12px;
+}
+
+.portfoliosetingcustomername option:hover{
+    font-family:'peydaRegular' ;
+    font-size: 0.9rem;
+    background-color: blue;
+}

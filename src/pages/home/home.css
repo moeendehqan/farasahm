@@ -1,0 +1,74 @@
+.homeback{
+    background-image: linear-gradient(to top right,#2d41fd,#c63ef1);
+    padding: 35px;
+    height: 100% !important
+}
+
+.homecontiner{
+    background-color: #eae4e4;
+    border: #7976c7 1px solid;
+    border-radius: 35px;
+    display: flex;
+    flex-direction: row-reverse;
+    
+    
+}
+.homeborder{
+    width: 1px;
+    background-color: #fff;
+    margin: 50px 0px;
+}
+.homeloginbox{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+}
+.homeformbox{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+.homewellcombox{
+    width: 50%;
+}
+
+.homelable{
+    text-align: end;
+    font-family: 'peydaExtraBold';
+    color: #263bb0;
+}
+
+.homeinput{
+    height: 35px;
+    background-color: #f2eeee;
+    border-radius: 35px;
+    border: 0px;
+    box-shadow: 5px 5px 5px  inset rgba(0, 0, 0, 0.1);
+    text-align: end;
+    padding: 5px;
+    font-family: 'peydaMedium';
+    font-size: 1.05rem;
+}
+
+#homeinputusername{
+    background-image: url('../../icon/user.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+
+#homeinputpass{
+    background-image: url('../../icon/pass.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+}
+.homesubmit{
+    background-image: linear-gradient(to left,#c63ef1, #2d41fd) ;
+    height: 35px;
+    border: 0px;
+    border-radius: 35px;
+    color: white;
+    width: 50%;
+    font-family: 'peydaBold';
+}

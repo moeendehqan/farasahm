@@ -5,6 +5,8 @@ import { setCookie, getCookie } from '../../components/cookie'
 import { serverAddress } from '../../config/config'
 import { useNavigate } from 'react-router-dom'
 
+import usersvg from '../../icon/user.svg'
+
 const Home = () =>{
     const native = useNavigate()
     
@@ -66,20 +68,31 @@ const Home = () =>{
     }
 
     return(
-        <div>
-            <label>
-                نام کاربری
-                <input type='text' onChange={(e)=>handleUsername(e)} placeholder='نام کاربری'></input>
-            </label>
-            <br />
-            <label>
-                رمزعبور
-                <input type='password' onChange={(e)=>handlePassword(e)} placeholder='رمز عبور'></input>
-            </label>
-            <br />
-            <button onClick={handleSubmit}>ورود</button>
-            <br/>
-            <span>{msg}</span>
+        <div className='homeback'>
+            <div className='homecontiner'>
+                <div className='homeloginbox'>
+                    <div className='homeformbox'>
+                        <label className='homelable'>
+                            نام کاربری
+                        </label>
+                        <input className='homeinput' id='homeinputusername' type='text' onChange={(e)=>handleUsername(e)} placeholder='**********'></input>
+                        <br />
+                        <label className='homelable'>
+                            رمزعبور
+                        </label>
+                        <input className='homeinput' id='homeinputpass' type='password' onChange={(e)=>handlePassword(e)} placeholder='**********'></input>
+                        <br />
+                        <button className='homesubmit' onClick={handleSubmit}>ورود</button>
+                        <br/>
+                        <span>{msg}</span>
+                    </div>
+                </div>
+                <div className='homeborder'>
+                </div>
+                <div className='homewellcombox'>
+
+                </div>
+            </div>
         </div>
     )
 }

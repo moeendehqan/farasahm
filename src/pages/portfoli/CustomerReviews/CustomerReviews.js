@@ -58,12 +58,14 @@ const CustomerReviews = () =>{
 
     return(
         <div className="customerreviewportfoli">
-            <div className="setcustomerreviewportfoli">
-                Customer Reviews
-                <input type="input" list="optionsList" onChange={(e)=>handleCustomerselect(e)} onClick={(e)=>clean(e)} placeholder="نام مشتری"/>
-                <datalist id="optionsList">
-                    {customerlist!==''?customerlist.map((o) => (<option key={o}>{o}</option>)):null}
-                </datalist>
+            <div className="portfolioseting">
+                <div className="portfoliosetingcustomername">
+                    <p>نام مشتری</p>
+                    <input type="input" list="optionsList" onChange={(e)=>handleCustomerselect(e)} onClick={(e)=>clean(e)} placeholder="نام مشتری"/>
+                    <datalist id="optionsList">
+                        {customerlist!==''?customerlist.map((o) => (<option key={o}>{o}</option>)):null}
+                    </datalist>
+                </div>
                 <br/>
                 {portfoliview!==null?
                     <div>

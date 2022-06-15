@@ -1,4 +1,24 @@
 .menuportfoli{
     display:flex;
     flex-direction:column;
+    background-image: linear-gradient(to top , #263bb0 , #9b3cac);
+    padding:20px 0px 20px 25px ;
+    border-radius: 15px;
+}
+
+.portfolimenubtn{
+    background-color: transparent;
+    border: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    color: #fff;
+    font-family: 'peydaMedium';
+}
+
+.portfolimenubtn:hover{
+    color: #263bb0;
+    background-color: #e8d8ee;
+    border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
 }
