@@ -32,16 +32,21 @@ const Wfile = ()=>{
 
 
     return(
-        <div className='updateportfoli'>
-        <div className='content'>
-            <label>
-                فایل
-                <input type='file' onChange={(e)=>setFiletrade(e.target.files[0])}></input>
-            </label>
-            <button onClick={handleSubmit}>بارگذاری</button>
-            <span>{msg}</span>
+        <div>
+            <div className='portfoliupdatecontiner'>
+                <h2>بروزرسانی با فایل</h2>
+                <label>فایل
+                    <input type='file' onChange={(e)=>setFiletrade(e.target.files[0])}></input>
+                </label>
+                <button onClick={handleSubmit}>بارگذاری</button>
+                {msg!==''?
+                    <div className='portfoliupdatefilemsg'>
+                        <p>{msg}</p>
+                        <button onClick={()=>setMsg('')}>تایید</button>
+                    </div>
+                    :null}
+            </div>
         </div>
-    </div>
     )
 }
 

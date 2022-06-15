@@ -7,6 +7,9 @@ import './customerreview.css'
 import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
+import InputIcon from "react-multi-date-picker/components/input_icon"
+import "react-multi-date-picker/styles/colors/purple.css"
+
 
 const CustomerReviews = () =>{
     const [customerlist, setCustomerlist] = useState('')
@@ -69,12 +72,15 @@ const CustomerReviews = () =>{
                 <br/>
                 {portfoliview!==null?
                     <div>
-                        <button onClick={()=>seTab('asset')}>دارایی</button>
-                        <button onClick={()=>seTab('profitability')}>عملکرد</button>
-                        {tab==='profitability'?<div>
-                            <span>تا تاریخ</span>
-                            <DatePicker calendar={persian} locale={persian_fa} onChange={handleDataselect} /></div>:null}
-                    </div>
+                        <div className="portfolisetingtab">
+                            <button className={tab==='asset'?'portfolisetingtabbtnclck':null} onClick={()=>seTab('asset')}>دارایی</button>
+                            <button className={tab==='profitability'?'portfolisetingtabbtnclck':null} onClick={()=>seTab('profitability')}>عملکرد</button>
+                        </div>
+                        {tab==='profitability'?
+                            <div className="portfolisetingdate">
+                                <span className="portfolisetingdatetitle">تا تاریخ</span>
+                                <DatePicker inputClass="portfolisetingdateinput" calendar={persian} className="purple" locale={persian_fa} onChange={handleDataselect} /></div>:null}
+                            </div>
                     :null}
                 
                 <span>{msg}</span>

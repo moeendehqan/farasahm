@@ -94,8 +94,9 @@ useEffect(getListCustomer,[])
 useEffect(getSymbolList,[])
 
     return(
-        <div className="portfoliwform">
-            <div className="continer">
+        <div >
+            <div className="portfoliupdatecontiner">
+                <h2>بروزرسانی دستی</h2>
                 <label>
                     مشتری:
                     <input type="input" list="optionsList" onChange={(e)=>handleCustomerselect(e)} onClick={(e)=>clean(e)} placeholder="نام مشتری"/>

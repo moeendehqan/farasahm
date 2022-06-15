@@ -22,7 +22,10 @@ const Update = () =>{
                     <input className='portfoliupdateradio' type="radio" value="file" name='file' checked={tabradio==='file'} />فایل
                 </div>
             </div>
-            {tab}
+            <div>
+                {tab}
+                <p>sssss</p>
+            </div>
         </div>
     )
 }
