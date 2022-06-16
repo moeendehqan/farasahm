@@ -1,0 +1,32 @@
+.statisticcustomerreview{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 50px;
+    margin-right: 250px;
+    flex-wrap: wrap;
+}
+.statisticcustomerreview>div{
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+
+
+}
+.statisticcustomerreview>div>div{
+    margin: 0px 20px;
+    background-color: #fbfafa;
+    padding: 15px;
+    border-radius: 15px;
+    flex-wrap: wrap;
+
+}
+
+.statisticcustomerreview>div>div>h3{
+    font-family: 'peydaThin';
+    font-size: 0.9rem;
+    color: #a1a1be;
+}

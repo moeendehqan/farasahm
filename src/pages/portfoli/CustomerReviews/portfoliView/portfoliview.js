@@ -121,9 +121,11 @@ const PortfoliView = (props)=>{
     
 
     return(
-        <div className="contentcustomerreviewportfoli">
-            <span>content {props.customer}</span>
-            {content}
+        <div>
+            <div className="portfolicustomerreview">
+                <span>content {props.customer}</span>
+                {content}
+            </div>
         </div>
     )}
 
