@@ -7,25 +7,11 @@ import { getCookie } from '../../components/cookie'
 
 const Portfoli = () => {
     handleAccount('portfoli')
+    const username = getCookie('username')
 
     return(
         <div className='portfolicontiner'>
-            <div className='portfoliheader'>
-                <div className='portfolititle'>
-                    <h1>فراسهم</h1>
-                    <h4>پـرتـفـوگـردانی</h4>
-                </div>
-                <div className='portfoliprofile'>
-                    <div className='portfoliprofiletitle'>
-                        <h3>خوش آمدید</h3>
-                        <h6>{getCookie('username')}</h6>
-                    </div>
-                    <div className='portfoliprofileimg'>
-                        <img src={require('../../icon/porofile.png')}></img>   
-                    </div>
-                    <span className='portfoliprofilemenu'>.  .  .</span>
-                </div>
-            </div>
+            <Header section='پرتفو گردانی' username={username} />
 
             <div className='continermenuportfoli'>
                 <Menu />

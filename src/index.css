@@ -2,7 +2,9 @@
   margin: 0px;
   padding: 0px;
 }
-
+body{
+  background-color:#e6e1e1;
+}
 
 
 @font-face{

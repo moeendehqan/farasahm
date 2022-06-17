@@ -1,0 +1,41 @@
+.Menu{
+    display:flex;
+    flex-direction:column;
+    width: 250px;
+    background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
+    border-radius: 15px;
+    align-items:end;
+    padding:20px 0px;
+
+}
+
+.Menu>div{
+    display:flex;
+    flex-direction: row-reverse;
+    flex-wrap:nowrap;
+    align-items:center;
+    font-family: 'peydaThin';
+    color: #d6d8ef;
+    font-size: 0.9rem;
+    margin:15px 0px;
+    width:80%;
+    height:40px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    transition: 0.5s;
+
+}
+.Menu>div:hover{
+    background-color:#e8d8ee;
+    color:#263bb0;
+}
+
+.Menu>div:hover img{
+    filter: invert(.8) sepia(10) saturate(5) hue-rotate(180deg);
+}
+
+.Menu>div>img{
+    height: 25px;
+    margin-left: 15px;
+    margin-right:15px;
+}

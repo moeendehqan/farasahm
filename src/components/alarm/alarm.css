@@ -1,0 +1,33 @@
+.Alarm{
+    position:absolute;
+    z-index:1;
+    width:200px;
+    right:50%;
+    background-color:#fff;
+    border: 1px solid #000;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2)
+}
+
+.Alarm>span{
+    overflow: inherit;
+    text-align: right;
+    font-family: 'peydaSemiBold';
+    font-size:0.9rem;
+    color: #a0a0bd;
+}
+
+.Alarm>button{
+    margin-top:25px;
+    width: 50px;
+    background-image: linear-gradient(to left, #c63ef1, #2d41fd);
+    border: 0px;
+    font-family: 'peydaThin';
+    border-radius: 10px;
+    color: #fff;
+}

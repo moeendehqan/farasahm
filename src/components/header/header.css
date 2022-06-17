@@ -1,0 +1,80 @@
+.Header{
+    margin:40px 40px 10px 40px;
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+.HeaderTitle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    text-align: right;
+    border-right: 1px solid #fff;
+    padding-right: 30px;
+}
+
+.HeaderTitle>h1{
+    font-family: 'peydaBold';
+    color:#263bb0;
+}
+
+.HeaderTitle>h4{
+    font-family: 'peydaMedium';
+    color:#9546af;
+    font-size: 1.1rem;
+    margin-top: -10px;
+}
+
+.HeaderWellcom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+    text-align: right;
+    padding-right: 30px;
+    margin-left:auto;
+}
+.HeaderWellcom>h1{
+    font-family: 'peydaMedium';
+    color: #384ab4;
+    font-size: 1.2rem;
+}
+.HeaderWellcom>h5{
+    font-family: 'peydaRegular';
+    color: #4c5bb8;
+    font-size: 1rem;
+}
+
+.HeaderImg{
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    background: 
+    linear-gradient(to right, white, white), 
+    linear-gradient(to top right, #c63ef1 , #2d41fd); 
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    overflow: hidden;
+    margin-left: 10px;
+}
+
+.HeaderImg>img{
+    margin-top: 5px;
+    width: 50px;
+}
+
+.HeaderMenu{
+    writing-mode: vertical-rl;
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'peydaBlack';
+    font-size: 1.1rem;
+    color: #263bb0;
+    margin-right: 25px;
+}

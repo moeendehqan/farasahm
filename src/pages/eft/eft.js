@@ -1,13 +1,16 @@
-
+import Header from "../../components/header/header"
+import { getCookie } from '../../components/cookie'
 import {handleAccount} from '../../components/cheakaccount'
 
 
 
 const Eft = () => {
     handleAccount('eft')
+    const username = getCookie('username')
+
     return(
         <div>
-            etf
+            <Header section='امور سهام' username={username} />
         </div>
     )
 }

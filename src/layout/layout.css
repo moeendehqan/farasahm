@@ -1,0 +1,22 @@
+.LayoutBasic{
+    display:flex;
+    flex-direction: row-reverse;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding: 0px 60px;
+}
+aside{
+    flex-grow: 2;
+    background-image: linear-gradient(to right, #f4f3f3, #ffffff);
+    margin-right: 50px;
+    border-radius: 35px;
+    padding: 30px;
+}
+
+
+aside>div>h3{
+    text-align: center;
+    font-family: 'peydaExtraBold';
+    color: #a09fbd;
+    margin-bottom: 20px;
+}
