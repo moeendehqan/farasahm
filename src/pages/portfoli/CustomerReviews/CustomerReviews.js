@@ -7,9 +7,8 @@ import './customerreview.css'
 import DatePicker from "react-multi-date-picker"
 import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
-import InputIcon from "react-multi-date-picker/components/input_icon"
 import "react-multi-date-picker/styles/colors/purple.css"
-
+import Statisticcustomerreview from "../../../components/statisticcustomerreview/statisticcustomerreview"
 
 const CustomerReviews = () =>{
     const [customerlist, setCustomerlist] = useState('')
@@ -35,14 +34,13 @@ const CustomerReviews = () =>{
     const username = getCookie('username')
 
     const handleCustomerlist = () =>{
-
         axios({
             method: 'post',
-            url: serverAddress+'/portfoli/customerlist',
+            url: serverAddress+'/portfoli/customerupdate',
             data: { username:username}
             }).then(Response=>{
                 if (Response.data.replay){
-                    setCustomerlist(Response.data.databack)
+                    setCustomerlist(Response.data.databack.customerNames)
                 }else{
                     setMsg(Response.data.msg)
                 }            })    }
@@ -86,7 +84,7 @@ const CustomerReviews = () =>{
                 <span>{msg}</span>
             </div>
             <div>
-                {portfoliview}
+                <Statisticcustomerreview />
             </div>
             
         </div>

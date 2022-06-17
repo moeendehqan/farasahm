@@ -1,10 +1,9 @@
 
-import { getCookie } from '../../../../components/cookie'
 import {useState} from 'react'
 import axios from 'axios'
 import { serverAddress } from '../../../../config/config'
 import './file.css'
-const Wfile = ()=>{
+const Wfile = (props)=>{
 
     const [filetrade, setFiletrade] = useState('')
     const [msg, setMsg] = useState('')
@@ -15,7 +14,7 @@ const Wfile = ()=>{
         }else{
             const formData = new FormData()
             formData.append('filetrade',filetrade)
-            formData.append('username',getCookie('username'))
+            formData.append('username',props.username)
             setMsg('')
             axios({
                 method: 'post',
