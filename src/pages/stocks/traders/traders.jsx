@@ -4,11 +4,22 @@ import { serverAddress } from '../../../config/config'
 import {getCookie} from '../../../components/cookie'
 import { useEffect, useState} from 'react';
 import './traders.css'
-
+import DatePicker from 'react-multi-date-picker';
+import persian from "react-date-object/calendars/persian"
+import persian_fa from 'react-date-object/locales/persian_fa'
+import { DatePickerToInt } from '../../../components/datetoint';
+import Alarm from '../../../components/alarm/alarm';
 const Traders = () => {
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
     const [dataTraders, setDataTraders] = useState(null)
+    const [side, setSide] = useState('buy')
+    const [fromDate, setFromData] = useState(false)
+    const [toDate, setToData] = useState(false)
+
+
+    const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
+    const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetDataTraders = () =>{
         axios({
@@ -16,19 +27,34 @@ const Traders = () => {
             url:serverAddress+'/stocks/traders',
             data: {
                 username:username,
-                fromDate:false,
-                toDate:false,
-                side:'buy'
+                fromDate:fromDate,
+                toDate:toDate,
+                side:side
             }
         }).then(response=>{
             if(response.data.replay){
                 setDataTraders(response.data.data)
             }else{
                 setMsg(response.data.msg)
+                setDataTraders(null)
             }        })    }
 
-    useEffect(handleGetDataTraders,[])
+    const infoTraders = (code) =>{
+        axios({
+            method:'POST',
+            url:serverAddress+'/stocks/infocode',
+            data:{
+                username:username,
+                code:code
+            }
+        }).then(response=>{
+            console.log(response.data)
+        })
+    }
 
+
+
+    useEffect(handleGetDataTraders,[fromDate, toDate, side])
 
     return(
         <aside>
@@ -52,17 +78,32 @@ const Traders = () => {
                                     <div style={weg} className='stocksTbar'><p>{items.volume.toLocaleString()}</p></div>
                                 </div>
                                 <p className='StocksTprice'>{items.price.toLocaleString()}</p>
-                                <div className='StocksTinfo'><button>[نمایش]</button></div>
+                                <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>[نمایش]</button></div>
                                 <div className='StocksTbehavior'><button>نمودار</button></div>
                             </div>
                         )
                     })}
                 </div>
                 }
+                <Alarm msg={msg} smsg={setMsg}/>
             </div>
-            <div>
-                jklsdjkhv
+            <div className='StocksOption'>
+                <label>سمت</label>
+                <select onChange={(e)=>setSide(e.target.value)}>
+                    <option value='buy'>خرید</option>
+                    <option value='sel'>فروش</option>
+                </select>
+                <label className='StocksDateLabel'>
+                    <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
+                    از تاریخ
+                </label>
+                <label className='StocksDateLabel'>
+                    <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
+                    تا تاریخ
+                </label>
+
             </div>
+
         </aside>
     )
 }

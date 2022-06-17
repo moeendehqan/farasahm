@@ -1,0 +1,37 @@
+.StocksOption{
+    display:flex;
+    flex-direction:column;
+    position: absolute;
+    width:210px; /*total = 250w - 20*2padding  */
+    background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
+    border-radius: 15px;
+    right:60px;
+    top:590px;
+    padding:20px 20px;
+}
+
+.StocksOption>label{
+    font-family: 'peydaRegular';
+    text-align:right;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.StocksOption>select{
+    text-align: right;
+    height: 25px;
+    border: 0px;
+    border-radius: 15px;
+    box-shadow: inset 7px 7px 7px rgba(0,0,0,0.3);
+    font-family:'peydaRegular';
+}
+
+.custom-input{
+    border: 0px;
+    height: 25px;
+    border-radius: 15px;
+    box-shadow: inset 7px 7px 7px rgba(0,0,0,0.3);
+    text-align: center;
+    width: 100px;
+    font-family:'peydaRegular';
+}
