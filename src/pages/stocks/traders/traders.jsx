@@ -9,6 +9,17 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
+import { Line } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
 
 const Traders = () => {
     const username = getCookie('username')
@@ -17,6 +28,15 @@ const Traders = () => {
     const [side, setSide] = useState('buy')
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+      );
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -62,6 +82,31 @@ const Traders = () => {
                 }
             }).then(response=>{
                     console.log(response.data.data)
+                    const options = {
+                        responsive: true,
+                        plugins: {
+                          legend: {
+                            position: 'top',
+                          },
+                          title: {
+                            display: true,
+                            text: 'Chart.js Line Chart',
+                          },
+                        },
+                      };
+                    const data = {
+                        labels: response.data.data.map(d=>d.date),
+                        datasets: [
+                          {
+                            label: "First dataset",
+                            data: response.data.data.map(d=>d.cum),
+                            fill: true,
+                            backgroundColor: "rgba(75,192,192,0.2)",
+                            borderColor: "rgba(75,192,192,1)"
+                          }
+                        ]
+                      }
+                      setMsg(<Line options={options} data={data} />)
                     })    }
 
 
