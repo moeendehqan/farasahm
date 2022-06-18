@@ -9,6 +9,7 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
+
 const Traders = () => {
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
@@ -48,10 +49,20 @@ const Traders = () => {
                 code:code
             }
         }).then(response=>{
-            console.log(response.data)
-        })
-    }
-
+                setMsg(response.data.msg)
+                })    }
+        
+        const historiCode = (code) =>{
+            axios({
+                method:'POST',
+                url:serverAddress+'/stocks/historicode',
+                data:{
+                    username:username,
+                    code:code
+                }
+            }).then(response=>{
+                    console.log(response.data.data)
+                    })    }
 
 
     useEffect(handleGetDataTraders,[fromDate, toDate, side])
@@ -70,7 +81,7 @@ const Traders = () => {
                         <p className='StocksTbehavior'>رفتار</p>
                     </div>
                     {dataTraders.map(items=>{
-                        const weg = {width :(items.w*90)+'%'}
+                        const weg = {width :(items.w*85)+'%'}
                         return(
                             <div key={items.code} className='StocksTbody'>
                                 <p className='StocksTname'>{items.name}</p>
@@ -79,7 +90,7 @@ const Traders = () => {
                                 </div>
                                 <p className='StocksTprice'>{items.price.toLocaleString()}</p>
                                 <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>[نمایش]</button></div>
-                                <div className='StocksTbehavior'><button>نمودار</button></div>
+                                <div className='StocksTbehavior'><button onClick={()=>historiCode(items.code)}>نمودار</button></div>
                             </div>
                         )
                     })}

@@ -1,7 +1,6 @@
 import './alarm.css'
 import{ useEffect, useMemo,useState} from 'react'
 const Alarm = (props) =>{
-    
 
     if(props.msg!==null){
         return(
