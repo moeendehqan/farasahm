@@ -20,23 +20,16 @@ import {
     Tooltip,
     Legend,
   } from 'chart.js';
-
+import Popview from '../../../components/popview/popview';
 const Traders = () => {
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
+    const [historiCode, setHistoriCode] = useState(null)
     const [dataTraders, setDataTraders] = useState(null)
     const [side, setSide] = useState('buy')
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Legend
-      );
+    ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -72,7 +65,7 @@ const Traders = () => {
                 setMsg(response.data.msg)
                 })    }
         
-        const historiCode = (code) =>{
+        const handleHistoriCode = (code , name) =>{
             axios({
                 method:'POST',
                 url:serverAddress+'/stocks/historicode',
@@ -90,7 +83,7 @@ const Traders = () => {
                           },
                           title: {
                             display: true,
-                            text: 'Chart.js Line Chart',
+                            text: 'رفتار معاملاتی ' + name,
                           },
                         },
                       };
@@ -98,15 +91,15 @@ const Traders = () => {
                         labels: response.data.data.map(d=>d.date),
                         datasets: [
                           {
-                            label: "First dataset",
+                            label: "حجم",
                             data: response.data.data.map(d=>d.cum),
                             fill: true,
-                            backgroundColor: "rgba(75,192,192,0.2)",
-                            borderColor: "rgba(75,192,192,1)"
+                            backgroundColor: "rgba(198, 62, 241,0.2)",
+                            borderColor: "rgba(45, 65, 253,1)"
                           }
                         ]
                       }
-                      setMsg(<Line options={options} data={data} />)
+                      setHistoriCode(<Line options={options} data={data} />)
                     })    }
 
 
@@ -135,13 +128,14 @@ const Traders = () => {
                                 </div>
                                 <p className='StocksTprice'>{items.price.toLocaleString()}</p>
                                 <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>[نمایش]</button></div>
-                                <div className='StocksTbehavior'><button onClick={()=>historiCode(items.code)}>نمودار</button></div>
+                                <div className='StocksTbehavior'><button onClick={()=>handleHistoriCode(items.code, items.name)}>نمودار</button></div>
                             </div>
                         )
                     })}
                 </div>
                 }
                 <Alarm msg={msg} smsg={setMsg}/>
+                <Popview contet={historiCode} scontent={setHistoriCode}/>
             </div>
             <div className='StocksOption'>
                 <label>سمت</label>

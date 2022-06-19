@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-export const handleAccount = (section) =>{
-    const native = useNavigate()
+const HandleAccount = (section) =>{
+    const navigate = useNavigate()
     axios({
         method: 'post',
         url: serverAddress+'/account',
@@ -18,10 +18,11 @@ export const handleAccount = (section) =>{
                 if(!response.data.databack[section]){
                     setCookie('username','',0)
                     setCookie('password','',0)
-                    native('/')
+                    navigate('/')
                 }
             }else{
                 setCookie('username','',0)
                 setCookie('password','',0)
-                native('/')
+                navigate('/')
             }})}
+export default HandleAccount

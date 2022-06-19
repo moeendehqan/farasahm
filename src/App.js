@@ -11,6 +11,9 @@ import Stocks from './pages/stocks/stocks'
 import Dashboard from './pages/stocks/dashboard/dashboard'
 import UpdateStocks from './pages/stocks/update/update'
 import Traders from './pages/stocks/traders/traders';
+import Newbie from './pages/stocks/newbie/newbie';
+import Station from './pages/stocks/station/station';
+
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
 
@@ -30,6 +33,8 @@ function App() {
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='update' element={<UpdateStocks />} />
           <Route path='traders' element={<Traders />} />
+          <Route path='newbie' element={<Newbie />} />
+          <Route path='station' element={<Station />} />
         </Route>
       </Routes>
     </BrowserRouter>

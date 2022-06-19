@@ -1,0 +1,37 @@
+.Popview{
+    position:absolute;
+    z-index:1;
+    width:80%;
+    right:10%;
+    background-color:#fff;
+    border: 1px solid #000;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    top:200px;
+}
+
+.Popview>span{
+    overflow: inherit;
+    text-align: right;
+    font-family: 'peydaSemiBold';
+    font-size:0.9rem;
+    color: #a0a0bd;
+}
+
+.Popview>button{
+    margin-top:25px;
+    width: 50px;
+    background-image: linear-gradient(to left, rgb(198, 62, 241), rgb(45, 65, 253));
+    border: 0px;
+    font-family: 'peydaThin';
+    border-radius: 10px;
+    color: #fff;
+}
+
+
+

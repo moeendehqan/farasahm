@@ -20,11 +20,13 @@
     font-family:'peydaRegular';
     color: #a09fbd;
     margin: 5px 0px;
+    height: 35px;
+    align-items: center;
 }
 
 .StocksTname{
     width:17%;
-    overflow: hidden;
+    overflow: hidden ;
     text-align: right;
     font-family: 'peydaMedium' !important
 }

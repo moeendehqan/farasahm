@@ -1,5 +1,5 @@
 
-import {handleAccount} from '../../components/cheakaccount'
+import HandleAccount from '../../components/cheakaccount'
 import Menu from './menu/menu'
 import { Outlet } from "react-router-dom"
 import './portfoli.css'
@@ -7,7 +7,7 @@ import { getCookie } from '../../components/cookie'
 import Header from '../../components/header/header'
 
 const Portfoli = () => {
-    handleAccount('portfoli')
+    HandleAccount('portfoli')
     const username = getCookie('username')
 
     return(

@@ -13,10 +13,15 @@ aside{
     padding: 30px;
 }
 
-
 aside>div>h3{
     text-align: center;
     font-family: 'peydaExtraBold';
     color: #a09fbd;
     margin-bottom: 20px;
+}
+
+.dashboard{
+    flex-grow: 2;
+    margin-right: 50px;
+    padding: 30px;
 }
