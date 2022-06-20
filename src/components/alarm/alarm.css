@@ -15,11 +15,11 @@
     top:200px;
 }
 
-.Alarm>span{
+.Alarm>div{
     overflow: inherit;
     text-align: right;
     font-family: 'peydaSemiBold';
-    font-size:0.9rem;
+    font-size:0.8rem;
     color: #a0a0bd;
 }
 

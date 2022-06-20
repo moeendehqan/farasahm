@@ -20,6 +20,9 @@ const Newbie = () =>{
     const [chartNum, setChartNum] = useState(null)
     const [typeReport, setTypeReport] = useState('num')
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+    const options = {responsive: true,plugins: {legend: {position: 'top',},title: {display: false,text: 'رفتار معاملاتی '}}}
+    const [dataNum, setDataNum] = useState(null)
+    const [dataVol, setDataVol] = useState(null)
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
@@ -35,54 +38,41 @@ const Newbie = () =>{
             }
         }).then(Response=>{
             if(Response.data.replay){
-                console.log(Response.data.data.map(d=>d.Date))
+                setDataNum({
+                    labels: Response.data.data.map(d=>d.Date),
+                    datasets:[{
+                        label: "خریداران",
+                        data: Response.data.data.map(d=>d.allnum),
+                        fill: true,
+                        backgroundColor: "rgba(198, 62, 241,0.2)",
+                        borderColor: "rgba(45, 65, 253,1)"
+                    },{
+                        label: "جدیدالورود",
+                        data: Response.data.data.map(d=>d.newnum),
+                        fill: true,
+                        backgroundColor: "rgba(177, 61, 206,0.2)",
+                        borderColor: "rgba(177, 61, 206,1)"
+                        }]                    })
+                setDataVol({
+                    labels: Response.data.data.map(d=>d.Date),
+                    datasets:[{
+                        label: "خریداران",
+                        data: Response.data.data.map(d=>d.allvol),
+                        fill: true,
+                        backgroundColor: "rgba(198, 62, 241,0.2)",
+                        borderColor: "rgba(45, 65, 253,1)"
+                    },{
+                        label: "جدیدالورود",
+                        data: Response.data.data.map(d=>d.newvol),
+                        fill: true,
+                        backgroundColor: "rgba(177, 61, 206,0.2)",
+                        borderColor: "rgba(177, 61, 206,1)"
+                        }]                    })
 
-                const options = {
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'top',
-                      },
-                      title: {
-                        display: false,
-                        text: 'رفتار معاملاتی ',
-                      },                    },                  }
-                
-                    const datan = {
-                        labels: Response.data.data.map(d=>d.Date),
-                        datasets:[{
-                            label: "خریداران",
-                            data: Response.data.data.map(d=>d.allnum),
-                            fill: true,
-                            backgroundColor: "rgba(198, 62, 241,0.2)",
-                            borderColor: "rgba(45, 65, 253,1)"
-                        },{
-                            label: "جدیدالورود",
-                            data: Response.data.data.map(d=>d.newnum),
-                            fill: true,
-                            backgroundColor: "rgba(177, 61, 206,0.2)",
-                            borderColor: "rgba(177, 61, 206,1)"
-                            }]                    }
-                    const datav = {
-                        labels: Response.data.data.map(d=>d.Date),
-                        datasets:[{
-                            label: "خریداران",
-                            data: Response.data.data.map(d=>d.allvol),
-                            fill: true,
-                            backgroundColor: "rgba(198, 62, 241,0.2)",
-                            borderColor: "rgba(45, 65, 253,1)"
-                        },{
-                            label: "جدیدالورود",
-                            data: Response.data.data.map(d=>d.newvol),
-                            fill: true,
-                            backgroundColor: "rgba(177, 61, 206,0.2)",
-                            borderColor: "rgba(177, 61, 206,1)"
-                            }]                    }
-
-                    setChartNum(<Line options={options} data={typeReport=='num'?datan:datav} />)
             }else{
                 setMsg(Response.data.msg)
-                setChartNum(null)
+                setDataNum(null)
+                setDataVol(null)
             }
         })
     }
@@ -93,10 +83,13 @@ const Newbie = () =>{
         <aside>
             <div>
                 <h3>جدید الورود ها</h3>
-                <div>
-                    <div>
-                        {chartNum}
-                    </div>
+                <div className='NewbieChart'>
+                    {dataNum===null?null:
+                        typeReport==='vol'?
+                        <Line options={options} data={dataVol} />:
+                        <Line options={options} data={dataNum} />
+                    }
+
                 </div>
                 <Alarm msg={msg} smsg={setMsg}/>
             </div>

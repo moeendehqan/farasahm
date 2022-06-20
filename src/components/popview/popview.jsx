@@ -4,7 +4,7 @@ const Popview = (props) =>{
     if(props.contet!==null){
         return(
             <div className='Popview'>
-                <span>{props.contet}</span>
+                {props.contet}
                 <button onClick={()=>props.scontent(null)}>تایید</button>
             </div>
         )

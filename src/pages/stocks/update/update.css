@@ -2,19 +2,39 @@
     display: flex;
     flex-direction: column;
     align-items:center;
+    border: 1px solid #f7f6f6;
+    border-radius: 35px;
+    padding: 35px;
+}
+.UpdateStocks>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.UpdateStocks>div>h3{
+    text-align: center;
+    font-family: 'peydaExtraBold';
+    color: #394cb5;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
 }
 
-.UpdateStocks>label{
+.UpdateStocks>div>div{
+    border: 1px solid #f7f6f6;
+    padding: 25px 35px;
+    border-radius: 20px;
+}
+.UpdateStocks>div>div>label{
     font-family:'peydaMedium';
-    color: #a09fbd;
+    color: #394bb5;
     font-size: 1rem;
     display: flex;
     flex-direction: row-reverse;
     align-items:end;
     margin: 10px;
 }
-.UpdateStocks>button{
-    background-image: linear-gradient(to left, #c63ef1, #2d41fd);
+.UpdateStocks>div>button{
+    background-image: linear-gradient(to left, #9b3cac, #263bb0);
     width: 80px;
     height: 25px;
     font-family: 'peydaRegular';
@@ -23,5 +43,37 @@
     color:#fff;
     border-radius: 15px;
     margin: 10px;
+    align-self: flex-start;
 
+}
+.updateBulletin{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 35px;
+    }
+
+.updateBulletin>div{
+    padding: 25px 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-left: 3px solid #eee9e9;
+}
+
+.updateBulletin>div:first-child{
+    border-left:0px;
+
+}
+
+.updateBulletin>div>span{
+    font-family: 'peydaRegular';
+    color: #384bb4;
+}
+.updateBulletin>div>h2{
+    color: #6d77c2;
+    font-family: 'peydaMedium';
+    font-size: 1rem;
+    margin-top: 10px;
 }

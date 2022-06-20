@@ -12,12 +12,12 @@ const Stocks = () => {
     HandleAccount('portfoli')
     const username = getCookie('username')
     const menuProperties =[
-        {key:1 ,title:'داشبورد', navigate:'dashboard' ,icon:require('../../icon/seting.svg').default},
-        {key:2 ,title:'بروزرسانی', navigate:'update' ,icon:require('../../icon/seting.svg').default},
-        {key:3 ,title:'معاملگران', navigate:'traders' ,icon:require('../../icon/seting.svg').default},
-        {key:4 ,title:'جدیدالورود', navigate:'newbie' ,icon:require('../../icon/seting.svg').default},
-        {key:5 ,title:'ایستگاهای معاملاتی', navigate:'station' ,icon:require('../../icon/seting.svg').default},
-        {key:6 ,title:'رسوب', navigate:'sediment' ,icon:require('../../icon/seting.svg').default}
+        {key:1 ,title:'داشبورد', navigate:'dashboard' ,icon:require('../../icon/dashboard.png')},
+        {key:2 ,title:'بروزرسانی', navigate:'update' ,icon:require('../../icon/update.png')},
+        {key:3 ,title:'معاملگران', navigate:'traders' ,icon:require('../../icon/traders.png')},
+        {key:4 ,title:'جدیدالورود', navigate:'newbie' ,icon:require('../../icon/newbie.png')},
+        {key:5 ,title:'ایستگاهای معاملاتی', navigate:'station' ,icon:require('../../icon/station.png')},
+        {key:6 ,title:'رسوب', navigate:'sediment' ,icon:require('../../icon/sediment.png')}
     ]
 
 

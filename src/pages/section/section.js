@@ -30,10 +30,12 @@ const Section = () => {
     }
 
     return(
-                <div>
-                    <button disabled={!account.stocks} onClick={()=>handlenav('/stocks')}>مدیریت سهام</button>
-                    <button disabled={!account.eft} onClick={()=>handlenav('/etf')}>مدیریت صندوق</button>
-                    <button disabled={!account.portfoli} onClick={()=>handlenav('/portfoli')}>مدیریت پرتفوی</button>
+                <div className='Section'>
+                    <div>
+                        <button disabled={!account.stocks} onClick={()=>handlenav('/stocks')}>مدیریت سهام</button>
+                        <button disabled={!account.eft} onClick={()=>handlenav('/etf')}>مدیریت صندوق</button>
+                        <button disabled={!account.portfoli} onClick={()=>handlenav('/portfoli')}>مدیریت پرتفوی</button>
+                    </div>
                 </div>
         )
 

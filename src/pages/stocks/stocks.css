@@ -22,16 +22,16 @@
     height: 25px;
     border: 0px;
     border-radius: 15px;
-    box-shadow: inset 7px 7px 7px rgba(0,0,0,0.3);
     font-family:'peydaRegular';
+    background-color: #e7d8ef
 }
 
 .custom-input{
     border: 0px;
     height: 25px;
     border-radius: 15px;
-    box-shadow: inset 7px 7px 7px rgba(0,0,0,0.3);
     text-align: center;
     width: 100px;
     font-family:'peydaRegular';
+    background-color: #e7d8ef;
 }

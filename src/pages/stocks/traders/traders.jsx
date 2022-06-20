@@ -30,6 +30,9 @@ const Traders = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+    const  [sorting, setsorting] = useState('zvol')
+
+
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -43,7 +46,8 @@ const Traders = () => {
                 username:username,
                 fromDate:fromDate,
                 toDate:toDate,
-                side:side
+                side:side,
+                sorting:sorting
             }
         }).then(response=>{
             if(response.data.replay){
@@ -51,8 +55,10 @@ const Traders = () => {
             }else{
                 setMsg(response.data.msg)
                 setDataTraders(null)
-            }        })    }
-
+            }        })
+        }
+        
+        console.log(dataTraders)
     const infoTraders = (code) =>{
         axios({
             method:'POST',
@@ -83,7 +89,8 @@ const Traders = () => {
                           },
                           title: {
                             display: true,
-                            text: 'رفتار معاملاتی ' + name,
+                            text: name,
+                            color: "rgb(39, 59, 176)"
                           },
                         },
                       };
@@ -103,7 +110,7 @@ const Traders = () => {
                     })    }
 
 
-    useEffect(handleGetDataTraders,[fromDate, toDate, side])
+    useEffect(handleGetDataTraders,[fromDate, toDate, side,sorting])
 
     return(
         <aside>
@@ -113,8 +120,18 @@ const Traders = () => {
                 <div>
                     <div className='stocksTheader'>
                         <p className='StocksTname'>نام</p>
-                        <p className='StocksTvolume'>حجم</p>
-                        <p className='StocksTprice'>قیمت</p>
+                        <p className='StocksTvolume'>حجم
+                            <ul className='StocksTvolumeSort'>
+                                <li onClick={()=>{setsorting('zvol')}}>بیشترین</li>
+                                <li onClick={()=>{setsorting('avol')}}>کمترین</li>
+                            </ul>
+                        </p>
+                        <p className='StocksTprice'>قیمت
+                            <ul className='StocksTpriceSort'>
+                                <li onClick={()=>{setsorting('zprv')}}>بیشترین</li>
+                                <li onClick={()=>{setsorting('aprv')}}>کمترین</li>
+                            </ul>
+                        </p>
                         <p className='StocksTinfo'>مشخصات</p>
                         <p className='StocksTbehavior'>رفتار</p>
                     </div>
@@ -127,7 +144,7 @@ const Traders = () => {
                                     <div style={weg} className='stocksTbar'><p>{items.volume.toLocaleString()}</p></div>
                                 </div>
                                 <p className='StocksTprice'>{items.price.toLocaleString()}</p>
-                                <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>[نمایش]</button></div>
+                                <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>{'{'+'نمایش'+'}'}</button></div>
                                 <div className='StocksTbehavior'><button onClick={()=>handleHistoriCode(items.code, items.name)}>نمودار</button></div>
                             </div>
                         )
@@ -136,6 +153,7 @@ const Traders = () => {
                 }
                 <Alarm msg={msg} smsg={setMsg}/>
                 <Popview contet={historiCode} scontent={setHistoriCode}/>
+
             </div>
             <div className='StocksOption'>
                 <label>سمت</label>

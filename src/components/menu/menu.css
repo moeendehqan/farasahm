@@ -6,7 +6,6 @@
     border-radius: 15px;
     align-items:end;
     padding:20px 0px;
-
 }
 
 .Menu>div{
@@ -26,7 +25,7 @@
 
 }
 .Menu>div:hover{
-    background-color:#e8d8ee;
+    background-color:rgba(232, 216, 238,1);
     color:#263bb0;
 }
 

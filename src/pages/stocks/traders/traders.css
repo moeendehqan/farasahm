@@ -8,8 +8,8 @@
     display:flex;
     flex-direction: row-reverse;
     flex-wrap: nowrap;
-    font-family: 'peydaBold';
-    color: #a09fbd;
+    font-family: 'peydaMedium';
+    color: #3c4eb8;
     margin-bottom:10px;
 }
 
@@ -18,17 +18,18 @@
     flex-direction: row-reverse;
     flex-wrap: nowrap;
     font-family:'peydaRegular';
-    color: #a09fbd;
+    color: #5060be;
     margin: 5px 0px;
     height: 35px;
     align-items: center;
+    font-size: 0.9rem;
 }
 
 .StocksTname{
     width:17%;
     overflow: hidden ;
     text-align: right;
-    font-family: 'peydaMedium' !important
+    font-family: 'peydaMedium'
 }
 
 .StocksTvolume{
@@ -36,7 +37,6 @@
     display: flex;
     justify-content: end;
     text-align: center;
-    text-shadow: 1px 0px  1px #2d41fd ;
 }
 
 .StocksTprice{
@@ -50,7 +50,7 @@
     justify-content: center;
 }
 .stocksTbar{
-    background-image: linear-gradient(to left,#c63ef1 ,#2d41fd);
+    background-image: linear-gradient(to left,#263bb0 ,#9a3cab);
     color:white;
     font-size:0.9rem;
     display:flex;
@@ -60,25 +60,71 @@
 }
 
 .StocksTinfo button{
-    color: #7944fb;
+    color: #5060be;
     background-color: transparent;
     border: 0px;
     font-family: 'peydaRegular';
+    font-size: 0.8rem;
 }
 
 .StocksTbehavior button {
     font-family: 'peydaRegular';
-    color:white;
-    border: 0px;
-    background-image: linear-gradient(to left,#c63ef1 ,#2d41fd);
+    color:#5060bd;
+    border: 2px solid transparent;
     font-size: 0.7rem;
-    width:45px;
-    height:18px;
-    border-radius: 10px;
+    width:55px;
+    height:25px;
+    border-radius: 15px;
+    background-color: transparent;
+    background: 
+    linear-gradient(to right, white, white), 
+    linear-gradient(to right, #2d41fd , #c63ef1); 
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
 }
-
+.StocksTbody>.StocksTprice{
+    font-size: 0.7rem;
+    color: #5060be;
+}
 .StocksDateLabel{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.StocksTvolume:hover >.StocksTvolumeSort{
+    display:flex;
+    flex-direction: column;
+    list-style: none;
+    position: absolute;
+    background-color: rgb(255, 255, 255,0.6);
+    margin-right:45px ;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); 
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    font-size: 0.8rem;
+}
+
+.StocksTprice:hover >.StocksTpriceSort{
+    display:flex;
+    flex-direction: column;
+    list-style: none;
+    position: absolute;
+    background-color: rgb(255, 255, 255,0.6);
+    margin-right:45px ;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); 
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    font-size: 0.8rem;
+}
+
+.StocksTvolumeSort{
+    display: none;
+}
+.StocksTpriceSort{
+    display: none;
 }

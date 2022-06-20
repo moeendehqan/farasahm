@@ -1,0 +1,39 @@
+.Section{
+    display: flex;
+    justify-content: center;
+    padding: 10%;
+
+}
+
+.Section>div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 1px solid #f3f0f0;
+    border-radius: 35px;
+}
+
+.Section>div>button:enabled{
+    margin: 40px;
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    border: 0px;
+    background-image: linear-gradient(to top right, #9f44ae, #3043b2);
+    color: #fff;
+    font-family: 'peydaMedium';
+    font-size: 0.8rem;
+}
+
+.Section>div>button:disabled{
+    margin: 40px;
+    height: 120px;
+    width: 120px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: transparent;
+    color: #515dba;
+    font-family: 'peydaMedium';
+    font-size: 0.8rem;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}

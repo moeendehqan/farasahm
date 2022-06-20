@@ -4,7 +4,7 @@ const Alarm = (props) =>{
     if(props.msg!==null){
         return(
             <div className='Alarm'>
-                <span>{props.msg}</span>
+                <div>{props.msg}</div>
                 <button onClick={()=>props.smsg(null)}>تایید</button>
             </div>
         )
