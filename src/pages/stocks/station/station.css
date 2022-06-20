@@ -1,0 +1,53 @@
+.StationTheader{
+    display: flex;
+    flex-direction: row-reverse;
+    color: #3c4eb8;
+    font-family: 'peydaMedium';
+    text-align: right;
+}
+
+.StationTbody{
+    display:flex;
+    flex-direction: column;
+    text-align: right;
+    overflow:hidden;
+    color: #3c4eb8;
+    font-family: 'peydaMedium';
+    font-size:0.85rem;
+}
+
+.StationTbar{
+    display:flex;
+    flex-direction: row-reverse;
+    height: 20px;
+    margin: 7px 0px;
+}
+
+
+.StationTistgah{
+    width: 220px;
+}
+
+.StationTvolum{
+    flex-grow: 3;
+    display: flex;
+    justify-content: end;
+    
+}
+
+.StationTcunt{
+    width: 80px;
+}
+
+.StationTvolum>div{
+    background-image: linear-gradient(to left,#263bb0 ,#9a3cab);
+    color:white;
+    font-size:0.9rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+}
+.StationTvolum>p{
+    font-family: 'peydaRegular';
+}

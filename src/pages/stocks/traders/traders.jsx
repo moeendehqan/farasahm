@@ -33,8 +33,6 @@ const Traders = () => {
     const  [sorting, setsorting] = useState('zvol')
 
 
-
-
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
@@ -58,7 +56,7 @@ const Traders = () => {
             }        })
         }
         
-        console.log(dataTraders)
+
     const infoTraders = (code) =>{
         axios({
             method:'POST',
@@ -120,18 +118,21 @@ const Traders = () => {
                 <div>
                     <div className='stocksTheader'>
                         <p className='StocksTname'>نام</p>
-                        <p className='StocksTvolume'>حجم
+                        <div className='StocksTvolume'>
+                            <p>حجم</p>
                             <ul className='StocksTvolumeSort'>
                                 <li onClick={()=>{setsorting('zvol')}}>بیشترین</li>
                                 <li onClick={()=>{setsorting('avol')}}>کمترین</li>
                             </ul>
-                        </p>
-                        <p className='StocksTprice'>قیمت
+                        </div>
+                        <div className='StocksTprice'>
+                            <p>قیمت</p>
                             <ul className='StocksTpriceSort'>
-                                <li onClick={()=>{setsorting('zprv')}}>بیشترین</li>
-                                <li onClick={()=>{setsorting('aprv')}}>کمترین</li>
+                                <li onClick={()=>{setsorting('zprc')}}>بیشترین</li>
+                                <li onClick={()=>{setsorting('aprc')}}>کمترین</li>
                             </ul>
-                        </p>
+                        </div>
+                        <p className='StocksTbalance'>مانده</p>
                         <p className='StocksTinfo'>مشخصات</p>
                         <p className='StocksTbehavior'>رفتار</p>
                     </div>
@@ -143,7 +144,8 @@ const Traders = () => {
                                 <div className='StocksTvolume'>
                                     <div style={weg} className='stocksTbar'><p>{items.volume.toLocaleString()}</p></div>
                                 </div>
-                                <p className='StocksTprice'>{items.price.toLocaleString()}</p>
+                                <div className='StocksTprice'><p>{items.price.toLocaleString()}</p></div>
+                                <p className='StocksTbalance'>{items.balance.toLocaleString()}</p>
                                 <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>{'{'+'نمایش'+'}'}</button></div>
                                 <div className='StocksTbehavior'><button onClick={()=>handleHistoriCode(items.code, items.name)}>نمودار</button></div>
                             </div>

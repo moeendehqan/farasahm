@@ -41,9 +41,14 @@
 
 .StocksTprice{
     width:80px;
+}
+.StocksTprice>p{
     text-align: right;
 }
-
+.StocksTbalance{
+    width:80px;
+    text-align: right;
+}
 .StocksTinfo, .StocksTbehavior{
     width:60px;
     display:flex;
@@ -57,6 +62,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 7px;
+    
 }
 
 .StocksTinfo button{
@@ -83,6 +89,10 @@
     background-origin: padding-box, border-box;
 }
 .StocksTbody>.StocksTprice{
+    font-size: 0.7rem;
+    color: #5060be;
+}
+.StocksTbody>.StocksTbalance{
     font-size: 0.7rem;
     color: #5060be;
 }

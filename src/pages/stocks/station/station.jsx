@@ -7,8 +7,7 @@ import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
-import {Chart as ChartJS,CategoryScale,LinearScale,BarElement,Title,Tooltip,Legend} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import './station.css'
 
 const Station = () => {
     const username = getCookie('username')
@@ -16,10 +15,8 @@ const Station = () => {
     const [side, setSide] = useState('Buy_brkr')
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
-    const [content, setContent] = useState(null)
-    const [typeReport, setTypeReport] = useState('vol')
-    console.log(typeReport)
-    ChartJS.register(CategoryScale,LinearScale,BarElement,Title,Tooltip,Legend)
+    const [dataStation, setDataStation] = useState(null)
+
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -37,48 +34,8 @@ const Station = () => {
             }
         }).then(Response=>{
             if(Response.data.replay){
+                setDataStation(Response.data.data)
 
-                const options = {
-                    indexAxis: 'y',
-                    elements: {
-                      bar: {
-                        borderWidth: 2,
-                      },
-                      font:{
-                        family:'peydaRegular'
-                      }
-                    },
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'bottom',
-                      },
-                      title: {
-                        display: false,
-                        text: 'Chart.js Horizontal Bar Chart',
-                      },                    },                  };
-
-                const labels = Response.data.data.map(items=>items.Istgah);
-                const datav = {
-                        labels,
-                        datasets: [
-                          {
-                            label: 'حجم',
-                            data: Response.data.data.map(items=>items.Volume),
-                            backgroundColor: "rgba(198, 62, 241,0.2)",
-                            borderColor: "rgba(45, 65, 253,1)"
-                          },                        ]                      }
-                const datan = {
-                        labels,
-                        datasets: [
-                            {
-                            label: 'حجم',
-                            data: Response.data.data.map(items=>items.count),
-                            backgroundColor: "rgba(198, 62, 241,0.2)",
-                            borderColor: "rgba(45, 65, 253,1)"
-                            },                        ]                      }
-
-                setContent(<Bar options={options} data={typeReport==='vol'?datav:datan} />)
             }else{
                 setMsg(Response.data.msg)
             }
@@ -86,13 +43,41 @@ const Station = () => {
         })
     }
 
-useEffect(handleGetStation, [fromDate,toDate,side,typeReport])
+useEffect(handleGetStation, [fromDate,toDate,side])
 
     return(
         <aside>
             <div>
                 <h3>ایستگاهای معاملاتی</h3>
-                {content}
+                <div>
+                    <div className='StationTheader'>
+                        <p className='StationTistgah'>ایستگاه</p>
+                        <p className='StationTvolum'>حجم</p>
+                        <p className='StationTcunt'>تعداد</p>
+                    </div>
+                    <div className='StationTbody'>
+                        {dataStation===null?null:
+                            dataStation.map(items=>{
+                                const weg ={
+                                    width:(items.w *85)+'%'
+                                }
+                                return(
+                                    <div key={items.Istgah} className='StationTbar'>
+                                        <p className='StationTistgah'>{items.Istgah}</p>
+                                        <div className='StationTvolum'>
+                                            <div style={weg}>
+                                                <p>{items.Volume.toLocaleString()}</p>
+                                            </div>
+                                        </div>
+                                        <p className='StationTcunt'>{items.count.toLocaleString()}</p>
+                                    </div>
+                                )
+                            })
+                        
+                        }
+
+                    </div>
+                </div>
                 <Alarm msg={msg} smsg={setMsg} />
             </div>
             <div className='StocksOption'>
@@ -100,11 +85,6 @@ useEffect(handleGetStation, [fromDate,toDate,side,typeReport])
                 <select onChange={(e)=>setSide(e.target.value)}>
                     <option value='Buy_brkr'>خرید</option>
                     <option value='Sel_brkr'>فروش</option>
-                </select>
-                <label>نوع</label>
-                <select onChange={(e)=>setTypeReport(e.target.value)}>
-                    <option value='vol'>حجم</option>
-                    <option value='num'>تعداد</option>
                 </select>
                 <label className='StocksDateLabel'>
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
