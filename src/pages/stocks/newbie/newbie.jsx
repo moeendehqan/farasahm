@@ -11,6 +11,7 @@ import Alarm from '../../../components/alarm/alarm';
 import { Line } from "react-chartjs-2";
 import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
 import Popview from '../../../components/popview/popview';
+import Loader from '../../../components/loader/loader'
 
 const Newbie = () =>{
     const username = getCookie('username')
@@ -23,11 +24,13 @@ const Newbie = () =>{
     const options = {responsive: true,plugins: {legend: {position: 'top',},title: {display: false,text: 'رفتار معاملاتی '}}}
     const [dataNum, setDataNum] = useState(null)
     const [dataVol, setDataVol] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleNewbieData = () =>{
+        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/newbie',
@@ -37,7 +40,9 @@ const Newbie = () =>{
                 toDate:toDate,
             }
         }).then(Response=>{
+            setLoading(false)
             if(Response.data.replay){
+                console.log(Response.data.data)
                 setDataNum({
                     labels: Response.data.data.map(d=>d.Date),
                     datasets:[{
@@ -109,7 +114,7 @@ const Newbie = () =>{
                     تا تاریخ
                 </label>
             </div>
-
+            {loading?<Loader />:null}
         </aside>
     )
 }

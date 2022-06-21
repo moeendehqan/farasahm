@@ -4,6 +4,7 @@ import Alarm from '../../../components/alarm/alarm'
 import axios from 'axios'
 import { serverAddress } from "../../../config/config"
 import { useEffect, useState } from "react"
+import Loader from '../../../components/loader/loader'
 
 const UpdateStocks = () =>{
     const username = getCookie('username')
@@ -11,6 +12,7 @@ const UpdateStocks = () =>{
     const [fileRegister, SetFileRegister] = useState(null)
     const [msg, setMsg] = useState(null)
     const [bulletin, setBulletin] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     const handleGetDataUpdate = () =>{
         axios({
@@ -20,6 +22,7 @@ const UpdateStocks = () =>{
                 username:username
             }
         }).then(response=>{
+            setLoading(false)
             if(response.data.replay){
                 setBulletin(response.data.data)
             }
@@ -32,6 +35,7 @@ const UpdateStocks = () =>{
         }else if(fileRegister===null){
             setMsg('فایل ریجیستر را بارگذاری کنید')
         }else{
+            setLoading(true)
             const formData = new FormData();
             formData.append('Trade',fileTrade)
             formData.append('Register',fileRegister)
@@ -42,6 +46,7 @@ const UpdateStocks = () =>{
                 data: formData,
                 config: {headers:{'content-type': 'multipart/form-data'}}
             }).then(response=>{
+                setLoading(false)
                 setMsg(response.data.msg)
                 if(response.data.replay){
                     setFileTrade(null)
@@ -69,6 +74,7 @@ const UpdateStocks = () =>{
                     </div>
                         <button onClick={handleSubmit}>ثبت</button>
                 </div>
+
             </div>
             <Alarm msg={msg} smsg={setMsg}/>
             <div className='updateBulletin'>
@@ -89,6 +95,7 @@ const UpdateStocks = () =>{
                     <h2>{bulletin!=null?bulletin.cuntTrader.toLocaleString():null}</h2>
                 </div>
             </div>
+            {loading?<Loader />:null}
         </div>
     )
 }

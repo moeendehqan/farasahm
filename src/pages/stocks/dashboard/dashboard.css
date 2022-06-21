@@ -1,33 +1,17 @@
-.Dashboard{
+.DashboardTablo{
     display: flex;
-    flex-direction: column;
-    background-color:transparent !important;
-}
-
-.Dashboard>div{
-    display:flex;
-    flex-direction:row-reverse;
+    flex-direction: row;
     justify-content: space-around;
-    align-content: space-between;
 
 }
 
-.DashbnoardCodal{
-    display:flex;
-    flex-direction: column;
-    font-style: normal;
-    align-items: flex-end;
-    font-family: 'peydaThin';
-    border-bottom: 1px solid #f2efef;
+.DashboardTablo>div{
+    display: flex;
+    flex-direction: row;
+    width: 45%;
+    justify-content: space-around;
+    border: 1px solid #f3f0f0;
     border-radius: 15px;
     padding: 15px;
-    width:40%;
-
 }
 
-.DashbnoardCodal>a{
-    font-style: normal;
-    color: #394bb5;
-    text-decoration: none;
-    text-align: right;
-}

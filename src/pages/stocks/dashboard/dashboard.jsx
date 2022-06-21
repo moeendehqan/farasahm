@@ -3,11 +3,73 @@ import { serverAddress } from '../../../config/config'
 import {getCookie} from '../../../components/cookie'
 import { useEffect, useState} from 'react';
 import './dashboard.css'
+import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
+import { Line } from "react-chartjs-2";
+import Loader from '../../../components/loader/loader'
+
 const Dashboard = () => {
     const username = getCookie('username')
-    const [codal, setCodal] = useState(null)
+    const [power, setPower] = useState(null)
+    console.log(power)
+    ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
+    const [loading, setLoading] = useState(true)
+
+    var optionsPower = {responsive: true,
+                plugins: {legend: {display: false},
+                    title: {display: true,
+                        text: 'سرانه معاملات',
+                        color: "rgb(39, 59, 176)",
+                        font: {family:'peydaRegular'}},
+                        tooltip:{bodyFont:{family:'peydaRegular'},
+                            backgroundColor:'#22388a',
+                            bodyAlign:'right'
+                    }                    }};
+
+    var optionsPrice = {responsive: true,
+        plugins: {legend: {display: false},
+            title: {display: true,
+                text: 'قیمت',
+                color: "rgb(39, 59, 176)",
+                font: {family:'peydaRegular'}},
+                tooltip:{bodyFont:{family:'peydaRegular'},
+                    backgroundColor:'#22388a',
+                    bodyAlign:'right'
+            }            }};
+
+    if(power!==null){
+    var dataPower = {
+        labels: power.map(items=>{return items.date}),
+        datasets: [
+          {
+            label: "خرید",
+            data: power.map(items=>{return Math.round(items.buy_power)}),
+            fill: true,
+            backgroundColor: "#5cac3c",
+            borderColor: "#5cac3c"
+          },{
+            label: "فروش",
+            data: power.map(items=>{return Math.round(items.sell_power)}),
+            fill: true,
+            backgroundColor: "#ac3c3c",
+            borderColor: "#ac3c3c"
+          },
+        ]
+      }
+var dataPrice = {
+    labels: power.map(items=>{return items.date}),
+    datasets: [
+        {
+        label: "قیمت پایانی",
+        data: power.map(items=>{return (items.final_price)}),
+        fill: true,
+        backgroundColor: "#263bb0",
+        borderColor: "#263bb0"
+        }    ]    }
+
+    }
 
     const handleGetData = () =>{
+        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/dashbord',
@@ -15,10 +77,9 @@ const Dashboard = () => {
                 username:username,
             }
         }).then(Response=>{
-            console.log(Response.data)
+            setLoading(false)
             if(Response.data.replay){
-                setCodal(Response.data.codal)
-
+                setPower(Response.data.power)
             }
 
         })
@@ -27,25 +88,19 @@ const Dashboard = () => {
     useEffect(handleGetData,[])
     
     return(
-        <aside className="Dashboard">
-            <div className='DashboardRow1'>
-                <div className='DashbnoardCodal'>
-                    {codal===null?null:
-                        codal.map(items=>{
-                            return(<a key={items.date} href={items.link}>{items.title}</a>)
-                        })
-                    }
-
+        <div className="dashboard">
+            <div className='DashboardTablo'>
+                <div>
+                    <div>{power===null?null:<Line options={optionsPrice} data={dataPrice} />}</div>
                 </div>
                 <div>
-                    idea
+                    <div>{power===null?null:<Line options={optionsPower} data={dataPower} />}</div>
                 </div>
             </div>
             <div>
-                row 2
             </div>
-
-        </aside>
+            {loading?<Loader />:null}
+        </div>
 
     )
 }

@@ -10,18 +10,12 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
 import { Line } from "react-chartjs-2";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
+import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
 import Popview from '../../../components/popview/popview';
+import Loader from '../../../components/loader/loader'
+
 const Traders = () => {
+
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
     const [historiCode, setHistoriCode] = useState(null)
@@ -30,13 +24,16 @@ const Traders = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
-    const  [sorting, setsorting] = useState('zvol')
+    const [sorting, setsorting] = useState('zvol')
+    const [loading, setLoading] = useState(true)
+
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetDataTraders = () =>{
+        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/traders',
@@ -48,6 +45,7 @@ const Traders = () => {
                 sorting:sorting
             }
         }).then(response=>{
+            setLoading(false)
             if(response.data.replay){
                 setDataTraders(response.data.data)
             }else{
@@ -58,6 +56,7 @@ const Traders = () => {
         
 
     const infoTraders = (code) =>{
+        setLoading(true)
         axios({
             method:'POST',
             url:serverAddress+'/stocks/infocode',
@@ -66,10 +65,12 @@ const Traders = () => {
                 code:code
             }
         }).then(response=>{
+            setLoading(false)
                 setMsg(response.data.msg)
                 })    }
         
         const handleHistoriCode = (code , name) =>{
+            setLoading(true)
             axios({
                 method:'POST',
                 url:serverAddress+'/stocks/historicode',
@@ -78,7 +79,7 @@ const Traders = () => {
                     code:code
                 }
             }).then(response=>{
-                    console.log(response.data.data)
+                setLoading(false)
                     const options = {
                         responsive: true,
                         plugins: {
@@ -173,7 +174,7 @@ const Traders = () => {
                 </label>
 
             </div>
-
+            {loading?<Loader />:null}
         </aside>
     )
 }

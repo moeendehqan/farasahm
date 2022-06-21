@@ -8,6 +8,7 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
 import './station.css'
+import Loader from '../../../components/loader/loader'
 
 const Station = () => {
     const username = getCookie('username')
@@ -16,6 +17,7 @@ const Station = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     const [dataStation, setDataStation] = useState(null)
+    const [loading, setLoading] = useState(true)
 
 
 
@@ -23,6 +25,7 @@ const Station = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetStation = () =>{
+        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/station',
@@ -33,13 +36,12 @@ const Station = () => {
                 side:side
             }
         }).then(Response=>{
+            setLoading(false)
             if(Response.data.replay){
                 setDataStation(Response.data.data)
-
             }else{
                 setMsg(Response.data.msg)
             }
-
         })
     }
 
@@ -95,6 +97,7 @@ useEffect(handleGetStation, [fromDate,toDate,side])
                     تا تاریخ
                 </label>
             </div>
+            {loading?<Loader />:null}
         </aside>
     )
 }

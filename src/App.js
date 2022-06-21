@@ -13,7 +13,8 @@ import UpdateStocks from './pages/stocks/update/update'
 import Traders from './pages/stocks/traders/traders';
 import Newbie from './pages/stocks/newbie/newbie';
 import Station from './pages/stocks/station/station';
-
+import Sediment from './pages/stocks/sediment/sediment';
+import NoPage from './components/nopage/nopage';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
 
@@ -35,6 +36,8 @@ function App() {
           <Route path='traders' element={<Traders />} />
           <Route path='newbie' element={<Newbie />} />
           <Route path='station' element={<Station />} />
+          <Route path='sediment' element={<Sediment />} />
+          <Route path='*' element={<NoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
