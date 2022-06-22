@@ -1,9 +1,11 @@
+import './nopage.css'
 
 const NoPage = () => {
 
     return(
-        <div>
-            به نظر آدرس اشتباه وارد شده
+        <div className="NoPage">
+            <h3>404</h3>
+            <p>به نظر آدرس اشتباه وارد شده</p>
         </div>
     )
 }

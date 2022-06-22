@@ -6,7 +6,7 @@
     background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
     border-radius: 15px;
     right:60px;
-    top:590px;
+    top:660px;
     padding:20px 20px;
 }
 
@@ -32,6 +32,15 @@
     border-radius: 15px;
     text-align: center;
     width: 100px;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef;
+}
+
+.StocksOption>input{
+    border: 0px;
+    height: 25px;
+    border-radius: 15px;
+    text-align: center;
     font-family:'peydaRegular';
     background-color: #e7d8ef;
 }

@@ -1,0 +1,24 @@
+.NoPage{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    align-content:center;
+    justify-items:center;
+    margin-top: 5%;
+    width: 80%;
+}
+.NoPage>p{
+    font-family:'peydaExtraBold';
+    font-size: 1rem;
+    text-align: center;
+    color:#394bb5;
+    margin: 10px;
+}
+
+.NoPage>h3{
+    font-family:'peydaRegular';
+    font-size: 2rem;
+    text-align: center;
+    color:#394bb5;
+}
