@@ -1,15 +1,17 @@
 .homeback{
     background-image: linear-gradient(to top right,#2d41fd,#c63ef1);
-    padding: 35px;
-    height: 100% !important
+    height: 100vh;
+    display: flex;
 }
 
 .homecontiner{
     background-color: #eae4e4;
     border: #7976c7 1px solid;
     border-radius: 35px;
+    margin: 40px;
     display: flex;
     flex-direction: row-reverse;
+    width: 100%;
     
     
 }

@@ -1,0 +1,74 @@
+.SedimentSum{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.SedimentSum>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.SedimentSum>div>h3{
+    font-family: 'peydaMedium';
+    font-size: 1rem;
+    color: #384ab4;
+}
+
+.SedimentSum>div>p{
+    font-family: 'peydaRegular';
+    font-size: 1rem;
+    color: #6b75bf;
+}
+.SedimentAll{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.SedimentTheader{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    font-family: 'peydaMedium';
+    color: #384ab4;
+}
+
+.SedimentTbody>div{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    height: 25px;
+    margin: 5px 0px;
+    align-items: center;
+}
+
+.SedimentName{
+    width: 250px;
+    text-align: right;
+}
+.SedimentTbody .SedimentName{
+    font-family: 'peydaMedium';
+    color: #6b75bf;
+    font-size: 0.9rem;
+}
+.SedimentVolume{
+    display: flex;
+    flex-grow: 2;
+    text-align: center;
+    justify-content: flex-end;
+
+
+}
+
+.SedimentVolume>div{
+    background-image: linear-gradient(to left,#263bb0 ,#9a3cab);
+    border-radius: 5px;
+    align-content: center;
+}
+
+.SedimentVolume>div>p{
+    color: aliceblue;
+    font-family: 'peydaRegular';
+    font-size: 0.9rem;
+}

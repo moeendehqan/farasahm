@@ -71,6 +71,7 @@
     border: 0px;
     font-family: 'peydaRegular';
     font-size: 0.8rem;
+    cursor: pointer;
 }
 
 .StocksTbehavior button {
@@ -87,6 +88,7 @@
     linear-gradient(to right, #2d41fd , #c63ef1); 
     background-clip: padding-box, border-box;
     background-origin: padding-box, border-box;
+    cursor: pointer;
 }
 .StocksTbody>.StocksTprice{
     font-size: 0.7rem;

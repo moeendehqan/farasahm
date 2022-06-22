@@ -1,5 +1,5 @@
 .Alarm{
-    position:absolute;
+    position:fixed;
     z-index:1;
     width:200px;
     right:50%;

@@ -3,8 +3,6 @@ import { getCookie,setCookie } from "./cookie"
 import { serverAddress } from "../config/config"
 import { useNavigate } from 'react-router-dom'
 
-
-
 const HandleAccount = (section) =>{
     const navigate = useNavigate()
     axios({

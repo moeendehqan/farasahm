@@ -13,7 +13,7 @@ const Header = (props)=>{
                 </div>
                 <div className='HeaderWellcom'>
                     <h1>خوش آمدید</h1>
-                    <h5>{props.username}</h5>
+                    <h5>{props.fullName}</h5>
                 </div>
                 <div className='HeaderImg'>
                     <img src={require('../../icon/porofile.png')}></img>

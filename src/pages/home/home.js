@@ -58,6 +58,7 @@ const Home = () =>{
                     if(response.data.replay){
                         setCookie('username',username,5)
                         setCookie('password',password,5)
+                        setCookie('fullname',response.data.databack,5)
                         native('/section')
 
                     }else{
