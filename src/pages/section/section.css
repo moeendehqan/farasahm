@@ -23,6 +23,7 @@
     color: #fff;
     font-family: 'peydaMedium';
     font-size: 0.8rem;
+    cursor: pointer;
 }
 
 .Section>div>button:disabled{

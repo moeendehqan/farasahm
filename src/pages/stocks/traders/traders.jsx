@@ -13,9 +13,10 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
 import Popview from '../../../components/popview/popview';
 import Loader from '../../../components/loader/loader'
-
+import { useNavigate } from 'react-router-dom';
 const Traders = () => {
 
+    const navigate = useNavigate()
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
     const [historiCode, setHistoriCode] = useState(null)
@@ -108,7 +109,9 @@ const Traders = () => {
                       setHistoriCode(<Line options={options} data={data} />)
                     })    }
 
-
+    const handleDetailsTrade = (code)=>{
+        navigate('/stocks/details',{state:code})
+    }
     useEffect(handleGetDataTraders,[fromDate, toDate, side,sorting])
 
     return(
@@ -141,7 +144,7 @@ const Traders = () => {
                         const weg = {width :(items.w*85)+'%'}
                         return(
                             <div key={items.code} className='StocksTbody'>
-                                <p className='StocksTname'>{items.name}</p>
+                                <p className='StocksTname' onClick={()=>handleDetailsTrade(items.code)}>{items.name}</p>
                                 <div className='StocksTvolume'>
                                     <div style={weg} className='stocksTbar'><p>{items.volume.toLocaleString()}</p></div>
                                 </div>

@@ -1,0 +1,14 @@
+.Details>table{
+    width: 100%;
+    text-align: right;
+}
+
+.Details>table>thead{
+    font-family: 'peydaMedium';
+    color: #384bb4;
+}
+
+.Details>table>tbody{
+    font-family: 'peydaRegular';
+    color: #6d77c2;
+}

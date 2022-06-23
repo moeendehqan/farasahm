@@ -29,7 +29,10 @@
     width:17%;
     overflow: hidden ;
     text-align: right;
-    font-family: 'peydaMedium'
+    font-family: 'peydaMedium';
+}
+.StocksTbody>.StocksTname{
+    cursor: pointer;
 }
 
 .StocksTvolume{
