@@ -10,7 +10,6 @@ import Loader from '../../../components/loader/loader'
 const Dashboard = () => {
     const username = getCookie('username')
     const [power, setPower] = useState(null)
-    console.log(power)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
     const [loading, setLoading] = useState(true)
 

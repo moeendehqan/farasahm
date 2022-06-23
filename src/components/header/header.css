@@ -3,6 +3,7 @@
     display:flex;
     flex-direction: row;
     justify-content:center;
+    align-items: center;
 }
 
 .HeaderTitle{
@@ -78,4 +79,18 @@
     font-size: 1.1rem;
     color: #263bb0;
     margin-right: 25px;
+}
+
+.HeaderSerche>input{
+    border: 0px;
+    height: 30px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:'peydaRegular';
+    background-color: #ffffff;
+    margin-left: 35px;
+    background-image: url('../../icon/serche.png');
+    background-size:20px;
+    background-repeat: no-repeat;
+    background-position: 10px;
 }

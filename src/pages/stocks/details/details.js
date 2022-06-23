@@ -7,14 +7,20 @@ import DatePicker from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
+import {useLocation} from 'react-router-dom';
+import Loader from '../../../components/loader/loader'
 
 const Details = () => {
+    const location = useLocation(); 
     const username = getCookie('username')
     const [listTrader, setListTrader] = useState([])
-    const [traderSelect, setTraderSelect] = useState('')
+    const [traderSelect, setTraderSelect] = useState(location.state)
     const [listTrade, setListTrade] = useState([])
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -23,7 +29,7 @@ const Details = () => {
     const handleGetDetails = () => {
         const inList = (listTrader.find(i => i.Account==traderSelect))
         if(inList!= undefined && inList.Account==traderSelect){
-            console.log(fromDate)
+            setLoading(true)
             axios({
                 method: 'POST',
                 url:serverAddress+'/stocks/detailes',
@@ -34,16 +40,39 @@ const Details = () => {
                     toDate:toDate
                 }
             }).then(Response=>{
+                setLoading(false)
                 if(Response.data.replay){
                     setListTrade(Response.data.data)
                 }
             })
         }
+
     }
 
+    const handleGetDetailsLoction = () => {
+        if(location.state){
+            setLoading(true)
+            axios({
+                method: 'POST',
+                url:serverAddress+'/stocks/detailes',
+                data:{
+                    username:username,
+                    account:location.state,
+                    fromDate:false,
+                    toDate:false
+                }
+            }).then(Response=>{
+                setLoading(false)
+                if(Response.data.replay){
+                    setListTrade(Response.data.data)
+                }
+            })
+        }
 
+    }
 
     const handleGetTraderList = () =>{
+
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/traderlist',
@@ -53,9 +82,11 @@ const Details = () => {
         }).then(response =>{
             setListTrader(response.data.data)
         })
+
     }
 
     useEffect(handleGetTraderList,[])
+    useEffect(handleGetDetailsLoction,[location.state])
     useEffect(handleGetDetails,[traderSelect, fromDate, toDate])
 
     return(
@@ -91,7 +122,7 @@ const Details = () => {
             {listTrader.length===0?null:
             <div className='StocksOption'>
                 <label>نام</label>
-                <input  list='browsers' onChange={(e)=>setTraderSelect(e.target.value)} />
+                <input value={traderSelect}  list='browsers' onChange={(e)=>setTraderSelect(e.target.value)} />
                 <datalist id="browsers">
                     {listTrader.map(items=>{
                         return(
@@ -110,6 +141,7 @@ const Details = () => {
                     تا تاریخ
                 </label>
             </div>}
+            {loading?<Loader />:null}
         </aside>
     )
 }
