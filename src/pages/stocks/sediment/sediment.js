@@ -5,8 +5,9 @@ import { useEffect, useState} from 'react';
 import './sediment.css'
 import Alarm from '../../../components/alarm/alarm'
 import Loader from '../../../components/loader/loader'
-
+import { useNavigate } from 'react-router-dom';
 const Sediment = () =>{
+    const navigate = useNavigate()
     const username = getCookie('username')
     const [period, setPeriod] = useState(3)
     const [sedimentVolume, setSedmentVolume] = useState(null)
@@ -39,6 +40,12 @@ const Sediment = () =>{
             }
         })
     }
+
+    const handleDetailsTrade = (code)=>{
+        navigate('/stocks/details',{state:code})
+    }
+
+
     useEffect(handleSediment,[period])
 
     return(
@@ -69,7 +76,7 @@ const Sediment = () =>{
                                 const weg = {width: (items.w*90).toString()+'%'}
                                 return(
                                 <div key={items.B_account}>
-                                    <p className='SedimentName'>{items.B_account}</p>
+                                    <p onClick={()=>handleDetailsTrade(items.B_account)} className='SedimentName'>{items.name}</p>
                                     <div className='SedimentVolume'>
                                         <div style={weg}>
                                             <p>{items.balance.toLocaleString()}</p>

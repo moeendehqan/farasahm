@@ -75,12 +75,76 @@
     flex-direction: row ;
     align-items: center;
     background-color: rgba(255, 255, 255,0.0);
-    height: 100%;
+    min-height: 100vh !important;
     width: 100%;
-    top:0px;
+    bottom:0px;
     right: 0px;
     backdrop-filter: blur(4px);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     z-index: 1;
     cursor: wait;
+    overflow: scroll;
+}
+
+.MiniLoader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+    cursor: wait;
+}
+
+.MiniLoaderXXL{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 0px;
+    height: 0px;
+    background-color: transparent;
+    border: 2px solid #9546af ;
+    border-radius: 50%;
+    animation: mimiloaderXXl 2s infinite ease;
+    opacity: 0.9;
+}
+
+
+
+.MiniLoaderXL{
+    width: 0px;
+    height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #9546af ;
+    border-radius: 50%;
+    animation: mimiloaderXXl 2s infinite ease;
+    animation-delay: 0.2s;
+    opacity: 0.9;
+}
+
+
+.MiniLoaderL{
+    width: 0px;
+    height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #9546af ;
+    border-radius: 50%;
+    animation: mimiloaderXXl 2s infinite ease;
+    animation-delay: 0.4s;
+    opacity: 0.9;
+}
+
+@keyframes mimiloaderXXl{
+    100%{
+        width: 30px;
+        height: 30px;
+        border-color:#263bb0;
+        opacity:0;
+    }
 }

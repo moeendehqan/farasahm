@@ -51,6 +51,7 @@
     font-family: 'peydaMedium';
     color: #6b75bf;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 .SedimentVolume{
     display: flex;

@@ -9,6 +9,7 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import {useLocation} from 'react-router-dom';
 import Loader from '../../../components/loader/loader'
+import exportFromJSON from 'export-from-json'
 
 const Details = () => {
     const location = useLocation(); 
@@ -23,8 +24,20 @@ const Details = () => {
 
 
 
+
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
+
+    const handleDownload = () =>{
+        const inList = (listTrader.find(i => i.Account==traderSelect))
+        if(inList!= undefined && inList.Account==traderSelect){
+            const fileName = 'download'
+            const exportType =  exportFromJSON.types.csv  
+            const data = Object.keys(listTrade).map((item)=>[listTrade[item]])
+            exportFromJSON({ data, fileName, exportType })
+
+        }
+    }
 
     const handleGetDetails = () => {
         const inList = (listTrader.find(i => i.Account==traderSelect))
@@ -43,6 +56,7 @@ const Details = () => {
                 setLoading(false)
                 if(Response.data.replay){
                     setListTrade(Response.data.data)
+                    console.log(Response.data.data)
                 }
             })
         }
@@ -94,7 +108,7 @@ const Details = () => {
             {listTrade.length>0?
             <table>
                 <thead>
-                    <tr>
+                    <tr key={0}>
                         <td className='DetailsVolume'>حجم</td>
                         <td className='DetailsPrice'>قیمت</td>
                         <td className='DetailsSaller'>فروشنده</td>
@@ -106,7 +120,7 @@ const Details = () => {
                 <tbody>
             {listTrade.map(items=>{
                 return(
-                    <tr>
+                    <tr key={items.index+1}>
                         <td className='DetailsVolume'>{items.Volume.toLocaleString()}</td>
                         <td className='DetailsPrice'>{items.Price.toLocaleString()}</td>
                         <td className='DetailsSaller'>{items.S_account}</td>
@@ -126,7 +140,7 @@ const Details = () => {
                 <datalist id="browsers">
                     {listTrader.map(items=>{
                         return(
-                            <option key={items.Account} value={items.Account}>{items.Fullname}</option>
+                            <option key={items.index} value={items.Account}>{items.Fullname}</option>
                         )
                     })
 
@@ -140,6 +154,7 @@ const Details = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
+                <button onClick={handleDownload}>download</button>
             </div>}
             {loading?<Loader />:null}
         </aside>

@@ -10,7 +10,7 @@ const Header = (props)=>{
     const navigate = useNavigate()
     const username = getCookie('username')
     const [listTrader, setListTrader] = useState([])
-    const [traderSelect, setTraderSelect] = useState(null)
+    const [traderSelect, setTraderSelect] = useState('')
 
     const handleGetTraderList = () =>{
         axios({
