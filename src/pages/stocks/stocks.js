@@ -24,6 +24,7 @@ const Stocks = () => {
 
     return(
         <div>
+            
             <Header section='امور سهام' username={username} fullName={username}/>
                 <div className='LayoutBasic'>
                     <Menu menuProperties={menuProperties}/>

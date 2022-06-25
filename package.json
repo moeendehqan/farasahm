@@ -11,6 +11,8 @@
     "axois": "^0.0.1-security",
     "export-from-json": "^1.6.0",
     "js-file-download": "^0.4.12",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.25",
     "range-parser": "^1.2.1",
     "react": "^18.1.0",
     "react-chartjs-2": "^4.2.0",
@@ -20,8 +22,9 @@
     "react-multi-date-picker": "^3.3.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "tabulator-tables": "^5.2.7",
     "web-vitals": "^2.1.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz"
   },
   "scripts": {
     "start": "react-scripts start",

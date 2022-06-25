@@ -9,7 +9,10 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import {useLocation} from 'react-router-dom';
 import Loader from '../../../components/loader/loader'
-import { CSVLink, CSVDownload } from "react-csv";
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import XLSX from 'xlsx/dist/xlsx.full.min.js';
+
+
 
 const Details = () => {
     const location = useLocation(); 
@@ -22,12 +25,35 @@ const Details = () => {
     const [loading, setLoading] = useState(true)
 
 
-
+    window.XLSX = XLSX;
+    window.jspdf  = require('jspdf');
 
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
+
+    if(listTrade.length>0){
+        const vol = (listTrade.map(i=>i.Volume*1))
+        console.log(vol)
+        console.log(Math.max(...vol))
+        var table = new Tabulator("#detailsTable", {
+            data:listTrade,
+            columnHeaderSortMulti:true,
+            columns:[
+                {title:"index", field:"index",visible:false},
+                {title:"حجم", field:"Volume",hozAlign:'center',headerHozAlign:'center',formatter:'progress'},
+                {title:"قیمت", field:"Price",hozAlign:'center',headerHozAlign:'center'},
+                {title:"خریدار", field:"B_account",hozAlign:'center',headerHozAlign:'center'},
+                {title:"فروشنده", field:"S_account",hozAlign:'center',headerHozAlign:'center'},
+                {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center'},
+                {title:"زمان", field:"Time",visible:false,}
+            ],
+            layout: "fitColumns",
+        });
+}
+
+    const handleDownloadCsv =() =>{table.download("csv", "data.csv")}
 
     const handleGetDetails = () => {
         const inList = (listTrader.find(i => i.Account==traderSelect))
@@ -47,7 +73,7 @@ const Details = () => {
                 setLoading(false)
                 if(Response.data.replay){
                     setListTrade(Response.data.data)
-                    console.log(Response.data.data)
+
                 }
             })
         }
@@ -96,34 +122,9 @@ const Details = () => {
 
     return(
         <aside className='Details'>
-            {listTrade.length>0?
-            <table>
-                <thead>
-                    <tr key={0}>
-                        <td className='DetailsVolume'>حجم</td>
-                        <td className='DetailsPrice'>قیمت</td>
-                        <td className='DetailsSaller'>فروشنده</td>
-                        <td className='DetailsBuyer'>خریدار</td>
-                        <td className='DetailsDate'>تاریخ</td>
-                        <td className='DetailsTime'>ساعت</td>
-                    </tr>
-                </thead>
-                <tbody>
-            {listTrade.map(items=>{
-                return(
-                    <tr key={items.index+1}>
-                        <td className='DetailsVolume'>{items.Volume.toLocaleString()}</td>
-                        <td className='DetailsPrice'>{items.Price.toLocaleString()}</td>
-                        <td className='DetailsSaller'>{items.S_account}</td>
-                        <td className='DetailsBuyer'>{items.B_account}</td>
-                        <td className='DetailsDate'>{items.Date}</td>
-                        <td className='DetailsTime'>{items.Time}</td>
-                    </tr>
-                )
-            })}
-                </tbody>
-            </table>
-            :null}
+            
+            <div id='detailsTable'></div>
+
             {listTrader.length===0?null:
             <div className='StocksOption'>
                 <label>نام</label>
@@ -131,7 +132,7 @@ const Details = () => {
                 <datalist id="browsers">
                     {listTrader.map(items=>{
                         return(
-                            <option key={items.index} value={items.Account}>{items.Fullname}</option>
+                            <option key={Math.random(Math.random()*100000000)} value={items.Account}>{items.Fullname}</option>
                         )
                     })
 
@@ -145,7 +146,12 @@ const Details = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <CSVLink data={listTrade} filename={"tradeList.csv"} className="btnDownload">CSV</CSVLink>
+                <div>
+                    <button id="download-csv" onClick={()=>table.download("csv", "data.csv")}>Download CSV</button>
+                    <button id="download-xlsx" onClick={()=>{table.download("xlsx", "data.xlsx")}}>Download XLSX</button>
+                    <button id="download-pdf" onClick={()=>{table.download("pdf", "data.pdf")}}>Download PDF</button>
+                    <button id="download-html" onClick={()=>{table.download("html", "data.html")}}>Download HTML</button>
+                </div>
             </div>}
             {loading?<Loader />:null}
         </aside>

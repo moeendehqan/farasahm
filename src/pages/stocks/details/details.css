@@ -12,3 +12,10 @@
     font-family: 'peydaRegular';
     color: #6d77c2;
 }
+.tabulator-header{
+    font-family: 'peydaMedium';
+}
+.tabulator-cell	{
+    font-family: 'peydaRegular'
+}
+@import  "tabulator-tables";
