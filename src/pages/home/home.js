@@ -5,7 +5,6 @@ import { setCookie, getCookie } from '../../components/cookie'
 import { serverAddress } from '../../config/config'
 import { useNavigate } from 'react-router-dom'
 
-import usersvg from '../../icon/user.svg'
 
 const Home = () =>{
     const native = useNavigate()
@@ -58,7 +57,6 @@ const Home = () =>{
                     if(response.data.replay){
                         setCookie('username',username,5)
                         setCookie('password',password,5)
-                        setCookie('fullname',response.data.databack,5)
                         native('/section')
 
                     }else{

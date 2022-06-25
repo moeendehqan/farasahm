@@ -9,7 +9,7 @@
     background-color: #9546af;
     opacity: 0.5;
     animation: ls1 1s infinite ease-in-out alternate;
-    animation-delay: 0.1s;
+    animation-delay: 0s;
 }
 
 .LoaderSquid2{
@@ -23,7 +23,7 @@
     background-color: #9546af;
     opacity: 0.5;
     animation: ls2 1s infinite ease-in-out alternate;
-    animation-delay: 0.3s;
+    animation-delay: 0.5s;
 }
 
 .LoaderSquid3{
@@ -37,7 +37,7 @@
     background-color: #9546af;
     opacity: 0.5;
     animation: ls3 1s infinite ease-in-out alternate;
-    animation-delay: 0.5s;
+    animation-delay: 1s;
 }
 
 @keyframes ls1 {
@@ -83,7 +83,6 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     z-index: 1;
     cursor: wait;
-    overflow: scroll;
 }
 
 .MiniLoader{

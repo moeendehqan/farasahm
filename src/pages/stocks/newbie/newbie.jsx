@@ -21,9 +21,29 @@ const Newbie = () =>{
     const [chartNum, setChartNum] = useState(null)
     const [typeReport, setTypeReport] = useState('num')
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
-    const options = {responsive: true,plugins: {legend: {position: 'top',},title: {display: false,text: 'رفتار معاملاتی '}}}
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            labels:{
+                font:{
+                    family:'peydaRegular'
+                },
+            },
+            Tooltip:{
+                backgroundColor:'#263bb0'
+            },
+        title: {
+            display: false,text: 'رفتار معاملاتی '
+                }
+            }
+        }
     const [dataNum, setDataNum] = useState(null)
     const [dataVol, setDataVol] = useState(null)
+    const [dataNumR, setDataNumR] = useState(null)
+    const [dataVolR, setDataVolR] = useState(null)
     const [loading, setLoading] = useState(true)
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
@@ -46,7 +66,7 @@ const Newbie = () =>{
                 setDataNum({
                     labels: Response.data.data.map(d=>d.Date),
                     datasets:[{
-                        label: "خریداران",
+                        label: "کل",
                         data: Response.data.data.map(d=>d.allnum),
                         fill: true,
                         backgroundColor: "rgba(198, 62, 241,0.2)",
@@ -61,7 +81,7 @@ const Newbie = () =>{
                 setDataVol({
                     labels: Response.data.data.map(d=>d.Date),
                     datasets:[{
-                        label: "خریداران",
+                        label: "کل",
                         data: Response.data.data.map(d=>d.allvol),
                         fill: true,
                         backgroundColor: "rgba(198, 62, 241,0.2)",
@@ -73,6 +93,24 @@ const Newbie = () =>{
                         backgroundColor: "rgba(177, 61, 206,0.2)",
                         borderColor: "rgba(177, 61, 206,1)"
                         }]                    })
+                setDataNumR({
+                    labels: Response.data.data.map(d=>d.Date),
+                    datasets:[{
+                        label: "نسبت تعداد جدیدالورود به کل",
+                        data: Response.data.data.map(d=>Math.round((d.newnum/d.allnum)*100)),
+                        fill: true,
+                        backgroundColor: "rgba(198, 62, 241,0.2)",
+                        borderColor: "rgba(45, 65, 253,1)"
+                    }]                    })
+                setDataVolR({
+                    labels: Response.data.data.map(d=>d.Date),
+                    datasets:[{
+                        label: "نسبت حجم جدیدالورود به کل",
+                        data: Response.data.data.map(d=>Math.round((d.newvol/d.allvol)*100)),
+                        fill: true,
+                        backgroundColor: "rgba(198, 62, 241,0.2)",
+                        borderColor: "rgba(45, 65, 253,1)"
+                    }]                    })
 
             }else{
                 setMsg(Response.data.msg)
@@ -82,7 +120,7 @@ const Newbie = () =>{
         })
     }
 
-    useEffect(handleNewbieData, [typeReport, fromDate, toDate])
+    useEffect(handleNewbieData, [fromDate, toDate])
 
     return(
         <aside>
@@ -92,7 +130,11 @@ const Newbie = () =>{
                     {dataNum===null?null:
                         typeReport==='vol'?
                         <Line options={options} data={dataVol} />:
-                        <Line options={options} data={dataNum} />
+                        typeReport==='num'?
+                        <Line options={options} data={dataNum} />:
+                        typeReport==='volR'?
+                        <Line options={options} data={dataVolR} />:
+                        <Line options={options} data={dataNumR} />
                     }
 
                 </div>
@@ -104,6 +146,8 @@ const Newbie = () =>{
                 <select onChange={(e)=>setTypeReport(e.target.value)}>
                     <option value='num'>تعداد</option>
                     <option value='vol'>حجم</option>
+                    <option value='volR'>حجم%</option>
+                    <option value='volR'>تعداد%</option>
                 </select>
                 <label className='StocksDateLabel'>
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>

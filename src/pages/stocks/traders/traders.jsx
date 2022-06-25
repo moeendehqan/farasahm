@@ -14,6 +14,8 @@ import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Tit
 import Popview from '../../../components/popview/popview';
 import Loader from '../../../components/loader/loader'
 import { useNavigate } from 'react-router-dom';
+
+
 const Traders = () => {
 
     const navigate = useNavigate()

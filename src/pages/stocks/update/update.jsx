@@ -5,6 +5,7 @@ import axios from 'axios'
 import { serverAddress } from "../../../config/config"
 import { useEffect, useState } from "react"
 import Loader from '../../../components/loader/loader'
+import MiniLoader from '../../../components/loader/miniloader'
 
 const UpdateStocks = () =>{
     const username = getCookie('username')
@@ -12,7 +13,8 @@ const UpdateStocks = () =>{
     const [fileRegister, SetFileRegister] = useState(null)
     const [msg, setMsg] = useState(null)
     const [bulletin, setBulletin] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
+    const [unavailable, setUnavailable] = useState(null)
 
     const handleGetDataUpdate = () =>{
         axios({
@@ -22,9 +24,18 @@ const UpdateStocks = () =>{
                 username:username
             }
         }).then(response=>{
-            setLoading(false)
             if(response.data.replay){
                 setBulletin(response.data.data)
+                axios({
+                    method:'POST',
+                    url: serverAddress+'/stocks/unavailable',
+                    data:{
+                        username: username
+                    }
+                }).then(res=>{
+                    setUnavailable(res.data)
+                    console.log(res.data)
+                })
             }
         })
     }
@@ -53,7 +64,20 @@ const UpdateStocks = () =>{
                     SetFileRegister(null)
                 }            })        }    }
 
+    const handleUnavailebleList= ()=>{
+        const text = <p>روز های که بروزرسانی انجام نشده</p>
+        const listDate = unavailable.listDate.map(i=>{
+            return(
+                <span>{i}</span> 
+            )
+        })
+        setMsg(<div className='UnavailableMsg'>
+                    {text}
+                    {listDate}
+                </div>)
 
+
+    }
     useEffect(handleGetDataUpdate,[msg])
 
     return(
@@ -80,19 +104,25 @@ const UpdateStocks = () =>{
             <div className='updateBulletin'>
                 <div>
                     <span>اخرین بروزرسانی</span>
-                    <h2>{bulletin!=null?bulletin.lastUpdate.toString():null}</h2>
+                    <h2>{bulletin!=null?bulletin.lastUpdate.toString():<MiniLoader/>}</h2>
                 </div>
                 <div>
                     <span>تعداد بروزرسانی</span>
-                    <h2>{bulletin!=null?bulletin.cuntUpdate.toLocaleString():null}</h2>
+                    <h2>{bulletin!=null?bulletin.cuntUpdate.toLocaleString():<MiniLoader/>}</h2>
+                </div>
+                <div>
+                    <span>بروزرسانی ناموجود</span>
+                    <h2 onClick={handleUnavailebleList}>{unavailable==null?<MiniLoader/>:
+                    unavailable.count.toLocaleString()
+                    }</h2>
                 </div>
                 <div>
                     <span>تعداد معاملات</span>
-                    <h2>{bulletin!=null?bulletin.cuntTrade.toLocaleString():null}</h2>
+                    <h2>{bulletin!=null?bulletin.cuntTrade.toLocaleString():<MiniLoader/>}</h2>
                 </div>
                 <div>
                     <span>تعداد معاملگران</span>
-                    <h2>{bulletin!=null?bulletin.cuntTrader.toLocaleString():null}</h2>
+                    <h2>{bulletin!=null?bulletin.cuntTrader.toLocaleString():<MiniLoader/>}</h2>
                 </div>
             </div>
             {loading?<Loader />:null}

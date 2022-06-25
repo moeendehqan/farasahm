@@ -77,3 +77,13 @@
     font-size: 1rem;
     margin-top: 10px;
 }
+
+.UnavailableMsg{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.UnavailableMsg>span{
+    margin:0px 5px;
+}
+

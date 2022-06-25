@@ -9,7 +9,7 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import {useLocation} from 'react-router-dom';
 import Loader from '../../../components/loader/loader'
-import exportFromJSON from 'export-from-json'
+import { CSVLink, CSVDownload } from "react-csv";
 
 const Details = () => {
     const location = useLocation(); 
@@ -28,21 +28,12 @@ const Details = () => {
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
-    const handleDownload = () =>{
-        const inList = (listTrader.find(i => i.Account==traderSelect))
-        if(inList!= undefined && inList.Account==traderSelect){
-            const fileName = 'download'
-            const exportType =  exportFromJSON.types.csv  
-            const data = Object.keys(listTrade).map((item)=>[listTrade[item]])
-            exportFromJSON({ data, fileName, exportType })
-
-        }
-    }
 
     const handleGetDetails = () => {
         const inList = (listTrader.find(i => i.Account==traderSelect))
         if(inList!= undefined && inList.Account==traderSelect){
             setLoading(true)
+            setListTrade([])
             axios({
                 method: 'POST',
                 url:serverAddress+'/stocks/detailes',
@@ -154,7 +145,7 @@ const Details = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <button onClick={handleDownload}>download</button>
+                <CSVLink data={listTrade} filename={"tradeList.csv"} className="btnDownload">CSV</CSVLink>
             </div>}
             {loading?<Loader />:null}
         </aside>

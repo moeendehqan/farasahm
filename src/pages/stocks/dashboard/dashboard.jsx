@@ -110,7 +110,7 @@ const Dashboard = () => {
                     <table>
                         <tbody>
                             <tr>
-                                <td>{newBie.newvol}</td>
+                                <td>{(newBie.newvol).toLocaleString()}</td>
                                 <td>{(Math.round((newBie.newvol/newBie.allvol)*10000)/100).toString()+'%'}</td>
                                 <td>حجم</td>
                             </tr>

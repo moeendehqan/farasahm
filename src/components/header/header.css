@@ -79,7 +79,11 @@
     font-size: 1.1rem;
     color: #263bb0;
     margin-right: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
 }
+
 
 .HeaderSerche>input{
     border: 0px;

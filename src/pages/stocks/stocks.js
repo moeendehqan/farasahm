@@ -10,7 +10,6 @@ import { Outlet } from "react-router-dom"
 const Stocks = () => {
 
     HandleAccount('stocks')
-    const fullName = getCookie('fullname')
     const username = getCookie('username')
     const menuProperties =[
         {key:1 ,title:'داشبورد', navigate:'dashboard' ,icon:require('../../icon/dashboard.png')},
@@ -22,9 +21,10 @@ const Stocks = () => {
     ]
 
 
+
     return(
         <div>
-            <Header section='امور سهام' username={username} fullName={fullName}/>
+            <Header section='امور سهام' username={username} fullName={username}/>
                 <div className='LayoutBasic'>
                     <Menu menuProperties={menuProperties}/>
                     <Outlet/>
