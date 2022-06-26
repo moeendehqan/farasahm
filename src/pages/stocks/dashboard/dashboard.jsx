@@ -81,7 +81,7 @@ const Dashboard = () => {
                             axios({method: 'POST',url: serverAddress+'/stocks/tablo',data: {username:username,date:response.data.lastUpdate,}
                             }).then(tabloApi=>{
                                 setTablo(tabloApi.data)
-                                console.log(tabloApi.data)
+
                             })
                         })
                     })

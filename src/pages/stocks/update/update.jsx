@@ -34,7 +34,7 @@ const UpdateStocks = () =>{
                     }
                 }).then(res=>{
                     setUnavailable(res.data)
-                    console.log(res.data)
+
                 })
             }
         })

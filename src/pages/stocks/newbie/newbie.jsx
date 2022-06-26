@@ -10,7 +10,8 @@ import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
 import { Line } from "react-chartjs-2";
 import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
-import Popview from '../../../components/popview/popview';
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 import Loader from '../../../components/loader/loader'
 
 const Newbie = () =>{
@@ -46,6 +47,17 @@ const Newbie = () =>{
     const [dataVolR, setDataVolR] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    const exportPdf = () => {
+        html2canvas(document.querySelector("#NewbieChart")).then(canvas => {
+           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
+           const imgData = canvas.toDataURL('image/png');
+           const pdf = new jsPDF();
+           pdf.addImage(imgData, 'PNG', 0, 0);
+           pdf.save("download.pdf"); 
+       });
+   
+    }
+
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
@@ -62,7 +74,6 @@ const Newbie = () =>{
         }).then(Response=>{
             setLoading(false)
             if(Response.data.replay){
-                console.log(Response.data.data)
                 setDataNum({
                     labels: Response.data.data.map(d=>d.Date),
                     datasets:[{
@@ -126,7 +137,7 @@ const Newbie = () =>{
         <aside>
             <div>
                 <h3>جدید الورود ها</h3>
-                <div className='NewbieChart'>
+                <div className='NewbieChart' id='NewbieChart'>
                     {dataNum===null?null:
                         typeReport==='vol'?
                         <Line options={options} data={dataVol} />:
@@ -157,6 +168,10 @@ const Newbie = () =>{
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
+                <label>دریافت</label>
+                <div className='StocksDownloadBox'>
+                    <button onClick={exportPdf}>PDF</button>
+                </div>
             </div>
             {loading?<Loader />:null}
         </aside>

@@ -10,7 +10,7 @@
     padding:20px 20px;
 }
 
-.StocksOption>label{
+.StocksOption label{
     font-family: 'peydaRegular';
     text-align:right;
     color: #fff;
@@ -45,16 +45,19 @@
     background-color: #e7d8ef;
 }
 
-.btnDownload{
-    background-color: #e7d8ef;
-    width: 50%;
-    margin: 25px 0px;
-    margin-left: 15px;
-    font-family: 'peydaRegular';
-    height: 25px;
-    border-radius: 15px;
-    text-align: center;
-    text-decoration: none;
-    color: #263bb0;
+.StocksDownloadBox{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px;
+    justify-content: space-around;
+}
 
+.StocksDownloadBox>button{
+    margin: 0px 10px;
+    width: 45px;
+    height: 20px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #e7d8ef;
+    font-family: 'peydaRegular';
 }

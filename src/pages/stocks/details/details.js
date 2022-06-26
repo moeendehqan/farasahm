@@ -11,7 +11,8 @@ import {useLocation} from 'react-router-dom';
 import Loader from '../../../components/loader/loader'
 import {TabulatorFull as Tabulator} from 'tabulator-tables';
 import XLSX from 'xlsx/dist/xlsx.full.min.js';
-
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 
 
 const Details = () => {
@@ -28,32 +29,53 @@ const Details = () => {
     window.XLSX = XLSX;
     window.jspdf  = require('jspdf');
 
+    const exportPdf = () => {
+        html2canvas(document.querySelector("#detailsTable")).then(canvas => {
+           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
+           const imgData = canvas.toDataURL('image/png');
+           const pdf = new jsPDF();
+           pdf.addImage(imgData, 'PNG', 0, 0);
+           pdf.save("download.pdf"); 
+       });
+   
+    }
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
 
     if(listTrade.length>0){
-        const vol = (listTrade.map(i=>i.Volume*1))
-        console.log(vol)
-        console.log(Math.max(...vol))
+
         var table = new Tabulator("#detailsTable", {
             data:listTrade,
             columnHeaderSortMulti:true,
             columns:[
                 {title:"index", field:"index",visible:false},
-                {title:"حجم", field:"Volume",hozAlign:'center',headerHozAlign:'center',formatter:'progress'},
-                {title:"قیمت", field:"Price",hozAlign:'center',headerHozAlign:'center'},
-                {title:"خریدار", field:"B_account",hozAlign:'center',headerHozAlign:'center'},
-                {title:"فروشنده", field:"S_account",hozAlign:'center',headerHozAlign:'center'},
-                {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center'},
+                {title:"حجم", field:"Volume",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
+                formatter:"progress",
+                formatterParams:{
+                    min:Math.min(...(listTrade.map(i=>i.Volume*1))),
+                    max:Math.max(...(listTrade.map(i=>i.Volume*1))),
+                    color:(vol)=>{return vol>0?'#263bb0':'#9546af'},
+                    legend:true,
+                    legendAlign:'justify'
+                                },
+                bottomCalc:"sum",
+                },
+                {title:"قیمت", field:"Price",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
+                formatter:"money",
+                formatterParams:{
+                    decimal:",",
+                    precision:false,
+                },},
+                {title:"خریدار", field:"B_account",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:3},
+                {title:"فروشنده", field:"S_account",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:3},
+                {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2},
                 {title:"زمان", field:"Time",visible:false,}
             ],
             layout: "fitColumns",
         });
 }
-
-    const handleDownloadCsv =() =>{table.download("csv", "data.csv")}
 
     const handleGetDetails = () => {
         const inList = (listTrader.find(i => i.Account==traderSelect))
@@ -146,11 +168,10 @@ const Details = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <div>
-                    <button id="download-csv" onClick={()=>table.download("csv", "data.csv")}>Download CSV</button>
-                    <button id="download-xlsx" onClick={()=>{table.download("xlsx", "data.xlsx")}}>Download XLSX</button>
-                    <button id="download-pdf" onClick={()=>{table.download("pdf", "data.pdf")}}>Download PDF</button>
-                    <button id="download-html" onClick={()=>{table.download("html", "data.html")}}>Download HTML</button>
+                <label>دریافت</label>
+                <div className='StocksDownloadBox'>
+                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
+                    <button onClick={exportPdf}>PDF</button>
                 </div>
             </div>}
             {loading?<Loader />:null}

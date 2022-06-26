@@ -14,7 +14,10 @@ import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Tit
 import Popview from '../../../components/popview/popview';
 import Loader from '../../../components/loader/loader'
 import { useNavigate } from 'react-router-dom';
-
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import XLSX from 'xlsx/dist/xlsx.full.min.js';
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 
 const Traders = () => {
 
@@ -27,10 +30,58 @@ const Traders = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
-    const [sorting, setsorting] = useState('zvol')
     const [loading, setLoading] = useState(true)
 
+    window.XLSX = XLSX;
+    window.jspdf  = require('jspdf');
 
+    const exportPdf = () => {
+        html2canvas(document.querySelector("#detailsTable")).then(canvas => {
+           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
+           const imgData = canvas.toDataURL('image/png');
+           const pdf = new jsPDF();
+           pdf.addImage(imgData, 'PNG', 0, 0);
+           pdf.save("download.pdf"); 
+       });
+   
+    }
+
+
+    if(dataTraders!=null){
+        var table = new Tabulator("#detailsTable", {
+            data:dataTraders,
+            columnHeaderSortMulti:true,
+            columns:[
+                {title:'کدبورسی', field:'code',visible:false},
+                {title:'مانده',field:'balance',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                cellClick:function(e, cell){
+                    handleHistoriCode(cell.getData().code, cell.getData().name)
+                    },
+                },
+                {title:'قیمت',field:'price',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2},
+                {title:'حجم',field:'volume',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,formatter:"progress",
+                    formatterParams:{
+                        min:Math.min(...(dataTraders.map(i=>i.volume*1))),
+                        max:Math.max(...(dataTraders.map(i=>i.volume*1))),
+                        color:'#263bb0',
+                        legend:true,
+                        legendAlign:'justify'
+                    },
+                    cellClick:function(e, cell){
+                        handleDetailsTrade(cell.getData().code)
+                    },
+                },
+                {title:'نام',field:'name',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:4,
+                cellClick:function(e, cell){
+                    infoTraders(cell.getData().code)
+                    },
+                    headerFilter:"input",
+                },
+
+            ],
+            layout: "fitColumns",
+        });
+}
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
@@ -45,7 +96,6 @@ const Traders = () => {
                 fromDate:fromDate,
                 toDate:toDate,
                 side:side,
-                sorting:sorting
             }
         }).then(response=>{
             setLoading(false)
@@ -114,55 +164,18 @@ const Traders = () => {
     const handleDetailsTrade = (code)=>{
         navigate('/stocks/details',{state:code})
     }
-    useEffect(handleGetDataTraders,[fromDate, toDate, side,sorting])
+    useEffect(handleGetDataTraders,[fromDate, toDate, side])
 
     return(
         <aside>
             <div>
-                <h3>معاملگران</h3>
-                {dataTraders===null?null:
-                <div>
-                    <div className='stocksTheader'>
-                        <p className='StocksTname'>نام</p>
-                        <div className='StocksTvolume'>
-                            <p>حجم</p>
-                            <ul className='StocksTvolumeSort'>
-                                <li onClick={()=>{setsorting('zvol')}}>بیشترین</li>
-                                <li onClick={()=>{setsorting('avol')}}>کمترین</li>
-                            </ul>
-                        </div>
-                        <div className='StocksTprice'>
-                            <p>قیمت</p>
-                            <ul className='StocksTpriceSort'>
-                                <li onClick={()=>{setsorting('zprc')}}>بیشترین</li>
-                                <li onClick={()=>{setsorting('aprc')}}>کمترین</li>
-                            </ul>
-                        </div>
-                        <p className='StocksTbalance'>مانده</p>
-                        <p className='StocksTinfo'>مشخصات</p>
-                        <p className='StocksTbehavior'>رفتار</p>
-                    </div>
-                    {dataTraders.map(items=>{
-                        const weg = {width :(items.w*85)+'%'}
-                        return(
-                            <div key={items.code} className='StocksTbody'>
-                                <p className='StocksTname' onClick={()=>handleDetailsTrade(items.code)}>{items.name}</p>
-                                <div className='StocksTvolume'>
-                                    <div style={weg} className='stocksTbar'><p>{items.volume.toLocaleString()}</p></div>
-                                </div>
-                                <div className='StocksTprice'><p>{items.price.toLocaleString()}</p></div>
-                                <p className='StocksTbalance'>{items.balance.toLocaleString()}</p>
-                                <div className='StocksTinfo'><button onClick={()=>infoTraders(items.code)}>{'{'+'نمایش'+'}'}</button></div>
-                                <div className='StocksTbehavior'><button onClick={()=>handleHistoriCode(items.code, items.name)}>نمودار</button></div>
-                            </div>
-                        )
-                    })}
-                </div>
-                }
-                <Alarm msg={msg} smsg={setMsg}/>
-                <Popview contet={historiCode} scontent={setHistoriCode}/>
-
+            <h3>معاملگران</h3>
             </div>
+            <div id='detailsTable'></div>
+
+            <Alarm msg={msg} smsg={setMsg}/>
+            <Popview contet={historiCode} scontent={setHistoriCode}/>
+
             <div className='StocksOption'>
                 <label>سمت</label>
                 <select onChange={(e)=>setSide(e.target.value)}>
@@ -177,6 +190,11 @@ const Traders = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
+                <label>دریافت</label>
+                <div className='StocksDownloadBox'>
+                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
+                    <button onClick={exportPdf}>PDF</button>
+                </div>
 
             </div>
             {loading?<Loader />:null}

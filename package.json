@@ -10,6 +10,7 @@
     "axios": "^0.27.2",
     "axois": "^0.0.1-security",
     "export-from-json": "^1.6.0",
+    "html2canvas": "^1.4.1",
     "js-file-download": "^0.4.12",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",

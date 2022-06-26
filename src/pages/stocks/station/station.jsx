@@ -9,6 +9,10 @@ import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
 import './station.css'
 import Loader from '../../../components/loader/loader'
+import {TabulatorFull as Tabulator} from 'tabulator-tables';
+import XLSX from 'xlsx/dist/xlsx.full.min.js';
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 
 const Station = () => {
     const username = getCookie('username')
@@ -19,7 +23,44 @@ const Station = () => {
     const [dataStation, setDataStation] = useState(null)
     const [loading, setLoading] = useState(true)
 
+    window.XLSX = XLSX;
+    window.jspdf  = require('jspdf');
 
+    const exportPdf = () => {
+        html2canvas(document.querySelector("#detailsTable")).then(canvas => {
+           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
+           const imgData = canvas.toDataURL('image/png');
+           const pdf = new jsPDF();
+           pdf.addImage(imgData, 'PNG', 0, 0);
+           pdf.save("download.pdf"); 
+       });
+   
+    }
+
+    if(dataStation!=null){
+        var table = new Tabulator("#detailsTable", {
+            data:dataStation,
+            columnHeaderSortMulti:true,
+            columns:[
+                {title:"تعداد", field:"count",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,bottomCalc:"sum",},
+                {title:"حجم", field:"Volume",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:3,
+                formatter:"progress",
+                formatterParams:{
+                    min:Math.min(...(dataStation.map(i=>i.Volume*1))),
+                    max:Math.max(...(dataStation.map(i=>i.Volume*1))),
+                    color:'#263bb0',
+                    legend:true,
+                    legendAlign:'justify'
+                                },
+                bottomCalc:"sum",
+                },
+                {title:"ایستگاه", field:"Istgah",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:3, headerFilter:true},
+
+            ],
+            
+            layout: "fitColumns",
+        });
+}
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
@@ -51,37 +92,8 @@ useEffect(handleGetStation, [fromDate,toDate,side])
         <aside>
             <div>
                 <h3>ایستگاهای معاملاتی</h3>
-                <div>
-                    <div className='StationTheader'>
-                        <p className='StationTistgah'>ایستگاه</p>
-                        <p className='StationTvolum'>حجم</p>
-                        <p className='StationTcunt'>تعداد</p>
-                    </div>
-                    <div className='StationTbody'>
-                        {dataStation===null?null:
-                            dataStation.map(items=>{
-                                const weg ={
-                                    width:(items.w *85)+'%'
-                                }
-                                return(
-                                    <div key={items.Istgah} className='StationTbar'>
-                                        <p className='StationTistgah'>{items.Istgah}</p>
-                                        <div className='StationTvolum'>
-                                            <div style={weg}>
-                                                <p>{items.Volume.toLocaleString()}</p>
-                                            </div>
-                                        </div>
-                                        <p className='StationTcunt'>{items.count.toLocaleString()}</p>
-                                    </div>
-                                )
-                            })
-                        
-                        }
-
-                    </div>
-                </div>
-                <Alarm msg={msg} smsg={setMsg} />
             </div>
+            <div id='detailsTable'></div>
             <div className='StocksOption'>
                 <label>سمت</label>
                 <select onChange={(e)=>setSide(e.target.value)}>
@@ -96,6 +108,11 @@ useEffect(handleGetStation, [fromDate,toDate,side])
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
+                <label>دریافت</label>
+                <div className='StocksDownloadBox'>
+                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
+                    <button onClick={exportPdf}>PDF</button>
+                </div>
             </div>
             {loading?<Loader />:null}
         </aside>

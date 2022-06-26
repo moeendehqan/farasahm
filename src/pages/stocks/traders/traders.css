@@ -52,7 +52,7 @@
     width:80px;
     text-align: right;
 }
-.StocksTinfo, .StocksTbehavior{
+.StocksTbehavior{
     width:60px;
     display:flex;
     justify-content: center;
