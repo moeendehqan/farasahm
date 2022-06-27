@@ -31,14 +31,14 @@ const Details = () => {
 
     const exportPdf = () => {
         html2canvas(document.querySelector("#detailsTable")).then(canvas => {
-           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-           const imgData = canvas.toDataURL('image/png');
-           const pdf = new jsPDF();
-           pdf.addImage(imgData, 'PNG', 0, 0);
-           pdf.save("download.pdf"); 
-       });
-   
-    }
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgProps= pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+        })}
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}

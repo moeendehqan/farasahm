@@ -1,0 +1,24 @@
+.TableNewbie{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.TableNewbie>div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'peydaRegular';
+    border-left: 1px solid #384bb4;
+    padding:0px 15px;
+}
+.TableNewbie>div:first-child{
+    border: 0px !important;
+}
+.TableNewbie>div>p:last-child{
+    color: #6d77c2;
+}
+.TableNewbie>div>p:first-child{
+    color: #384bb4;
+}

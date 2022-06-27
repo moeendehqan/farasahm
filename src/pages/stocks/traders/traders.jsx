@@ -12,7 +12,7 @@ import Alarm from '../../../components/alarm/alarm';
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
 import Popview from '../../../components/popview/popview';
-import Loader from '../../../components/loader/loader'
+import MiniLoader from '../../../components/loader/miniloader'
 import { useNavigate } from 'react-router-dom';
 import {TabulatorFull as Tabulator} from 'tabulator-tables';
 import XLSX from 'xlsx/dist/xlsx.full.min.js';
@@ -30,21 +30,21 @@ const Traders = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
-    const [loading, setLoading] = useState(true)
 
     window.XLSX = XLSX;
     window.jspdf  = require('jspdf');
 
+
     const exportPdf = () => {
         html2canvas(document.querySelector("#detailsTable")).then(canvas => {
-           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
            const imgData = canvas.toDataURL('image/png');
            const pdf = new jsPDF();
-           pdf.addImage(imgData, 'PNG', 0, 0);
-           pdf.save("download.pdf"); 
-       });
-   
-    }
+           const imgProps= pdf.getImageProperties(imgData);
+           const pdfWidth = pdf.internal.pageSize.getWidth();
+           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+           pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+           pdf.save("download.pdf");
+       })}
 
 
     if(dataTraders!=null){
@@ -57,13 +57,14 @@ const Traders = () => {
                 cellClick:function(e, cell){
                     handleHistoriCode(cell.getData().code, cell.getData().name)
                     },
+                    formatter:"money",formatterParams:{precision:false,}
                 },
-                {title:'قیمت',field:'price',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2},
+                {title:'قیمت',field:'price',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,formatter:"money",formatterParams:{precision:false}},
                 {title:'حجم',field:'volume',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,formatter:"progress",
                     formatterParams:{
                         min:Math.min(...(dataTraders.map(i=>i.volume*1))),
                         max:Math.max(...(dataTraders.map(i=>i.volume*1))),
-                        color:'#263bb0',
+                        color:side=='buy'?'#263bb0':'#9a3cab',
                         legend:true,
                         legendAlign:'justify'
                     },
@@ -87,7 +88,7 @@ const Traders = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetDataTraders = () =>{
-        setLoading(true)
+        setDataTraders(null)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/traders',
@@ -98,7 +99,6 @@ const Traders = () => {
                 side:side,
             }
         }).then(response=>{
-            setLoading(false)
             if(response.data.replay){
                 setDataTraders(response.data.data)
             }else{
@@ -109,7 +109,6 @@ const Traders = () => {
         
 
     const infoTraders = (code) =>{
-        setLoading(true)
         axios({
             method:'POST',
             url:serverAddress+'/stocks/infocode',
@@ -118,12 +117,10 @@ const Traders = () => {
                 code:code
             }
         }).then(response=>{
-            setLoading(false)
                 setMsg(response.data.msg)
                 })    }
         
         const handleHistoriCode = (code , name) =>{
-            setLoading(true)
             axios({
                 method:'POST',
                 url:serverAddress+'/stocks/historicode',
@@ -132,7 +129,6 @@ const Traders = () => {
                     code:code
                 }
             }).then(response=>{
-                setLoading(false)
                     const options = {
                         responsive: true,
                         plugins: {
@@ -170,8 +166,12 @@ const Traders = () => {
         <aside>
             <div>
             <h3>معاملگران</h3>
+            {dataTraders==null?
+            <div className='ContinerLoader'><MiniLoader/></div>
+            :null}
             </div>
             <div id='detailsTable'></div>
+
 
             <Alarm msg={msg} smsg={setMsg}/>
             <Popview contet={historiCode} scontent={setHistoriCode}/>
@@ -197,7 +197,6 @@ const Traders = () => {
                 </div>
 
             </div>
-            {loading?<Loader />:null}
         </aside>
     )
 }

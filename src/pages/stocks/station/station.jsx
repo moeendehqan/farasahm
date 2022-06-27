@@ -8,7 +8,7 @@ import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
 import Alarm from '../../../components/alarm/alarm';
 import './station.css'
-import Loader from '../../../components/loader/loader'
+import MiniLoader from '../../../components/loader/miniloader'
 import {TabulatorFull as Tabulator} from 'tabulator-tables';
 import XLSX from 'xlsx/dist/xlsx.full.min.js';
 import jsPDF from 'jspdf'
@@ -21,21 +21,21 @@ const Station = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     const [dataStation, setDataStation] = useState(null)
-    const [loading, setLoading] = useState(true)
+
 
     window.XLSX = XLSX;
     window.jspdf  = require('jspdf');
 
     const exportPdf = () => {
         html2canvas(document.querySelector("#detailsTable")).then(canvas => {
-           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-           const imgData = canvas.toDataURL('image/png');
-           const pdf = new jsPDF();
-           pdf.addImage(imgData, 'PNG', 0, 0);
-           pdf.save("download.pdf"); 
-       });
-   
-    }
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgProps= pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+        })}
 
     if(dataStation!=null){
         var table = new Tabulator("#detailsTable", {
@@ -66,7 +66,6 @@ const Station = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetStation = () =>{
-        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/station',
@@ -77,7 +76,6 @@ const Station = () => {
                 side:side
             }
         }).then(Response=>{
-            setLoading(false)
             if(Response.data.replay){
                 setDataStation(Response.data.data)
             }else{
@@ -93,6 +91,8 @@ useEffect(handleGetStation, [fromDate,toDate,side])
             <div>
                 <h3>ایستگاهای معاملاتی</h3>
             </div>
+            {dataStation==null?<div className='ContinerLoader'><MiniLoader/></div>:null}
+
             <div id='detailsTable'></div>
             <div className='StocksOption'>
                 <label>سمت</label>
@@ -114,7 +114,6 @@ useEffect(handleGetStation, [fromDate,toDate,side])
                     <button onClick={exportPdf}>PDF</button>
                 </div>
             </div>
-            {loading?<Loader />:null}
         </aside>
     )
 }

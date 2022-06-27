@@ -147,3 +147,10 @@
         opacity:0;
     }
 }
+
+
+.ContinerLoader{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

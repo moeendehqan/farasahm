@@ -13,7 +13,6 @@ const UpdateStocks = () =>{
     const [fileRegister, SetFileRegister] = useState(null)
     const [msg, setMsg] = useState(null)
     const [bulletin, setBulletin] = useState(null)
-    const [loading, setLoading] = useState(false)
     const [unavailable, setUnavailable] = useState(null)
 
     const handleGetDataUpdate = () =>{
@@ -46,7 +45,6 @@ const UpdateStocks = () =>{
         }else if(fileRegister===null){
             setMsg('فایل ریجیستر را بارگذاری کنید')
         }else{
-            setLoading(true)
             const formData = new FormData();
             formData.append('Trade',fileTrade)
             formData.append('Register',fileRegister)
@@ -57,7 +55,6 @@ const UpdateStocks = () =>{
                 data: formData,
                 config: {headers:{'content-type': 'multipart/form-data'}}
             }).then(response=>{
-                setLoading(false)
                 setMsg(response.data.msg)
                 if(response.data.replay){
                     setFileTrade(null)
@@ -125,7 +122,6 @@ const UpdateStocks = () =>{
                     <h2>{bulletin!=null?bulletin.cuntTrader.toLocaleString():<MiniLoader/>}</h2>
                 </div>
             </div>
-            {loading?<Loader />:null}
         </div>
     )
 }

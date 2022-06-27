@@ -12,14 +12,13 @@ import { Line } from "react-chartjs-2";
 import {Chart as ChartJS,CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend} from 'chart.js';
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas';
-import Loader from '../../../components/loader/loader'
+import MiniLoader from '../../../components/loader/miniloader'
 
 const Newbie = () =>{
     const username = getCookie('username')
     const [msg, setMsg] = useState(null)
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
-    const [chartNum, setChartNum] = useState(null)
     const [typeReport, setTypeReport] = useState('num')
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
     const options = {
@@ -45,24 +44,25 @@ const Newbie = () =>{
     const [dataVol, setDataVol] = useState(null)
     const [dataNumR, setDataNumR] = useState(null)
     const [dataVolR, setDataVolR] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [toDayNewbie,setToDayNewbie] = useState(null)
+    
+
 
     const exportPdf = () => {
         html2canvas(document.querySelector("#NewbieChart")).then(canvas => {
-           //document.body.appendChild(canvas);  // if you want see your screenshot in body.
-           const imgData = canvas.toDataURL('image/png');
-           const pdf = new jsPDF();
-           pdf.addImage(imgData, 'PNG', 0, 0);
-           pdf.save("download.pdf"); 
-       });
-   
-    }
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgProps= pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+        })}
 
     const handleFromDate = (date) =>{setFromData(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleNewbieData = () =>{
-        setLoading(true)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/newbie',
@@ -72,7 +72,7 @@ const Newbie = () =>{
                 toDate:toDate,
             }
         }).then(Response=>{
-            setLoading(false)
+
             if(Response.data.replay){
                 setDataNum({
                     labels: Response.data.data.map(d=>d.Date),
@@ -122,7 +122,31 @@ const Newbie = () =>{
                         backgroundColor: "rgba(198, 62, 241,0.2)",
                         borderColor: "rgba(45, 65, 253,1)"
                     }]                    })
-
+                const dataToday = (Response.data.ToDayNewBie[0])
+                setToDayNewbie(
+                    <div className='TableNewbie'>
+                        <div>
+                            <p>سرانه حجم جدیدالورود</p>
+                            <p>{(Math.floor(dataToday.newvol/dataToday.newnum)).toLocaleString()}</p>
+                        </div>
+                        <div>
+                            <p>نسبت تعداد جدیدالورود</p>
+                            <p>{(Math.round(dataToday.newnum/dataToday.allnum*10000)/100).toLocaleString()} %</p>
+                        </div>
+                        <div>
+                            <p>نسبت حجم جدیدالورود</p>
+                            <p>{(Math.round((dataToday.newvol/dataToday.allvol)*10000)/100).toLocaleString()} %</p>
+                        </div>
+                        <div>
+                            <p>تعداد جدیدالورود</p>
+                            <p>{(dataToday.newnum).toLocaleString()}</p>
+                        </div>
+                        <div>
+                            <p>حجم جدیدالورود</p>
+                            <p>{(dataToday.newvol).toLocaleString()}</p>
+                        </div>
+                    </div>
+                )
             }else{
                 setMsg(Response.data.msg)
                 setDataNum(null)
@@ -131,6 +155,10 @@ const Newbie = () =>{
         })
     }
 
+    const tableToday = () =>{
+
+
+    }
     useEffect(handleNewbieData, [fromDate, toDate])
 
     return(
@@ -138,7 +166,8 @@ const Newbie = () =>{
             <div>
                 <h3>جدید الورود ها</h3>
                 <div className='NewbieChart' id='NewbieChart'>
-                    {dataNum===null?null:
+                    {dataNum===null?
+                    <div className='ContinerLoader'><MiniLoader/></div>:
                         typeReport==='vol'?
                         <Line options={options} data={dataVol} />:
                         typeReport==='num'?
@@ -147,10 +176,12 @@ const Newbie = () =>{
                         <Line options={options} data={dataVolR} />:
                         <Line options={options} data={dataNumR} />
                     }
-
+                    {toDayNewbie}
                 </div>
                 <Alarm msg={msg} smsg={setMsg}/>
             </div>
+
+
 
             <div className='StocksOption'>
                 <label>نوع</label>
@@ -173,7 +204,6 @@ const Newbie = () =>{
                     <button onClick={exportPdf}>PDF</button>
                 </div>
             </div>
-            {loading?<Loader />:null}
         </aside>
     )
 }
