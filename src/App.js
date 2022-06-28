@@ -3,6 +3,8 @@ import './App.css';
 import Home from './pages/home/home'
 import Section from './pages/section/section'
 import Etf from './pages/eft/eft'
+import Nav from './pages/eft/nav/nav';
+import DashboardEtf from './pages/eft/dashboard/dashboard';
 import Portfoli from './pages/portfoli/portfoli'
 import Update from './pages/portfoli/update/update'
 import CustomerReviews from './pages/portfoli/CustomerReviews/CustomerReviews'
@@ -26,7 +28,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/section' element={<Section />}/>
-        <Route path='/etf' element={<Etf />}/>
+        <Route path='/etf' element={<Etf />}>
+          <Route path='nav' element={<Nav />}/>
+          <Route path='dashboard' element={<DashboardEtf />}/>
+        </Route>
         <Route path='/portfoli' element={<Portfoli />}>
           <Route path='update' element={<Update />}/>
           <Route path='customerreviews' element={<CustomerReviews />}/>
