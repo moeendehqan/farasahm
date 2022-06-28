@@ -1,0 +1,38 @@
+.EtfOption{
+    display:flex;
+    flex-direction:column;
+    position: absolute;
+    width:210px; /*total = 250w - 20*2padding  */
+    background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
+    border-radius: 15px;
+    right:60px;
+    top:510px;
+    padding:20px 20px;
+}
+
+.EtfOption label{
+    font-family: 'peydaRegular';
+    text-align:right;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.EtfOption>select{
+    text-align: right;
+    height: 25px;
+    border: 0px;
+    border-radius: 15px;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef
+}
+
+.EtfOption>input{
+    border: 0px;
+    height: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef;
+}
+
+

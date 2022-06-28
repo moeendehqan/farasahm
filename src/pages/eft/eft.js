@@ -3,7 +3,7 @@ import Menu from "../../components/menu/menu"
 import { getCookie } from '../../components/cookie'
 import HandleAccount from '../../components/cheakaccount'
 import { Outlet } from "react-router-dom"
-
+import './eft.css'
 
 const Eft = () => {
     HandleAccount('eft')

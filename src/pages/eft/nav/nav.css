@@ -1,0 +1,17 @@
+.EtfNavRDTContiner{
+    display:flex;
+    flex-direction:row-reverse;
+    justify-content: space-between;
+}
+.EtfNavRDTContiner>p{
+
+}
+.EtfNavRDTN{
+    background-color: #9b3cac;
+
+}
+.EtfNavRDTP{
+    background-color:#263bb0;
+
+    
+}
