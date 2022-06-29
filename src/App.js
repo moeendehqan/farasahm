@@ -5,6 +5,9 @@ import Section from './pages/section/section'
 import Etf from './pages/eft/eft'
 import Nav from './pages/eft/nav/nav';
 import DashboardEtf from './pages/eft/dashboard/dashboard';
+import Volume from './pages/eft/volume/volume';
+import Return from './pages/eft/return/return';
+import Reserve from './pages/eft/reserve/reserve'
 import Portfoli from './pages/portfoli/portfoli'
 import Update from './pages/portfoli/update/update'
 import CustomerReviews from './pages/portfoli/CustomerReviews/CustomerReviews'
@@ -31,6 +34,9 @@ function App() {
         <Route path='/etf' element={<Etf />}>
           <Route path='nav' element={<Nav />}/>
           <Route path='dashboard' element={<DashboardEtf />}/>
+          <Route path='volume' element={<Volume />}/>
+          <Route path='return' element={<Return />}/>
+          <Route path='reserve' element={<Reserve />}/>
         </Route>
         <Route path='/portfoli' element={<Portfoli />}>
           <Route path='update' element={<Update />}/>

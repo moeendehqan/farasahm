@@ -18,6 +18,7 @@ const Nav = () => {
     const username = getCookie('username')
     const [fromDate, setFromDate] = useState(false)
     const [toDate, setToDate] = useState(false)
+    console.log(fromDate)
 
 
     const handleFromDate = (date) =>{setFromDate(DatePickerToInt(date))}
@@ -33,7 +34,6 @@ const Nav = () => {
                 toDate:toDate,
             }
         }).then(Response=>{
-            console.log(Response.data)
             var table = new Tabulator("#detailsTable", {
                 data:Response.data,
                 columnHeaderSortMulti:true,
@@ -49,9 +49,9 @@ const Nav = () => {
                         var value = cell.getValue();
                         if (value<0){
 
-                            return("<div class='EtfNavRDTContiner'><div class='EtfNavRDTN' style='width:"+((value*-1)/0.05).toString()+'%'+"'> </div><p>"+ value.toString()+'%' +"</p></div>")
+                            return("<div class='EtfNavRDTContiner'><div class='EtfNavRDTN' style='width:"+((value*-1)/0.02).toString()+'%'+"'> </div><p>"+ value.toString()+'%' +"</p></div>")
                         }else{
-                            return("<div class='EtfNavRDTContiner'><div class='EtfNavRDTP' style='width:"+(value/0.05).toString()+'%'+"'></div><p>"+ value.toString()+'%' +"</p></div>")
+                            return("<div class='EtfNavRDTContiner'><div class='EtfNavRDTP' style='width:"+(value/0.02).toString()+'%'+"'></div><p>"+ value.toString()+'%' +"</p></div>")
                         }
                     }
                  
@@ -62,8 +62,8 @@ const Nav = () => {
             })
         })
     }
-    'date','final_price','close_price_change_percent','deffNav','RatedeffNav','dateInt'
-    useEffect(handleGetNav,[])
+
+    useEffect(handleGetNav,[fromDate,toDate])
 
     return(
         <aside>
