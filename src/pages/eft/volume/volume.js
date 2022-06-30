@@ -8,6 +8,9 @@ import DatePicker from 'react-multi-date-picker';
 import persian from "react-date-object/calendars/persian"
 import persian_fa from 'react-date-object/locales/persian_fa'
 import { DatePickerToInt } from '../../../components/datetoint';
+import XLSX from 'xlsx/dist/xlsx.full.min.js';
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 
 const Volume = () =>{
     const username = getCookie('username')
@@ -36,6 +39,20 @@ const Volume = () =>{
                 }
             }
         }
+    window.XLSX = XLSX;
+    window.jspdf  = require('jspdf');
+
+    const exportPdf = () => {
+        html2canvas(document.querySelector("#ChartVolume")).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            const imgProps= pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("download.pdf");
+        })}
+
     const handleFromDate = (date) =>{setFromDate(DatePickerToInt(date))}
     const handleToDate = (date) =>{setToDate(DatePickerToInt(date))}
 
@@ -91,13 +108,20 @@ const Volume = () =>{
     useEffect(handleGetVolume,[fromDate,toDate])
     return(
         <aside>
-            {chartVolume}
+            <div id='ChartVolume'>
+                {chartVolume}
+            </div>
+            
 
             <div className='EtfOption'>
                 <label>از تاریخ</label>
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
                 <label>تا تاریخ</label>
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
+                <label>دریافت</label>
+                <div className='StocksDownloadBox'>
+                    <button onClick={exportPdf}>PDF</button>
+                </div>
             </div>
         </aside>
     )

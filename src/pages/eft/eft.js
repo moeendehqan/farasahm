@@ -4,10 +4,30 @@ import { getCookie } from '../../components/cookie'
 import HandleAccount from '../../components/cheakaccount'
 import { Outlet } from "react-router-dom"
 import './eft.css'
+import axios from "axios"
+import { serverAddress } from "../../config/config"
+import { useEffect, useState } from "react"
 
 const Eft = () => {
+    const [fullUser, setFullUser] = useState('')
+
+
     HandleAccount('eft')
     const username = getCookie('username')
+    const handleName = ()=>{
+        axios({
+            method:'POST',
+            url:serverAddress+'/fulluser',
+            data:{
+                username:username
+            }
+        }).then(Response=>{
+            setFullUser(Response.data[0])
+        })
+    }
+
+    useEffect(handleName,[])
+
     const menuProperties =[
         {key:1 ,title:'داشبورد', navigate:'dashboard' ,icon:require('../../icon/dashboard.png')},
         {key:2 ,title:'NAV', navigate:'nav' ,icon:require('../../icon/update.png')},
@@ -19,7 +39,7 @@ const Eft = () => {
 
     return(
         <div>
-            <Header section='صندوق' fullName={username} />
+            <Header section='صندوق' fullName={fullUser.etfSymbol} />
             <div className='LayoutBasic'>
                     <Menu menuProperties={menuProperties}/>
                     <Outlet/>
