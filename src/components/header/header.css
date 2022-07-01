@@ -69,8 +69,12 @@
     width: 50px;
 }
 
-.HeaderMenu{
-    writing-mode: vertical-rl;
+
+.HeaderMenu li{
+    list-style-type: none;
+}
+
+.HeaderMenuPoint{
     margin-left: 10px;
     display: flex;
     justify-content: center;
@@ -84,6 +88,23 @@
     flex-direction: column;
 }
 
+.HeaderMenu ul ul{
+    display:none;
+    position:absolute;
+    right:10px;
+    background-color:#fff;
+    padding:5px 10px;
+    border-radius: 5px;
+}
+.HeaderMenu ul ul li{
+    margin: 5px 10px;
+    font-family: 'peydaRegular';
+    text-align: right;
+    cursor: pointer;
+}
+.HeaderMenu>ul>li:hover ul{
+    display:block;
+}
 
 .HeaderSerche>input{
     border: 0px;

@@ -20,7 +20,7 @@ const Stocks = () => {
             method:'POST',
             url:serverAddress+'/fulluser',
             data:{
-                username:username
+                username:username,
             }
         }).then(Response=>{
             setFullUser(Response.data[0])
@@ -43,7 +43,7 @@ const Stocks = () => {
     return(
         <div>
             
-            <Header section='امور سهام' fullName={fullUser.etfSymbol}/>
+            <Header section='امور سهام' fullName={fullUser.stocksSymbol}/>
                 <div className='LayoutBasic'>
                     <Menu menuProperties={menuProperties}/>
                     <Outlet/>

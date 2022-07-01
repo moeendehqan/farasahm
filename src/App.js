@@ -4,7 +4,6 @@ import Home from './pages/home/home'
 import Section from './pages/section/section'
 import Etf from './pages/eft/eft'
 import Nav from './pages/eft/nav/nav';
-import DashboardEtf from './pages/eft/dashboard/dashboard';
 import Volume from './pages/eft/volume/volume';
 import Return from './pages/eft/return/return';
 import Reserve from './pages/eft/reserve/reserve'
@@ -33,7 +32,6 @@ function App() {
         <Route path='/section' element={<Section />}/>
         <Route path='/etf' element={<Etf />}>
           <Route path='nav' element={<Nav />}/>
-          <Route path='dashboard' element={<DashboardEtf />}/>
           <Route path='volume' element={<Volume />}/>
           <Route path='return' element={<Return />}/>
           <Route path='reserve' element={<Reserve />}/>

@@ -19,7 +19,7 @@ const Eft = () => {
             method:'POST',
             url:serverAddress+'/fulluser',
             data:{
-                username:username
+                username:username,
             }
         }).then(Response=>{
             setFullUser(Response.data[0])
@@ -29,11 +29,10 @@ const Eft = () => {
     useEffect(handleName,[])
 
     const menuProperties =[
-        {key:1 ,title:'داشبورد', navigate:'dashboard' ,icon:require('../../icon/dashboard.png')},
-        {key:2 ,title:'NAV', navigate:'nav' ,icon:require('../../icon/update.png')},
-        {key:3 ,title:'حجم معاملات', navigate:'volume' ,icon:require('../../icon/traders.png')},
-        {key:4 ,title:'بازدهی', navigate:'return' ,icon:require('../../icon/newbie.png')},
-        {key:5 ,title:'دارایی کد رزور', navigate:'reserve' ,icon:require('../../icon/sediment.png')}
+        {key:1 ,title:'NAV', navigate:'nav' ,icon:require('../../icon/update.png')},
+        {key:2 ,title:'حجم معاملات', navigate:'volume' ,icon:require('../../icon/traders.png')},
+        {key:3 ,title:'بازدهی', navigate:'return' ,icon:require('../../icon/newbie.png')},
+        {key:4 ,title:'دارایی کد رزور', navigate:'reserve' ,icon:require('../../icon/sediment.png')}
     ]
 
 
