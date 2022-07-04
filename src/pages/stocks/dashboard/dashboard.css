@@ -4,22 +4,27 @@
     justify-content: space-between;
     flex-wrap: wrap-reverse;
 }
-
+.DashboardDateString{
+    font-family: 'peydaRegular';
+    text-align: right;
+    color: #394bb4;
+    font-size: 1rem;
+    margin: 15px;
+}
 .DashboardTopToday>div{
     display: flex;
     width: 46%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #f3f0f0;
-    border-radius: 15px;
+
     padding: 5px;
     margin: 0px 1%;
 
 }
 .DashboardTopToday>div>h6{
-    font-family: 'peydaMedium';
-    font-size: 1.2rem;
+    font-family: 'peydaRegular';
+    font-size: 1.1rem;
     color: #394bb4;
 }
 .DashboardRow2{

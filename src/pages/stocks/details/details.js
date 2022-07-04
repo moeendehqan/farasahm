@@ -144,6 +144,10 @@ const Details = () => {
 
     return(
         <aside className='Details'>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             
             <div id='detailsTable'></div>
 
@@ -168,11 +172,6 @@ const Details = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
             </div>}
             {loading?<Loader />:null}
         </aside>

@@ -88,6 +88,7 @@ const Traders = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetDataTraders = () =>{
+        console.log('start')
         setDataTraders(null)
         axios({
             method: 'POST',
@@ -143,11 +144,11 @@ const Traders = () => {
                         },
                       };
                     const data = {
-                        labels: response.data.data.map(d=>d.date),
+                        labels: response.data.data.map(d=>d.Date),
                         datasets: [
                           {
                             label: "حجم",
-                            data: response.data.data.map(d=>d.cum),
+                            data: response.data.data.map(d=>d.Saham),
                             fill: true,
                             backgroundColor: "rgba(198, 62, 241,0.2)",
                             borderColor: "rgba(45, 65, 253,1)"
@@ -166,6 +167,10 @@ const Traders = () => {
         <aside>
             <div>
             <h3>معاملگران</h3>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             {dataTraders==null?
             <div className='ContinerLoader'><MiniLoader/></div>
             :null}
@@ -191,11 +196,6 @@ const Traders = () => {
                     تا تاریخ
                 </label>
                 <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
-
             </div>
         </aside>
     )

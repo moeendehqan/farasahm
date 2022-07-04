@@ -10,6 +10,7 @@ import MiniLoader from '../../../components/loader/miniloader'
 const UpdateStocks = () =>{
     const username = getCookie('username')
     const [daily, SetDaily] = useState(null)
+    const [registerDaily, SetRegisterDaily] = useState(null)
     const [msg, setMsg] = useState(null)
     const [bulletin, setBulletin] = useState(null)
     const [unavailable, setUnavailable] = useState(null)
@@ -40,10 +41,11 @@ const UpdateStocks = () =>{
 
     const handleSubmitdaily = async() =>{
         if (daily===null){
-            setMsg('فایل معاملات را بارگذاری کنید')
+            setMsg('(TCR) فایل معاملات روزانه')
         }else{
             const formData = new FormData();
             formData.append('daily',daily)
+            formData.append('registerdaily',registerDaily)
             formData.append('user',username)
             await axios({
                 method: 'post',
@@ -81,8 +83,12 @@ const UpdateStocks = () =>{
                 <div>
                     <div>
                         <label>
-                            <p>فایل معاملات روزانه</p>
+                            <p>(TCR) فایل معاملات روزانه</p>
                             <input type='file' onChange={e=>SetDaily(e.target.files[0])}></input>
+                        </label>
+                        <label>
+                            <p>فایل رجیستری روزانه سهام عادی</p>
+                            <input type='file' onChange={e=>SetRegisterDaily(e.target.files[0])}></input>
                         </label>
                     </div>
                         <button onClick={handleSubmitdaily}>ثبت</button>

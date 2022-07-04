@@ -165,6 +165,9 @@ const Newbie = () =>{
         <aside>
             <div>
                 <h3>جدید الورود ها</h3>
+                <div className='StocksDownloadBox'>
+                    <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+                </div>
                 <div className='NewbieChart' id='NewbieChart'>
                     {dataNum===null?
                     <div className='ContinerLoader'><MiniLoader/></div>:
@@ -199,10 +202,6 @@ const Newbie = () =>{
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
             </div>
         </aside>
     )

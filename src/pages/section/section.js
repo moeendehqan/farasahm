@@ -33,7 +33,7 @@ const Section = () => {
                 <div className='Section'>
                     <div>
                         <button disabled={!account.stocks} onClick={()=>handlenav('/stocks/dashboard')}>مدیریت سهام</button>
-                        <button disabled={!account.eft} onClick={()=>handlenav('/etf/nav')}><p>صندوق</p><p>(بزودی)</p></button>
+                        <button disabled={!account.eft} onClick={()=>handlenav('/etf/nav')}><p>صندوق</p></button>
                         <button disabled={!account.portfoli} onClick={()=>handlenav('/portfoli')}><p>پرتفوگردانی</p><p>(بزودی)</p></button>
                     </div>
                 </div>

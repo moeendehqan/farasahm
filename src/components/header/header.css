@@ -86,6 +86,13 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    margin-top: -10px;
+    margin-bottom: -9px;
+    margin-left: 14px;
+}
+.HeaderMenuContiner{
+    display: flex;
+    flex-direction: column;
 }
 
 .HeaderMenu ul ul{
@@ -105,7 +112,11 @@
 .HeaderMenu>ul>li:hover ul{
     display:block;
 }
-
+.HeaderButtom{
+    margin-left: 20px;
+    height: 30px;
+    cursor: pointer;
+}
 .HeaderSerche>input{
     border: 0px;
     height: 30px;
@@ -113,7 +124,7 @@
     text-align: center;
     font-family:'peydaRegular';
     background-color: #ffffff;
-    margin-left: 35px;
+    margin-left: 20px;
     background-image: url('../../icon/serche.png');
     background-size:20px;
     background-repeat: no-repeat;

@@ -91,6 +91,10 @@ useEffect(handleGetStation, [fromDate,toDate,side])
             <div>
                 <h3>ایستگاهای معاملاتی</h3>
             </div>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             {dataStation==null?<div className='ContinerLoader'><MiniLoader/></div>:null}
 
             <div id='detailsTable'></div>
@@ -108,11 +112,6 @@ useEffect(handleGetStation, [fromDate,toDate,side])
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
             </div>
         </aside>
     )

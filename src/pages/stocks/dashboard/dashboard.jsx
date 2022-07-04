@@ -6,6 +6,10 @@ import './dashboard.css'
 import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,defaults} from 'chart.js';
 import MiniLoader from '../../../components/loader/miniloader';
 import { Bar } from 'react-chartjs-2';
+import { DateObject } from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
+
 const Dashboard = () => {
     const username = getCookie('username')
     const [lastUpdate, setLastUpdate] = useState(null)
@@ -18,7 +22,39 @@ const Dashboard = () => {
     const [SedmentVolumeps, setSedmentVolumeps] = useState(null)
     const [SedmentVolumepy, setSedmentVolumepy] = useState(null)
     const [tablo, setTablo] = useState(null)
+    const [dateString, setDateString] = useState(null)
 
+    const dateShamsi = ()=>{
+        var date = (new DateObject(lastUpdate, { calendar: persian, locale: persian_fa }))
+        if(date.format('dddd')=='Sunday'){var dddd = 'یکشنیه'
+        }else if(date.format('dddd')=='Saturday'){var dddd = 'شنبه'
+        }else if(date.format('dddd')=='Monday'){var dddd = 'دوشنبه'
+        }else if(date.format('dddd')=='Tuesday'){var dddd = 'سه شنبه'
+        }else if(date.format('dddd')=='Wenesday'){var dddd = 'چهارشنبه'
+        }else if(date.format('dddd')=='Thursday'){var dddd = 'پنجشنبه'
+        }else{var dddd = 'جمعه'}
+        if(date.monthIndex==0){var mm = 'فروردین'
+        }else if(date.monthIndex==1){var mm = 'اردیبهشت'
+        }else if(date.monthIndex==2){var mm = 'خرداد'
+        }else if(date.monthIndex==3){var mm = 'تیر'
+        }else if(date.monthIndex==4){var mm = 'مرداد'
+        }else if(date.monthIndex==5){var mm = 'شهریور'
+        }else if(date.monthIndex==6){var mm = 'مهر'
+        }else if(date.monthIndex==7){var mm = 'آبان'
+        }else if(date.monthIndex==8){var mm = 'آذر'
+        }else if(date.monthIndex==9){var mm = 'دی'
+        }else if(date.monthIndex==10){var mm = 'بهمن'
+        }else{var mm = 'اسفند'}
+
+
+        if(lastUpdate!=null){
+            setDateString(
+                <p className='DashboardDateString'>{dddd} , {(date.day).toLocaleString()} {mm} {(date.year).toLocaleString()}</p>
+            )
+        }
+    }
+
+    useEffect(dateShamsi,[lastUpdate])
 
     const topBuyOptions = {
         responsive: true,
@@ -51,7 +87,7 @@ const Dashboard = () => {
             setTopBuy({
                 labelsTopBuy,
                 datasets: [{
-                    data: response.data.topBuy.Balance,
+                    data: response.data.topBuy.Volume,
                     backgroundColor: '#5aae40',
                 }]            })
 
@@ -59,13 +95,14 @@ const Dashboard = () => {
             setTopSel({
                 labelsTopSel,
                 datasets: [{
-                    data: response.data.topSel.Balance,
+                    data: response.data.topSel.Volume,
                     backgroundColor: '#ae4040',
                 }]}            )
             
             /**/
             axios({method: "POST",url: serverAddress+'/stocks/newbie',data:{username:username,fromDate:false,toDate:false,}
             }).then(newbie=>{
+                console.log(newbie.data)
                 setNewBie(newbie.data.data.find(d=>d.Date==response.data.lastUpdate))     
                 /**/
                 axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:3,}
@@ -80,8 +117,8 @@ const Dashboard = () => {
                             /**/
                             axios({method: 'POST',url: serverAddress+'/stocks/tablo',data: {username:username,date:response.data.lastUpdate,}
                             }).then(tabloApi=>{
-                                setTablo(tabloApi.data)
-
+                                if(tabloApi.data.Error!="data not found"){
+                                setTablo(tabloApi.data)}
                             })
                         })
                     })
@@ -93,6 +130,7 @@ const Dashboard = () => {
     useEffect(handleDashboard,[])
     return(
         <div className="dashboard">
+            {dateString}
             <div className='DashboardTopToday'>
                 <div>
                     <h6>ده خریدار بزرگ</h6>

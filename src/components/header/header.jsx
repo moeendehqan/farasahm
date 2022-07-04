@@ -25,6 +25,13 @@ const Header = (props)=>{
                     <h1>فراسهم</h1>
                     <h4>{props.section}</h4>
                 </div>
+                {props.HeaderButtom==null?null:
+                props.HeaderButtom.map(item=>{
+                    return(
+                        <img className='HeaderButtom' key={item.key} src={item.icon} onClick={()=>navigate(item.navigate)}/>
+                    )
+                })
+                }
                 {props.section==='امور سهام'?<SercheStocks/>:null}
 
                 <div className='HeaderWellcom'>
@@ -37,7 +44,11 @@ const Header = (props)=>{
                 <div className='HeaderMenu'>
                     <ul>
                         <li>
-                            <span className='HeaderMenuPoint'>...</span>
+                            <div className='HeaderMenuContiner'>
+                                <span className='HeaderMenuPoint'>.</span>
+                                <span className='HeaderMenuPoint'>.</span>
+                                <span className='HeaderMenuPoint'>.</span>
+                            </div>
                             <ul>
                                 <li><span onClick={handlehome}>خانه</span></li>
                                 <li><span >تنظیمات</span></li>
