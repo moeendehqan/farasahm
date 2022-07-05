@@ -108,6 +108,9 @@ const Volume = () =>{
     useEffect(handleGetVolume,[fromDate,toDate])
     return(
         <aside>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             <div id='ChartVolume'>
                 {chartVolume}
             </div>
@@ -118,10 +121,6 @@ const Volume = () =>{
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
                 <label>تا تاریخ</label>
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
             </div>
         </aside>
     )

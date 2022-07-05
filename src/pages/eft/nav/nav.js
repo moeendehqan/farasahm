@@ -90,6 +90,10 @@ if(dataNav!=null){
 
     return(
         <aside>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             <div id='detailsTable'></div>
             
             <div className='EtfOption'>
@@ -97,11 +101,6 @@ if(dataNav!=null){
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
                 <label>تا تاریخ</label>
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
             </div>
             <Alarm msg={msg} smsg={setMsg}/>
         </aside>

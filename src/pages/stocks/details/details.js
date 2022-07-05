@@ -24,7 +24,7 @@ const Details = () => {
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     const [loading, setLoading] = useState(true)
-
+    const [shortData, setShortData] = useState(null)
 
     window.XLSX = XLSX;
     window.jspdf  = require('jspdf');
@@ -45,6 +45,9 @@ const Details = () => {
 
 
     if(listTrade.length>0){
+        var Volume =listTrade.map(i=>i.Volume)
+        var vpmx = Math.max(...Volume)
+        var vpmn = Math.min(...Volume)
 
         var table = new Tabulator("#detailsTable", {
             data:listTrade,
@@ -52,14 +55,15 @@ const Details = () => {
             columns:[
                 {title:"index", field:"index",visible:false},
                 {title:"حجم", field:"Volume",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
-                formatter:"progress",
-                formatterParams:{
-                    min:Math.min(...(listTrade.map(i=>i.Volume*1))),
-                    max:Math.max(...(listTrade.map(i=>i.Volume*1))),
-                    color:(vol)=>{return vol>0?'#263bb0':'#9546af'},
-                    legend:true,
-                    legendAlign:'justify'
-                                },
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    if(value>0){
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/vpmx)*50).toString()+'%'+"'> </div><p>"+ value.toString()+"</p></div>")
+                    }else{
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartneg' style='width:"+(((value)/vpmn)*50).toString()+'%'+"'> </div><p>"+ value.toString()+"</p></div>")
+                    }
+
+                },
                 bottomCalc:"sum",
                 },
                 {title:"قیمت", field:"Price",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
@@ -95,7 +99,7 @@ const Details = () => {
                 setLoading(false)
                 if(Response.data.replay){
                     setListTrade(Response.data.data)
-
+                    setShortData(Response.data.shortData)
                 }
             })
         }
@@ -118,6 +122,7 @@ const Details = () => {
                 setLoading(false)
                 if(Response.data.replay){
                     setListTrade(Response.data.data)
+                    setShortData(Response.data.shortData)
                 }
             })
         }
@@ -148,6 +153,21 @@ const Details = () => {
                 <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
                 <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
             </div>
+            {shortData==null?null:
+            <div className='StocksDitailsShortData'>
+                <div>
+                    <p>مانده</p>
+                    <p>{shortData.vol}</p>
+                </div>
+                <div>
+                    <p>میانگین خرید</p>
+                    <p>{shortData.avgprcb}</p>
+                </div>
+                <div>
+                    <p>میانگین فروش</p>
+                    <p>{shortData.avgprcs}</p>
+                </div>
+            </div>}
             
             <div id='detailsTable'></div>
 

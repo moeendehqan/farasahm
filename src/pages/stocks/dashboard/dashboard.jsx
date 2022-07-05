@@ -102,8 +102,8 @@ const Dashboard = () => {
             /**/
             axios({method: "POST",url: serverAddress+'/stocks/newbie',data:{username:username,fromDate:false,toDate:false,}
             }).then(newbie=>{
-                console.log(newbie.data)
-                setNewBie(newbie.data.data.find(d=>d.Date==response.data.lastUpdate))     
+                console.log(newbie.data.ToDayNewBie[0])
+                setNewBie(newbie.data.ToDayNewBie[0])     
                 /**/
                 axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:3,}
                 }).then(sedimentpt=>{

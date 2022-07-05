@@ -66,6 +66,7 @@ const Station = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetStation = () =>{
+        console.log(fromDate)
         axios({
             method: 'POST',
             url:serverAddress+'/stocks/station',

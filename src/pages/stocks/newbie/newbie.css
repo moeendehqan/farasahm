@@ -22,3 +22,17 @@
 .TableNewbie>div>p:first-child{
     color: #384bb4;
 }
+
+.StocksTableChartContiner{
+    display:flex;
+    flex-direction:row-reverse;
+    justify-content: space-between;
+}
+
+.StocksTableChart{
+    background-color:#263bb0;
+}
+
+.StocksTableChartneg{
+    background-color: #9b3cac;
+}

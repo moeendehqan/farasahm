@@ -142,6 +142,9 @@ const Reserve = ()=>{
 
     return(
         <aside>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             <div id="tableReserve">
                 {chart}
             </div>
@@ -163,10 +166,7 @@ const Reserve = ()=>{
                     })
                     }
                 </datalist>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
+
             </div>
         </aside>
     )

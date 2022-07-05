@@ -85,18 +85,17 @@ if(dataTable!=null){
 
     return(
         <aside>
+            <div className='StocksDownloadBox'>
+                <img src={require('../../../icon/xlsx.png')} alt='pdf' onClick={()=>{table.download("xlsx", "data.xlsx")}}></img>
+                <img src={require('../../../icon/pdf.png')} alt='xlsx' onClick={exportPdf}></img>
+            </div>
             <div id='detailsTable'></div>
             <Alarm msg={msg} smsg={setMsg}/>
             <div className='EtfOption'>
                 <label>تاریخ</label>
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleOnDate}/>
                 <label>(%) هدف سالانه</label>
-                <input value={target} type='number' className="custom-input" onChange={e=>setTarget(e.target.value)}></input>
-                <label>دریافت</label>
-                <div className='StocksDownloadBox'>
-                    <button onClick={()=>{table.download("xlsx", "data.xlsx")}}>XLSX</button>
-                    <button onClick={exportPdf}>PDF</button>
-                </div>
+                <input value={target} type='number' step='0.1' className="custom-input" onChange={e=>setTarget(e.target.value)}></input>
             </div>
         </aside>
     )
