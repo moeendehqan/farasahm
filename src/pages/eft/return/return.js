@@ -18,8 +18,15 @@ const Return = () =>{
     const [msg, setMsg] = useState(null)
     const [target, setTarget] = useState(21)
     const [dataTable, setDataTable] = useState(null)
+    const [periodList, setPeriodList] = useState([1,7,14,30,90,180,365])
+    const [addPeriodList, setAddPeriodList] = useState(null)
+    
     window.XLSX = XLSX;
     window.jspdf  = require('jspdf');
+
+    const handlePeriodList = () =>{
+        setPeriodList([...periodList,addPeriodList])
+    }
 
     const exportPdf = () => {
         html2canvas(document.querySelector("#detailsTable")).then(canvas => {
@@ -43,7 +50,8 @@ const Return = () =>{
             data:{
                 username:username,
                 onDate:onDate,
-                target:target
+                target:target,
+                periodList:periodList,
             }
         }).then((Response)=>{
             if(Response.data.replay){
@@ -81,7 +89,7 @@ if(dataTable!=null){
         layout: "fitColumns",
     })}
 
-    useEffect(handleGetReturn,[onDate,target])
+    useEffect(handleGetReturn,[onDate,target,periodList])
 
     return(
         <aside>
@@ -96,6 +104,11 @@ if(dataTable!=null){
                 <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleOnDate}/>
                 <label>(%) هدف سالانه</label>
                 <input value={target} type='number' step='0.1' className="custom-input" onChange={e=>setTarget(e.target.value)}></input>
+                <div className="EtfAddBox">
+                <label>(روز)دوره</label>
+                <input  type='number' step='1' className="custom-input" onChange={e=>setAddPeriodList(e.target.value)}></input>
+                <button onClick={handlePeriodList}>افزودن</button>
+                </div>
             </div>
         </aside>
     )

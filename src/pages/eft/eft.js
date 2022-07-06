@@ -32,6 +32,7 @@ const Eft = () => {
         {key:1 ,title:'NAV', navigate:'nav' ,icon:require('../../icon/update.png')},
         {key:2 ,title:'حجم معاملات', navigate:'volume' ,icon:require('../../icon/traders.png')},
         {key:3 ,title:'بازدهی', navigate:'return' ,icon:require('../../icon/newbie.png')},
+        {key:5 ,title:'مقایسه', navigate:'allreturn' ,icon:require('../../icon/newbie.png')},
         {key:4 ,title:'دارایی کد رزور', navigate:'reserve' ,icon:require('../../icon/sediment.png')}
     ]
 

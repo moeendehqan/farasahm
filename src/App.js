@@ -6,6 +6,7 @@ import Etf from './pages/eft/eft'
 import Nav from './pages/eft/nav/nav';
 import Volume from './pages/eft/volume/volume';
 import Return from './pages/eft/return/return';
+import AllReturn from './pages/eft/allreturn/allreturn';
 import Reserve from './pages/eft/reserve/reserve'
 import Portfoli from './pages/portfoli/portfoli'
 import Update from './pages/portfoli/update/update'
@@ -34,6 +35,7 @@ function App() {
           <Route path='nav' element={<Nav />}/>
           <Route path='volume' element={<Volume />}/>
           <Route path='return' element={<Return />}/>
+          <Route path='allreturn' element={<AllReturn />}/>
           <Route path='reserve' element={<Reserve />}/>
         </Route>
         <Route path='/portfoli' element={<Portfoli />}>

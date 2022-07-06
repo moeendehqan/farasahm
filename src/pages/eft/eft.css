@@ -6,10 +6,40 @@
     background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
     border-radius: 15px;
     right:60px;
-    top:450px;
+    top:510px;
     padding:20px 20px;
 }
 
+.EtfAddBox{
+    margin: 15px 0px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+.EtfAddBox>button{
+    margin: 15px 0px;
+    width: 40px;
+    height: 25px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #e7d8ef;
+    font-family: 'peydaRegular';
+    font-size: 0.7rem;
+}
+.EtfAddBox>input{
+    border: 0px;
+    height: 25px;
+    width: 60px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef;
+}
+.EtfAddBox>label{
+    margin: 0px !important;
+
+}
 .EtfOption label{
     font-family: 'peydaRegular';
     text-align:right;
