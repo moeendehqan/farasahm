@@ -59,14 +59,15 @@ const Traders = () => {
                     },
                     formatter:"money",formatterParams:{precision:false,}
                 },
-                {title:'قیمت',field:'price',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,formatter:"money",formatterParams:{precision:false}},
-                {title:'حجم',field:'volume',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,formatter:"progress",
-                    formatterParams:{
-                        min:Math.min(...(dataTraders.map(i=>i.volume*1))),
-                        max:Math.max(...(dataTraders.map(i=>i.volume*1))),
-                        color:side=='buy'?'#263bb0':'#9a3cab',
-                        legend:true,
-                        legendAlign:'justify'
+                {title:'قیمت',field:'PriceSide',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,formatter:"money",formatterParams:{precision:false}},
+                {title:'حجم',field:'volume',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                    formatter:function(cell, formatterParams){
+                        var value = cell.getValue();
+                        if(side=='buy'){
+                            return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/Math.max(...(dataTraders.map(i=>i.volume*1))))*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                        }else{
+                            return("<div class='StocksTableChartContiner'><div class='StocksTableChartneg' style='width:"+(((value)/Math.max(...(dataTraders.map(i=>i.volume*1))))*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                        }
                     },
                     cellClick:function(e, cell){
                         handleDetailsTrade(cell.getData().code)

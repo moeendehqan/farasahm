@@ -62,7 +62,6 @@ const Details = () => {
                     }else{
                         return("<div class='StocksTableChartContiner'><div class='StocksTableChartneg' style='width:"+(((value)/vpmn)*50).toString()+'%'+"'> </div><p>"+ value.toString()+"</p></div>")
                     }
-
                 },
                 bottomCalc:"sum",
                 },
