@@ -8,10 +8,8 @@ import Volume from './pages/eft/volume/volume';
 import Return from './pages/eft/return/return';
 import AllReturn from './pages/eft/allreturn/allreturn';
 import Reserve from './pages/eft/reserve/reserve'
-import Portfoli from './pages/portfoli/portfoli'
-import Update from './pages/portfoli/update/update'
-import CustomerReviews from './pages/portfoli/CustomerReviews/CustomerReviews'
-import GroupReviews from './pages/portfoli/GroupReviews/GroupReviews'
+import Portfoli from './pages/portfolio/portfolio'
+import PortfolioUpdate from './pages/portfolio/update/update'
 import Stocks from './pages/stocks/stocks'
 import Dashboard from './pages/stocks/dashboard/dashboard'
 import UpdateStocks from './pages/stocks/update/update'
@@ -39,9 +37,7 @@ function App() {
           <Route path='reserve' element={<Reserve />}/>
         </Route>
         <Route path='/portfoli' element={<Portfoli />}>
-          <Route path='update' element={<Update />}/>
-          <Route path='customerreviews' element={<CustomerReviews />}/>
-          <Route path='groupreviews' element={<GroupReviews />}/>
+          <Route path='update' element={<PortfolioUpdate />}/>
         </Route>
         <Route path='/stocks' element={<Stocks />}>
           <Route path='dashboard' element={<Dashboard />} />

@@ -34,7 +34,7 @@
     align-items:end;
     margin: 10px;
 }
-.UpdateStocks>div>button{
+.UpdateStocks>div button{
     background-image: linear-gradient(to left, #9b3cac, #263bb0);
     width: 80px;
     height: 25px;

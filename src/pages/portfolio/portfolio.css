@@ -1,0 +1,56 @@
+.PortfolioOption{
+    display:flex;
+    flex-direction:column;
+    position: absolute;
+    width:210px; /*total = 250w - 20*2padding  */
+    background-image: linear-gradient(to bottom, #9b3cac, #263bb0);
+    border-radius: 15px;
+    right:60px;
+    top:300px;
+    padding:20px 20px;
+}
+
+.PortfolioOption label{
+    font-family: 'peydaRegular';
+    text-align:right;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.PortfolioOption>select{
+    text-align: right;
+    height: 25px;
+    border: 0px;
+    border-radius: 15px;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef
+}
+
+.custom-input{
+    border: 0px;
+    height: 25px;
+    border-radius: 15px;
+    text-align: center;
+    width: 100px;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef;
+}
+
+.PortfolioOption>input{
+    border: 0px;
+    height: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-family:'peydaRegular';
+    background-color: #e7d8ef;
+}
+.PortfolioOption>button{
+    margin: 0px 10px;
+    width: 45px;
+    height: 20px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: #e7d8ef;
+    font-family: 'peydaRegular';
+}
+

@@ -1,0 +1,8 @@
+.PortfolioUpdateMethode label{
+    display: flex;
+    flex-direction: row-reverse;
+    font-family: 'peydaRegular';
+    color: #263bb0;
+    margin: 20px 0px;
+
+}
