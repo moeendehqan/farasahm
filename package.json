@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.2.1",
     "axios": "^0.27.2",
     "axois": "^0.0.1-security",
+    "chart.js": "^3.8.0",
     "export-from-json": "^1.6.0",
     "html2canvas": "^1.4.1",
     "js-file-download": "^0.4.12",

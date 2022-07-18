@@ -26,7 +26,6 @@ const Traders = () => {
     const [msg, setMsg] = useState(null)
     const [historiCode, setHistoriCode] = useState(null)
     const [dataTraders, setDataTraders] = useState(null)
-    const [side, setSide] = useState('buy')
     const [fromDate, setFromData] = useState(false)
     const [toDate, setToData] = useState(false)
     ChartJS.register(CategoryScale,LinearScale,PointElement,LineElement,Title,Tooltip,Legend);
@@ -49,25 +48,61 @@ const Traders = () => {
 
     if(dataTraders!=null){
         var table = new Tabulator("#detailsTable", {
-            data:dataTraders,
+            data:dataTraders.table,
             columnHeaderSortMulti:true,
             columns:[
                 {title:'کدبورسی', field:'code',visible:false},
-                {title:'مانده',field:'balance',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
-                cellClick:function(e, cell){
-                    handleHistoriCode(cell.getData().code, cell.getData().name)
-                    },
-                    formatter:"money",formatterParams:{precision:false,}
-                },
-                {title:'قیمت',field:'PriceSide',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,formatter:"money",formatterParams:{precision:false}},
-                {title:'حجم',field:'volume',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                {title:'مانده',field:'Saham',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
                     formatter:function(cell, formatterParams){
                         var value = cell.getValue();
-                        if(side=='buy'){
-                            return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/Math.max(...(dataTraders.map(i=>i.volume*1))))*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                        return("<div><p>"+ value.toLocaleString()+"</p></div>")
+                    },
+                    cellClick:function(e, cell){
+                        handleHistoriCode(cell.getData().code, cell.getData().name)
+                        },
+                },
+                {title:'قیمت فروش',field:'price_sel',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                    formatter:function(cell, formatterParams){
+                        var value = cell.getValue();
+                        var rate = value!=0?(Math.round(((value/dataTraders.finallPrice)-1)*10000)/100).toString()+'%':'-'
+                        if(value!=0 && value>dataTraders.finallPrice){
+                            return("<div class='StocksTablePrice'><p>"+value.toLocaleString()+"</p><p class='StocksTablePricePos'>"+rate+"</p></div>")
+                        }else if(value!=0 && value<dataTraders.finallPrice){
+                            return("<div class='StocksTablePrice'><p>"+value.toLocaleString()+"</p><p class='StocksTablePriceNeg'>"+rate+"</p></div>")
                         }else{
-                            return("<div class='StocksTableChartContiner'><div class='StocksTableChartneg' style='width:"+(((value)/Math.max(...(dataTraders.map(i=>i.volume*1))))*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                            return("<div class='StocksTablePrice'><p> - </p></div>")
                         }
+                    },
+                },
+
+                {title:'قیمت خرید',field:'price_buy',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                    formatter:function(cell, formatterParams){
+                        var value = cell.getValue();
+                        var rate = value!=0?(Math.round(((value/dataTraders.finallPrice)-1)*10000)/100).toString()+'%':'-'
+                        if(value!=0 && value>dataTraders.finallPrice){
+                            return("<div class='StocksTablePrice'><p>"+value.toLocaleString()+"</p><p class='StocksTablePricePos'>"+rate+"</p></div>")
+                        }else if(value!=0 && value<dataTraders.finallPrice){
+                            return("<div class='StocksTablePrice'><p>"+value.toLocaleString()+"</p><p class='StocksTablePriceNeg'>"+rate+"</p></div>")
+                        }else{
+                            return("<div class='StocksTablePrice'><p> - </p></div>")
+                        }
+                    },
+                },
+                {title:'حجم فروش',field:'Volume_sel',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                    formatter:function(cell, formatterParams){
+                        var value = cell.getValue();
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartNeg' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*80).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+
+                    },
+                    cellClick:function(e, cell){
+                        handleDetailsTrade(cell.getData().code)
+                    },
+                },
+                {title:'حجم خرید',field:'Volume_buy',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                    formatter:function(cell, formatterParams){
+                        var value = cell.getValue();
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartPos' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*80).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+
                     },
                     cellClick:function(e, cell){
                         handleDetailsTrade(cell.getData().code)
@@ -89,7 +124,7 @@ const Traders = () => {
     const handleToDate = (date) =>{setToData(DatePickerToInt(date))}
 
     const handleGetDataTraders = () =>{
-        console.log('start')
+
         setDataTraders(null)
         axios({
             method: 'POST',
@@ -98,10 +133,10 @@ const Traders = () => {
                 username:username,
                 fromDate:fromDate,
                 toDate:toDate,
-                side:side,
             }
         }).then(response=>{
             if(response.data.replay){
+
                 setDataTraders(response.data.data)
             }else{
                 setMsg(response.data.msg)
@@ -162,7 +197,7 @@ const Traders = () => {
     const handleDetailsTrade = (code)=>{
         navigate('/stocks/details',{state:code})
     }
-    useEffect(handleGetDataTraders,[fromDate, toDate, side])
+    useEffect(handleGetDataTraders,[fromDate, toDate])
 
     return(
         <aside>
@@ -183,11 +218,6 @@ const Traders = () => {
             <Popview contet={historiCode} scontent={setHistoriCode}/>
 
             <div className='StocksOption'>
-                <label>سمت</label>
-                <select onChange={(e)=>setSide(e.target.value)}>
-                    <option value='buy'>خرید</option>
-                    <option value='sel'>فروش</option>
-                </select>
                 <label className='StocksDateLabel'>
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleFromDate}/>
                     از تاریخ
@@ -196,7 +226,6 @@ const Traders = () => {
                     <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={handleToDate}/>
                     تا تاریخ
                 </label>
-                <label>دریافت</label>
             </div>
         </aside>
     )

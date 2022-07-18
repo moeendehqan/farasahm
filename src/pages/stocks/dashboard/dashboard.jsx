@@ -10,6 +10,7 @@ import { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 
+
 const Dashboard = () => {
     const username = getCookie('username')
     const [lastUpdate, setLastUpdate] = useState(null)
@@ -100,10 +101,10 @@ const Dashboard = () => {
                 }]}            )
             
             /**/
-            axios({method: "POST",url: serverAddress+'/stocks/newbie',data:{username:username,fromDate:false,toDate:false,}
-            }).then(newbie=>{
-                console.log(newbie.data.ToDayNewBie[0])
-                setNewBie(newbie.data.ToDayNewBie[0])     
+            axios({method: "POST",url: serverAddress+'/stocks/newbie',data:{username:username,fromDate:false,toDate:false,headers:{'Content-Type':'application/json','Accept': 'application/json'}}
+            }).then(resnewbie=>{
+                console.log(resnewbie.data)
+                setNewBie(resnewbie.data.ToDayNewBie[0])
                 /**/
                 axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:3,}
                 }).then(sedimentpt=>{

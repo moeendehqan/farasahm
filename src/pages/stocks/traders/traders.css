@@ -112,3 +112,29 @@
     flex-direction: row;
     justify-content: center;
 }
+
+.StocksTablePrice{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.StocksTablePricePos{
+    color: rgb(99, 197, 99);
+    font-size: 0.7rem;
+}
+.StocksTablePriceNeg{
+    color: rgb(197, 99, 99);
+    font-size: 0.7rem;
+}
+
+.StocksTablePriceNo{
+    font-size: 0.7rem;
+}
+
+.StocksTableChartNeg{
+    background-color: rgb(197, 99, 99);
+}
+.StocksTableChartPos{
+    background-color: rgb(99, 197, 99);
+}
