@@ -19,10 +19,13 @@ const Dashboard = () => {
     ChartJS.register(CategoryScale,LinearScale,BarElement,Title,Tooltip,Legend)
     defaults.font.family = 'peydaRegular'
     const [newBie, setNewBie] = useState(null)
+    const [SedmentVolumepo, setSedmentVolumepo] = useState(null)
+    const [SedmentVolumepw, setSedmentVolumepw] = useState(null)
     const [SedmentVolumept, setSedmentVolumept] = useState(null)
     const [SedmentVolumeps, setSedmentVolumeps] = useState(null)
     const [SedmentVolumepy, setSedmentVolumepy] = useState(null)
     const [tablo, setTablo] = useState(null)
+    console.log(tablo)
     const [dateString, setDateString] = useState(null)
 
     const dateShamsi = ()=>{
@@ -100,38 +103,53 @@ const Dashboard = () => {
                     backgroundColor: '#ae4040',
                 }]}            )
             
-            /**/
+            /*جدیدالورود*/
             axios({method: "POST",url: serverAddress+'/stocks/newbie',data:{username:username,fromDate:false,toDate:false,headers:{'Content-Type':'application/json','Accept': 'application/json'}}
             }).then(resnewbie=>{
-                console.log(resnewbie.data)
-                setNewBie(resnewbie.data.ToDayNewBie[0])
-                /**/
-                axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:3,}
+                setNewBie(resnewbie.data.ToDayNewBie)
+            })
+
+            /*رسوب1*/
+            axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:1,}
+            }).then(sedimentpt=>{
+                if(sedimentpt.data.replay){setSedmentVolumepo(sedimentpt.data.sumSediment)}else{setSedmentVolumept(0)}
+                /*رسوب2*/
+                axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:2,}
                 }).then(sedimentpt=>{
-                    if(sedimentpt.data.replay){setSedmentVolumept(sedimentpt.data.sumSediment)}else{setSedmentVolumept(0)}
-                    /**/
-                    axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:6,}
-                    }).then(sedimentps=>{if(sedimentps.data.replay){setSedmentVolumeps(sedimentps.data.sumSediment)}else{setSedmentVolumeps(0)}
-                         /**/
-                        axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:12,}
-                        }).then(sedimentpn=>{if(sedimentpn.data.replay){setSedmentVolumepy(sedimentpn.data.sumSediment)}else{setSedmentVolumepy(0)}
-                            /**/
-                            axios({method: 'POST',url: serverAddress+'/stocks/tablo',data: {username:username,date:response.data.lastUpdate,}
-                            }).then(tabloApi=>{
-                                if(tabloApi.data.Error!="data not found"){
-                                setTablo(tabloApi.data)}
+                    if(sedimentpt.data.replay){setSedmentVolumepw(sedimentpt.data.sumSediment)}else{setSedmentVolumept(0)}
+                    /*رسوب3*/
+                    axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:3,}
+                    }).then(sedimentpt=>{
+                        if(sedimentpt.data.replay){setSedmentVolumept(sedimentpt.data.sumSediment)}else{setSedmentVolumept(0)}
+                        /*رسوب6*/
+                        axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:6,}
+                        }).then(sedimentps=>{if(sedimentps.data.replay){setSedmentVolumeps(sedimentps.data.sumSediment)}else{setSedmentVolumeps(0)}
+                            /*رسوب12*/
+                            axios({method: 'POST',url: serverAddress+'/stocks/sediment',data: {username:username,period:12,}
+                            }).then(sedimentpn=>{if(sedimentpn.data.replay){setSedmentVolumepy(sedimentpn.data.sumSediment)}else{setSedmentVolumepy(0)}
                             })
                         })
                     })
                 })
+            })  
+            /*تابلو بورس*/
+            axios({method: 'POST',url: serverAddress+'/stocks/tablo',data: {username:username,date:response.data.lastUpdate,}
+            }).then(tabloApi=>{
+                if(tabloApi.data.Error!="data not found"){
+                    console.log(tabloApi.data)
+                    setTablo(tabloApi.data)}
             })
         })
     }
 
+
     useEffect(handleDashboard,[])
     return(
         <div className="dashboard">
-            {dateString}
+            <div className='dashboardFristRow'>
+                {tablo!=null?<p className='DashboardDateString'>{tablo.tablo.full_name}</p>:null}
+                <p>{dateString}</p>
+            </div>
             <div className='DashboardTopToday'>
                 <div>
                     <h6>ده خریدار بزرگ</h6>
@@ -154,9 +172,24 @@ const Dashboard = () => {
                                 <td>حجم</td>
                             </tr>
                             <tr>
-                                <td>{newBie.newnum}</td>
+                                <td>{newBie.newnum.toLocaleString()}</td>
                                 <td>{(Math.round((newBie.newnum/newBie.allnum)*10000)/100).toString()+'%'}</td>
                                 <td>تعداد</td>
+                            </tr>
+                            <tr>
+                                <td>{(Math.round(newBie.newvol/newBie.newnum)).toLocaleString()}</td>
+                                <td> - </td>
+                                <td>حجم سرانه</td>
+                            </tr>
+                            <tr>
+                                <td>{newBie.newmax.toLocaleString()}</td>
+                                <td> - </td>
+                                <td>بیشترین</td>
+                            </tr>
+                            <tr>
+                                <td>{newBie.newmin.toLocaleString()}</td>
+                                <td> - </td>
+                                <td>کمترین</td>
                             </tr>
                         </tbody>
                     </table>}
@@ -166,6 +199,14 @@ const Dashboard = () => {
                     {SedmentVolumepy==null?<MiniLoader/>:
                     <table>
                         <tbody>
+                            <tr>
+                                <td>{SedmentVolumepo.toLocaleString()}</td>
+                                <td>یک ماهه</td>
+                            </tr>
+                            <tr>
+                                <td>{SedmentVolumepw.toLocaleString()}</td>
+                                <td>دو ماهه</td>
+                            </tr>
                             <tr>
                                 <td>{SedmentVolumept.toLocaleString()}</td>
                                 <td>سه ماهه</td>
@@ -182,40 +223,111 @@ const Dashboard = () => {
                     </table>}
                 </div>
                 <div>
-                    <h5>تابلو معاملات</h5>
+                    <h5>شاخص ها</h5>
                     {tablo==null?<MiniLoader/>:
                     <table>
                         <tbody>
                             <tr>
-                                <td>{(Math.round((tablo.real_buy_value/tablo.real_buy_count)/10000)/100).toLocaleString()} M</td>
-                                <td>سرانه خرید</td>
+                                <td>
+                                    <p className={tablo.ind.rate.total>0?'DashboardNumPos':'DashboardNumNeg'}>
+                                        {(tablo.ind.rate.total*1).toLocaleString()}%
+                                    </p>
+                                    </td>
+                                <td>کل</td>
                             </tr>
                             <tr>
-                                <td>{(Math.round((tablo.real_sell_value/tablo.real_sell_count)/10000)/100).toLocaleString()} M</td>
-                                <td>سرانه فروش</td>
+                                <td>
+                                    <p className={tablo.ind.rate.total50>0?'DashboardNumPos':'DashboardNumNeg'}>
+                                        {(tablo.ind.rate.total50*1).toLocaleString()}%
+                                    </p>
+                                    </td>
+                                <td>پنجاه شرکت</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p className={tablo.ind.rate.totalw>0?'DashboardNumPos':'DashboardNumNeg'}>
+                                        {(tablo.ind.rate.totalw*1).toLocaleString()}%
+                                    </p>
+                                    </td>
+                                <td>هم وزن</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p className={tablo.ind.rate.industry>0?'DashboardNumPos':'DashboardNumNeg'}>
+                                        {(tablo.ind.rate.industry*1).toLocaleString()}%
+                                    </p>
+                                    </td>
+                                <td>صنعت</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p className={tablo.ind.rate.company>0?'DashboardNumPos':'DashboardNumNeg'}>
+                                        {(tablo.ind.rate.company*1).toLocaleString()}%
+                                    </p>
+                                    </td>
+                                <td>نماد</td>
                             </tr>
                         </tbody>
                     </table>
                     }
                 </div>
                 <div>
-                    <h5>بازار</h5>
+                    <h5>تابلو نماد</h5>
                     {tablo==null?<MiniLoader/>:
                     <table>
                         <tbody>
                             <tr>
-                                <td>{(tablo.final_price).toLocaleString()}</td>
+                                <td>
+                                    {(tablo.tablo.final_price*1).toLocaleString()}
+                                </td>
                                 <td>قیمت پایانی</td>
                             </tr>
                             <tr>
-                                <td>{((tablo.all_stocks*tablo.final_price)/1000000000).toLocaleString()} B</td>
-                                <td>ارزش بازار</td>
+                                <td>
+                                    {(Math.round(((tablo.tablo.real_buy_value/tablo.tablo.real_buy_count)/10000))/100).toLocaleString()} M
+                                </td>
+                                <td>سرانه خرید</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {(Math.round(((tablo.tablo.real_sell_value/tablo.tablo.real_sell_count)/10000))/100).toLocaleString()} M
+                                </td>
+                                <td>سرانه فروش</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {(tablo.tablo.trade_volume*1).toLocaleString()}
+                                </td>
+                                <td>حجم</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {(Math.round(tablo.tablo.trade_value/10000)/100).toLocaleString()} M
+                                </td>
+                                <td>ارزش</td>
                             </tr>
                         </tbody>
                     </table>
                     }
                 </div>
             </div>
+            
+            <div className='DashboardSymbolStatus'>
+                {tablo==null?null:
+                    tablo.symbol_industry.map(sym=>{
+                    const prccls = sym.final_price_change_percent>0?'DashboardNumPos':'DashboardNumNeg'
+                    return(
+                        <div className='DashboardSymbolStatusItem'>
+                            <p>{sym.name}</p>
+                            <div>
+                                <p className={prccls}>{(sym.final_price_change_percent*1).toLocaleString()} %</p>
+                                <p>{(sym.final_price*1).toLocaleString()}</p>
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+            
         </div>
 
     )
