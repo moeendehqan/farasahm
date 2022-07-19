@@ -61,6 +61,7 @@ const Traders = () => {
                         handleHistoriCode(cell.getData().code, cell.getData().name)
                         },
                 },
+                {title:'ایستگاه',field:'brk',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:4},
                 {title:'قیمت فروش',field:'price_sel',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
                     formatter:function(cell, formatterParams){
                         var value = cell.getValue();
@@ -88,20 +89,20 @@ const Traders = () => {
                         }
                     },
                 },
-                {title:'حجم فروش',field:'Volume_sel',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                {title:'حجم فروش',field:'Volume_sel',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:5,
                     formatter:function(cell, formatterParams){
                         var value = cell.getValue();
-                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartNeg' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*80).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartNeg' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*60).toString()+'%'+"'> </div><p>"+ (value*1).toLocaleString()+"</p></div>")
 
                     },
                     cellClick:function(e, cell){
                         handleDetailsTrade(cell.getData().code)
                     },
                 },
-                {title:'حجم خرید',field:'Volume_buy',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:6,
+                {title:'حجم خرید',field:'Volume_buy',hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:5,
                     formatter:function(cell, formatterParams){
                         var value = cell.getValue();
-                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartPos' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*80).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+"</p></div>")
+                        return("<div class='StocksTableChartContiner'><div class='StocksTableChartPos' style='width:"+(((value)/Math.max(...(dataTraders.table.map(i=>i.Volume_sel*1))))*60).toString()+'%'+"'> </div><p>"+ (value*1).toLocaleString()+"</p></div>")
 
                     },
                     cellClick:function(e, cell){

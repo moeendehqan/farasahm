@@ -37,7 +37,7 @@ const Newbie = () =>{
 
     
     if(dataNewbie!=null){
-        console.log(dataNewbie)
+        console.log((dataNewbie))
         var volper =dataNewbie.map(i=>i.volper)
         var vpmx = Math.max(...volper)
         
@@ -45,7 +45,7 @@ const Newbie = () =>{
         var npmx = Math.max(...numper)
 
         var table = new Tabulator("#detailsTable", {
-            data:dataNewbie,
+            data:(dataNewbie),
             columnHeaderSortMulti:true,
             columns:[
                 {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1},
@@ -85,7 +85,8 @@ const Newbie = () =>{
             }
         }).then(Response=>{
             if(Response.data.replay){
-                setDataNewbie(Response.data.data)
+
+                setDataNewbie(JSON.parse(Response.data.data))
             }
         })
     }
