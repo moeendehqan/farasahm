@@ -51,7 +51,6 @@ const Header = (props)=>{
                             </div>
                             <ul>
                                 <li><span onClick={handlehome}>خانه</span></li>
-                                <li><span >تنظیمات</span></li>
                                 <li><span onClick={handleOut}>خروج</span></li>
                             </ul>
                         </li>

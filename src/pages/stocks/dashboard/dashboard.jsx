@@ -25,7 +25,6 @@ const Dashboard = () => {
     const [SedmentVolumeps, setSedmentVolumeps] = useState(null)
     const [SedmentVolumepy, setSedmentVolumepy] = useState(null)
     const [tablo, setTablo] = useState(null)
-    console.log(tablo)
     const [dateString, setDateString] = useState(null)
 
     const dateShamsi = ()=>{
@@ -136,7 +135,6 @@ const Dashboard = () => {
             axios({method: 'POST',url: serverAddress+'/stocks/tablo',data: {username:username,date:response.data.lastUpdate,}
             }).then(tabloApi=>{
                 if(tabloApi.data.Error!="data not found"){
-                    console.log(tabloApi.data)
                     setTablo(tabloApi.data)}
             })
         })

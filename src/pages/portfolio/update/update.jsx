@@ -14,11 +14,29 @@ const PortfolioUpdate = () =>{
     const [TBS, SetTBS] = useState(null)
     const [msg, setMsg] = useState(null)
     const [method, setMethod] = useState('فایل TBS')
+    const [investorList, setInvestorList] = useState(null)
+    const [symbolList, setSymbolList] = useState(null)
     const [ dateTrade ,setDateTrade ] = useState(null)
 
 
+    const handleGetInvestorList = ()=>{
+        axios({
+            method:"POST",
+            url:serverAddress+'/portfolio/investorlist',
+            data:{username:username}
+        }).then(Response=>{
+            setInvestorList(Response.data.df)
+        })
+    }
+    const handleGetSymbolList = ()=>{
+        axios({
+            method:"POST",
+            url:serverAddress+'/portfolio/symbolelist',
+        }).then(Response=>{
+            setSymbolList(Response.data)
+        })
+    }
     const handleDateTrade = (date) =>{setDateTrade(DatePickerToInt(date))}
-
     const handleUpdateFileTBS = () =>{
         if (TBS===null){
             setMsg('فایل را بار گذاری کنید')
@@ -37,6 +55,8 @@ const PortfolioUpdate = () =>{
         }
     }
 
+    useEffect(handleGetInvestorList,[])
+    useEffect(handleGetSymbolList,[])
     return(
         <div className="dashboard">
             <div className='UpdateStocks'>
@@ -50,8 +70,40 @@ const PortfolioUpdate = () =>{
                     <button onClick={handleUpdateFileTBS}>تایید</button>
                 </div>:
                 <div className="PortfolioUpdateMethode">
-                    <lable>تاریخ
-                        <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="custom-input" onChange={date => handleDateTrade(date)}/>
+                    <lable className='PortfolioFild'>
+                        <p>سرمایه گذار</p>
+                        <input list='browser'/>
+                        <datalist id='browser'>
+                            {investorList.map(items=>{
+                            return(
+                                <option key={items.code} value={items.code}>{items.name}</option>
+                            )
+                            })
+                            }
+                        </datalist>
+                    </lable>
+                    <lable className='PortfolioFild'>
+                        <p>تاریخ</p>
+                        <DatePicker calendar={persian} locale={persian_fa} className="purple" inputClass="PortfolioDateFild" onChange={date => handleDateTrade(date)}/>
+                    </lable>
+                    <lable className='PortfolioFild'>
+                        <p>سمت معامله</p>
+                        <select>
+                            <option value='buy'>خرید</option>
+                            <option value='sel'>فروش</option>
+                        </select>
+                    </lable>
+                    <lable className='PortfolioFild'>
+                        <p>نماد</p>
+                        <input list='browsersy'/>
+                        <datalist id='browsersy'>
+                            {symbolList.map(items=>{
+                            return(
+                                <option key={items.name} value={items.name}>{items.name}</option>
+                            )
+                            })
+                            }
+                        </datalist>
                     </lable>
                     <button onClick={handleUpdateFileTBS}>تایید</button>
                 </div>}

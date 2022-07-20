@@ -6,3 +6,26 @@
     margin: 20px 0px;
 
 }
+
+
+.PortfolioUpdateMethode>.PortfolioFild{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px 0px;
+    justify-content: space-between;
+    width: 260px;
+}
+.PortfolioUpdateMethode>.PortfolioFild>p{
+    font-family: 'peydaRegular';
+    margin-left: 25px;
+}
+.PortfolioUpdateMethode>.PortfolioFild>input, .PortfolioDateFild, .PortfolioUpdateMethode>.PortfolioFild>select{
+    background-color: #fff;
+    width: 150px;
+    border: 0px;
+    border-radius: 15px;
+    height: 25px;
+    font-family: 'peydaRegular';
+    text-align: center;
+    color: #263bb0;
+}

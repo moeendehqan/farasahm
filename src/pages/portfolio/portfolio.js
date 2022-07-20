@@ -42,7 +42,7 @@ const Portfolio = () => {
     return(
         <div>
             
-            <Header section='پرتفوگردانی' fullName={fullUser.stocksSymbol} HeaderButtom={HeaderButtom}/>
+            <Header section='پرتفوگردانی' fullName={fullUser.fullName} HeaderButtom={HeaderButtom}/>
                 <div className='LayoutBasic'>
                     <Menu menuProperties={menuProperties}/>
                     <Outlet/>

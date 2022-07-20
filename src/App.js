@@ -19,9 +19,10 @@ import Station from './pages/stocks/station/station';
 import Sediment from './pages/stocks/sediment/sediment';
 import Details from './pages/stocks/details/details'
 import NoPage from './components/nopage/nopage';
-
+import { useEffect } from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
+  useEffect(() =>{document.title = 'فراسهم'}, [])
 
   return (
 
