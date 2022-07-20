@@ -44,26 +44,60 @@ const Newbie = () =>{
         var numper =dataNewbie.map(i=>i.numper)
         var npmx = Math.max(...numper)
 
+        var srnper =dataNewbie.map(i=>i.sarane)
+        var nsmx = Math.max(...srnper)
+
         var table = new Tabulator("#detailsTable", {
             data:(dataNewbie),
             columnHeaderSortMulti:true,
             columns:[
-                {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1},
-                {title:"تعداد کل", field:"allnum",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1},
-                {title:"تعداد جدیدالورود", field:"newnum",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1},
-                {title:"حجم کل", field:"allvol",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2},
-                {title:"حجم جدیدالورود", field:"newvol",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2},
+                {title:"تاریخ", field:"Date",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div><p>"+ (value).toLocaleString() +"</p></div>")
+                }
+                },
+                {title:"تعداد کل", field:"allnum",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div><p>"+ (value*1).toLocaleString() +"</p></div>")
+                }
+                },
+                {title:"تعداد جدیدالورود", field:"newnum",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:1,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div><p>"+ (value*1).toLocaleString() +"</p></div>")
+                }
+                },
+                {title:"حجم کل", field:"allvol",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div><p>"+ (value*1).toLocaleString() +"</p></div>")
+                }
+                },
+                {title:"حجم جدیدالورود", field:"newvol",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div><p>"+ (value*1).toLocaleString() +"</p></div>")
+                }
+                },
                 {title:"%تعداد جدیدالورود", field:"numper",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
                 formatter:function(cell, formatterParams){
                     var value = cell.getValue();
-                    return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/npmx)*50).toString()+'%'+"'> </div><p>"+ value.toString()+'%' +"</p></div>")
+                    return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/npmx)*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+'%' +"</p></div>")
 
                 }
                 },
                 {title:"%حجم جدیدالورود", field:"volper",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
                 formatter:function(cell, formatterParams){
                     var value = cell.getValue();
-                    return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/vpmx)*50).toString()+'%'+"'> </div><p>"+ value.toString()+'%' +"</p></div>")
+                    return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/vpmx)*50).toString()+'%'+"'> </div><p>"+ value.toLocaleString()+'%' +"</p></div>")
+                }
+                },
+                {title:"حجم سرانه", field:"sarane",hozAlign:'center',headerHozAlign:'center',resizable:true, widthGrow:2,
+                formatter:function(cell, formatterParams){
+                    var value = cell.getValue();
+                    return("<div class='StocksTableChartContiner'><div class='StocksTableChart' style='width:"+(((value)/nsmx)*50).toString()+'%'+"'> </div><p>"+ (Math.round(value*1)).toLocaleString() +"</p></div>")
                 }
                 },
             ],
