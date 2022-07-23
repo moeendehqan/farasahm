@@ -11,13 +11,16 @@
 }
 
 .PortfolioOption label{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
     font-family: 'peydaRegular';
     text-align:right;
     color: #fff;
     margin-top: 20px;
 }
 
-.PortfolioOption>select{
+.PortfolioOption select{
     text-align: right;
     height: 25px;
     border: 0px;
@@ -36,7 +39,7 @@
     background-color: #e7d8ef;
 }
 
-.PortfolioOption>input{
+.PortfolioOption input{
     border: 0px;
     height: 25px;
     border-radius: 15px;

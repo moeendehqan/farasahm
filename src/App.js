@@ -10,6 +10,7 @@ import AllReturn from './pages/eft/allreturn/allreturn';
 import Reserve from './pages/eft/reserve/reserve'
 import Portfoli from './pages/portfolio/portfolio'
 import PortfolioUpdate from './pages/portfolio/update/update'
+import Asset from './pages/portfolio/asset/asset';
 import Stocks from './pages/stocks/stocks'
 import Dashboard from './pages/stocks/dashboard/dashboard'
 import UpdateStocks from './pages/stocks/update/update'
@@ -39,6 +40,7 @@ function App() {
         </Route>
         <Route path='/portfoli' element={<Portfoli />}>
           <Route path='update' element={<PortfolioUpdate />}/>
+          <Route path='asset' element={<Asset />}/>
         </Route>
         <Route path='/stocks' element={<Stocks />}>
           <Route path='dashboard' element={<Dashboard />} />

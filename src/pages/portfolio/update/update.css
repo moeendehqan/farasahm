@@ -1,3 +1,7 @@
+.PortfolioUpdateMethode{
+    display: flex;
+    flex-direction: row;
+}
 .PortfolioUpdateMethode label{
     display: flex;
     flex-direction: row-reverse;
@@ -8,18 +12,18 @@
 }
 
 
-.PortfolioUpdateMethode>.PortfolioFild{
+.PortfolioUpdateMethode .PortfolioFild{
     display: flex;
     flex-direction: row-reverse;
     margin: 10px 0px;
     justify-content: space-between;
     width: 260px;
 }
-.PortfolioUpdateMethode>.PortfolioFild>p{
+.PortfolioUpdateMethode .PortfolioFild>p{
     font-family: 'peydaRegular';
     margin-left: 25px;
 }
-.PortfolioUpdateMethode>.PortfolioFild>input, .PortfolioDateFild, .PortfolioUpdateMethode>.PortfolioFild>select{
+.PortfolioUpdateMethode .PortfolioFild>input, .PortfolioDateFild, .PortfolioUpdateMethode .PortfolioFild>select{
     background-color: #fff;
     width: 150px;
     border: 0px;
