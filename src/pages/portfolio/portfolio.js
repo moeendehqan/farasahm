@@ -25,18 +25,9 @@ const Portfolio = () => {
     HandleAccount('portfoli')
     const username = getCookie('username')
 
-    const handleName = ()=>{
-        axios({
-            method:'POST',
-            url:serverAddress+'/fulluser',
-            data:{
-                username:username,
-            }
-        }).then(Response=>{
-            setFullUser(Response.data[0])
-        })
-    }
-
+    const handleName = ()=>{axios({method:'POST',url:serverAddress+'/fulluser',data:{username:username}
+        }).then(Response=>{setFullUser(Response.data[0])})    }
+    
     
     useEffect(handleName,[])
     return(

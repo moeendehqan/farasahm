@@ -11,16 +11,28 @@ const Asset = ()=>{
     const username = getCookie('username')
     const [invester, setInvester] = useState('')
     const [investorList, setInvestorList] = useState(null)
-    const [dateTrade ,setDateTrade] = useState()
+    const [dateTrade ,setDateTrade] = useState('')
 
     
     const handleDateTrade = (date) =>{setDateTrade(DatePickerToInt(date))}
+
+    const handleSetInvester = (e)=>{if(investorList.find(i=>i.code==e.target.value)!=undefined){setInvester(e.target.value)}}
 
     const handleGetInvestorList = ()=>{
         axios({method:"POST",url:serverAddress+'/portfolio/investorlist',data:{username:username}
     }).then(Response=>{setInvestorList(Response.data.df)})}
 
+    const handleShowAsset = () =>{
+        if(invester.length>0){
+            axios({method:'POST',url:serverAddress+'/portfolio/asset',data:{username:username,invester:invester,date:dateTrade}
+        }).then(Response=>{
+            console.log(Response.data)
+        })
+        }
+    }
+
     useEffect(handleGetInvestorList,[])
+    useEffect(handleShowAsset,[invester,dateTrade])
 
     return(
         <aside>
@@ -31,7 +43,7 @@ const Asset = ()=>{
                 {investorList==null?null:
                 <label>
                     <p>سرمایه گذار</p>
-                    <input list='browser' onChange={(e)=>setInvester(e.target.value)}/>
+                    <input list='browser' onChange={(e)=>handleSetInvester(e)}/>
                     <datalist id='browser'>
                         {investorList.map(items=>{
                         return(
